@@ -1,0 +1,55 @@
+{
+  "title": "Vending machine, link corridor waiting bay, 04:10",
+  "artist": "nell-abara",
+  "year": 2003,
+  "medium": "Oil on hardboard, rough side",
+  "made": "2026-11-09",
+  "strokes": 5652,
+  "size": [
+    1800,
+    1200
+  ],
+  "stages": [
+    {
+      "name": "coloured darks over black",
+      "strokes": 110,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the room blocked in",
+      "strokes": 3123,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "light scumbled over the mesh",
+      "strokes": 4685,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "fixtures",
+      "strokes": 4933,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the cabinet, dark",
+      "strokes": 4988,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the floor gives it back",
+      "strokes": 5228,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "seats, and somebody's coat",
+      "strokes": 5450,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 5652,
+      "file": "stages/07.jpg"
+    }
+  ],
+  "seconds": 3.6
+}

@@ -1,0 +1,5 @@
+_site/
+.scratch/
+.venv/
+__pycache__/
+*.pyc
