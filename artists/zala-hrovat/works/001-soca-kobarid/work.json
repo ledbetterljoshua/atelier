@@ -1,0 +1,55 @@
+{
+  "title": "So\u010da at Kobarid, 9 June 1983, 58 cm",
+  "artist": "zala-hrovat",
+  "year": 1983,
+  "medium": "Oil on gessoed birch ply",
+  "made": "2026-11-09",
+  "strokes": 9235,
+  "size": [
+    1350,
+    1800
+  ],
+  "stages": [
+    {
+      "name": "the river turned off: the bed scrubbed in",
+      "strokes": 129,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "stones, biggest first",
+      "strokes": 4929,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the sun's net on the gravel",
+      "strokes": 6489,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "shadows: the leaf's, and the bridge's",
+      "strokes": 6632,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the river back in, a glaze for each depth",
+      "strokes": 8652,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the water's own colour",
+      "strokes": 8999,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "the surface",
+      "strokes": 9190,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 9235,
+      "file": "stages/07.jpg"
+    }
+  ],
+  "seconds": 4.8
+}

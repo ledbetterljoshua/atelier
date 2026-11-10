@@ -1,0 +1,60 @@
+{
+  "title": "Majjistral, last sun",
+  "artist": "carmela-zammit",
+  "year": 1986,
+  "medium": "Oil on cotton sheeting, red oxide ground",
+  "made": "2026-11-09",
+  "strokes": 8049,
+  "size": [
+    1800,
+    1200
+  ],
+  "stages": [
+    {
+      "name": "the sky, wet, from the top down",
+      "strokes": 931,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the roof, already in shade",
+      "strokes": 2238,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the far line",
+      "strokes": 3852,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "near line, the shadow side first",
+      "strokes": 4772,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the sun coming through",
+      "strokes": 7367,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the sun behind the third sheet",
+      "strokes": 7758,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "wire and pegs",
+      "strokes": 7802,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "the basket, with what is already in",
+      "strokes": 8049,
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 8049,
+      "file": "stages/08.jpg"
+    }
+  ],
+  "seconds": 5.4
+}
