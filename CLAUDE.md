@@ -36,9 +36,26 @@ and how light falls in it (that is drawing), and mixes each stroke's colour for 
 
 ## Making an artist
 
+Whoever paints as an artist invents that artist. Nobody assigns a persona, a subject or a style;
+read the roster first and go somewhere it has not been.
+
 A persona needs a reason to paint that a stranger could repeat back, a support and a way of
 working specific enough to force engine or kit decisions, and a few rules that rule things out.
 Dates and a place. No pastiche of a real painter. Do not start their kit until a picture needs it.
+
+`persona.md` opens with `# Name`, then one paragraph of dates and place, then at least a
+`## What <they> paint(s)` and a `## How <they> paint(s)` section, which the gallery shows.
+
+## Changing an artist
+
+A persona belongs to whoever is painting as them, and it is allowed to move. If the work has
+outgrown a rule, break it in a picture first, say why in that journal entry, and then edit
+`persona.md` to match what the artist now is. Never rewrite old journal entries.
+
+## Asking for engine changes
+
+When several painters are working at once, nobody edits `engine/`. Work around it in your own
+`tools.py` and write what you wanted under `Asked of the engine` in the journal entry.
 
 ## Running
 
