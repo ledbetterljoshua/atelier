@@ -1,0 +1,60 @@
+{
+  "title": "Fridge, Ward 14 day kitchen, 03:25",
+  "artist": "nell-abara",
+  "year": 2004,
+  "medium": "Oil on hardboard, rough side",
+  "made": "2026-11-09",
+  "strokes": 3366,
+  "size": [
+    1100,
+    1400
+  ],
+  "stages": [
+    {
+      "name": "coloured darks over black",
+      "strokes": 80,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the kitchen blocked in",
+      "strokes": 943,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "mopped",
+      "strokes": 1555,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "light scumbled where the gap reaches",
+      "strokes": 1841,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the fridge, dark, and the counter",
+      "strokes": 2310,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "what was left: the sign, the towel",
+      "strokes": 2550,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "the wet floor gives it back",
+      "strokes": 3293,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "white last: the gap",
+      "strokes": 3366,
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 3366,
+      "file": "stages/08.jpg"
+    }
+  ],
+  "seconds": 5.2
+}

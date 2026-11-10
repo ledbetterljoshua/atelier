@@ -171,3 +171,212 @@ def line3(board, view, a, b, brush, color, wobble=0.0, **kw):
 
 def quad(view, pts):
     return view.P(np.array(pts, dtype=np.float64))
+
+
+# --- added for 002: a door that is not shut, a floor that is still wet ------------------------
+
+def crosses(plane, S, Q):
+    """Which of the segments S[i] -> Q pass through this rectangle."""
+    d = Q[None, :] - S
+    den = d @ plane.n
+    den = np.where(np.abs(den) < 1e-12, 1e-12, den)
+    t = ((plane.O - S) @ plane.n) / den
+    X = S + d * t[:, None]
+    rel = X - plane.O
+    u, v = rel @ plane.U / plane.uu, rel @ plane.V / plane.vv
+    return (t > 0) & (t < 1) & (u >= 0) & (u <= 1) & (v >= 0) & (v <= 1)
+
+
+class Patches:
+    """Many small lit squares at once: S positions, n facing, rad radiance, dA area.
+
+    aperture: the light only counts if it gets out through this rectangle (a door gap).
+    blockers: [(plane, transmit)] things standing in the way; transmit 0 is solid, 0.3 a tea towel.
+    """
+
+    def __init__(self, S, n, rad, dA, aperture=None, blockers=()):
+        self.S = np.asarray(S, dtype=np.float64)
+        self.n = np.asarray(n, dtype=np.float64)
+        self.rad = np.asarray(rad, dtype=np.float64)
+        self.dA = np.broadcast_to(np.asarray(dA, dtype=np.float64), (len(self.S),)).copy()
+        self.aperture, self.blockers = aperture, list(blockers)
+
+    @classmethod
+    def on(cls, plane, radiance, nu, nv, facing=None, rng=None, **kw):
+        """Grid a rectangle into patches. radiance may be a function of the patch centre.
+
+        With rng, each sample moves somewhere inside its cell, so a narrow gap seen through does not
+        pick out the rows of the grid as stripes of light.
+        """
+        uu, vv = np.meshgrid(np.arange(nu) + 0.5, np.arange(nv) + 0.5, indexing="ij")
+        uu, vv = uu.ravel(), vv.ravel()
+        if rng is not None:
+            uu, vv = uu + rng.uniform(-0.5, 0.5, uu.shape), vv + rng.uniform(-0.5, 0.5, vv.shape)
+        S = np.array([plane.at(u / nu, v / nv) for u, v in zip(uu, vv)])
+        n = np.tile(v3(*facing) if facing is not None else plane.n, (len(S), 1))
+        rad = np.array([radiance(s) if callable(radiance) else radiance for s in S], dtype=np.float64)
+        dA = np.linalg.norm(np.cross(plane.U, plane.V)) / len(S)
+        return cls(S, n, rad, dA, **kw)
+
+    def __add__(self, other):
+        out = Patches(np.vstack([self.S, other.S]), np.vstack([self.n, other.n]),
+                      np.vstack([self.rad, other.rad]), np.concatenate([self.dA, other.dA]),
+                      self.aperture, self.blockers)
+        return out
+
+    def onto(self, P, N, near=0.03):
+        P, N = np.asarray(P, dtype=np.float64), np.asarray(N, dtype=np.float64)
+        l = self.S - P
+        d2 = np.maximum((l * l).sum(1), near)
+        l = l / np.sqrt(d2)[:, None]
+        cp = l @ N
+        cl = -(l * self.n).sum(1)
+        w = np.where((cp > 0) & (cl > 0), self.dA * cp * cl / (np.pi * d2), 0.0)
+        if self.aperture is not None:
+            w = w * crosses(self.aperture, self.S, P)
+        for plane, tr in self.blockers:
+            w = np.where(crosses(plane, self.S, P), w * tr, w)
+        return (self.rad * w[:, None]).sum(0)
+
+
+def lay_flow(board, view, plane, brush, shade, field, length=110.0, cover=2.0, wobble=1.0, zref=5.0,
+             shrink=0.5, tape=True, where=None, feather=1.2, steps=5, pressure=1.0):
+    """Like lay(), but each stroke follows field(P) across the plane, so it can bend (a mop arc)."""
+    rng = board.rng
+    if tape:
+        poly = plane.screen_poly(view)
+        if poly is None:
+            return 0
+        board.tape(poly, feather=feather)
+    pts, area = plane.sample(view, rng, lambda a: a * cover / (length * brush.width) + 1)
+    n = 0
+    for P in pts:
+        if where is not None and not where(P):
+            continue
+        z = P[2] - view.eye[2]
+        k = min(1.6, max(0.25, (zref / z) ** shrink))
+        d0 = field(P)
+        e = view.P(np.array([P - d0 * 0.05, P + d0 * 0.05]))
+        px_per_m = max(np.hypot(*(e[1] - e[0])) / 0.1, 1e-3)
+        Lm = length * k * rng.uniform(0.6, 1.25) / px_per_m
+        h = Lm / (2 * steps)
+        path = [P]
+        for sgn in (1, -1):
+            q = P.copy()
+            side = []
+            for _ in range(steps):
+                d = field(q)
+                q2 = q + sgn * d * h
+                u, v = plane.uv(q2)
+                if not (0 <= u <= 1 and 0 <= v <= 1) or q2[2] < 0.6:
+                    break
+                q = q2
+                side.append(q)
+            path = (path + side) if sgn > 0 else (side[::-1] + path)
+        if len(path) < 2:
+            continue
+        path = np.array(path)
+        if rng.random() < 0.5:
+            path = path[::-1]
+        board.stroke(view.P(path), brush.but(width=brush.width * k), shade(P), wobble=wobble * k,
+                     pressure=pressure)
+        n += 1
+    if tape:
+        board.untape()
+    return n
+
+
+def floor_at(view, sx, sy, y=0.0):
+    """The point on the floor (height y) that a spot on the board is looking at."""
+    d = view.ray(np.asarray(sx, dtype=np.float64), np.asarray(sy, dtype=np.float64))
+    t = (y - view.eye[1]) / np.minimum(d[..., 1], -1e-6)
+    return view.eye + d * t[..., None]
+
+
+def wet_mirror(board, view, sources, wet, brush, smear=(18.0, 0.35), floor_ok=None, fresnel=(0.02, 5.0),
+               spread=0.004, blur=0.03, gain=1.0, k=2.2, rough=None, threads=3, thread=(0.25, 0.35)):
+    """What a wet floor gives back. sources: [(P, radiance)] lit points standing above the floor.
+
+    Each source is mirrored through the floor and painted where its mirror image lands. How bright
+    it comes back (Fresnel for water, times how wet the floor is there) goes into the colour, not
+    the opacity, so a hundred overlapping touches settle on the right value instead of piling up
+    to white. The higher the source stands above the floor the wider its image spreads, and each
+    touch is smeared toward the eye until the floor under it stops being wet, so a drying floor
+    breaks the image into pieces and a dry one gives nothing back. rough(F) scales the spread: a
+    standing puddle is a mirror, a mopped floor is not. The spread is laid as a few thin threads
+    side by side rather than one fat touch, because lino streaks along the line of sight.
+    """
+    rng = board.rng
+    n = 0
+    for P, rad in sources:
+        M = v3(P[0] + rng.normal(0, spread), -P[1], P[2] + rng.normal(0, spread))
+        sx, sy = view.P(M)
+        F = floor_at(view, sx, sy)
+        if F[2] <= 0.6 or (floor_ok is not None and not floor_ok(F)):
+            continue
+        w = wet(F)
+        if w <= 0.03:
+            continue
+        cos_i = view.eye[1] / np.linalg.norm(F - view.eye)
+        R = fresnel[0] + (1 - fresnel[0]) * (1 - cos_i) ** fresnel[1]
+        col = tone(np.asarray(rad) * R * w * gain, k)
+        if col.max() < 0.012:
+            continue
+        L = smear[0] * (1 + smear[1] * (sy - view.vy) / 100.0) * rng.uniform(0.6, 1.4)
+        y1 = sy + L
+        for yy in np.linspace(sy, sy + L, 7)[1:]:
+            if wet(floor_at(view, sx, yy)) < 0.35 * w:
+                y1 = yy
+                break
+        y0 = sy - L * 0.2
+        for yy in np.linspace(sy, sy - L * 0.2, 3)[1:]:
+            if wet(floor_at(view, sx, yy)) < 0.35 * w:
+                y0 = yy
+                break
+        if y1 - y0 < 3:
+            continue
+        bl = blur * P[1] * view.ppm(F[2]) * (rough(F) if rough is not None else 1.0)
+        for _ in range(threads):
+            x = sx + rng.normal(0, thread[1] * bl)
+            board.stroke([(x, y0), (x + rng.normal(0, 0.8), y1)], brush.but(width=brush.width + thread[0] * bl), col,
+                         smooth=False)
+            n += 1
+    return n
+
+
+class Hang:
+    """A cloth hanging from a straight edge: u runs along the edge, v falls from it (0 top, 1 hem).
+
+    top_a, top_b: the edge it hangs from. drop: length in metres. out: which way the face looks.
+    sag(u): extra drop of the hem; folds: [(u, depth, width)] where the cloth swings toward or away
+    from you as it falls.
+    """
+
+    def __init__(self, top_a, top_b, drop, out, sag=None, folds=(), lean=0.0):
+        self.a, self.b, self.drop = v3(*top_a), v3(*top_b), drop
+        self.out = v3(*out) / np.linalg.norm(out)
+        self.sag = sag or (lambda u: 0.0)
+        self.folds, self.lean = list(folds), lean
+
+    def at(self, u, v):
+        top = self.a + (self.b - self.a) * u
+        L = self.drop + self.sag(u)
+        off = 0.0
+        for fu, depth, w in self.folds:
+            off += depth * np.exp(-((u - fu) / w) ** 2) * min(1.0, v * 3)
+        return top + v3(0, -L * v, 0) + self.out * (off + self.lean * v * v)
+
+    def normal(self, u, v, e=1e-3):
+        du = self.at(min(u + e, 1), v) - self.at(max(u - e, 0), v)
+        dv = self.at(u, min(v + e, 1)) - self.at(u, max(v - e, 0))
+        n = np.cross(dv, du)
+        n /= np.linalg.norm(n) + 1e-12
+        return n if n @ self.out >= 0 else -n
+
+    def outline(self, view, n=24):
+        us = np.linspace(0, 1, n)
+        top = [self.at(u, 0) for u in us]
+        right = [self.at(1, v) for v in np.linspace(0, 1, n)]
+        hem = [self.at(u, 1) for u in us[::-1]]
+        left = [self.at(0, v) for v in np.linspace(1, 0, n)]
+        return view.P(np.array(top + right + hem + left))

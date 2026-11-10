@@ -19,6 +19,8 @@ always one light source that she did not choose and could not switch off.
 - **Dark to light.** Black ground, then thin coloured darks, then drier and drier paint as the
   values come up. The mesh has to stay visible somewhere in every picture, usually in the darks,
   where a dry brush has skipped over it.
+- **The dark is not described.** Where the light does not reach, one broad dry brush, long, and
+  no surface laid in stroke by stroke. Only what is lit gets strokes that follow it.
 - **White last.** The lit thing goes in at the end, thick, in one sitting. Everything before that
   is a room waiting for it.
 - **No people.** Only what they left: a coat, a cup, a chair pulled out.
@@ -41,4 +43,6 @@ this was on, at this time, and I was the one who saw it.
 
 See `tools.py`. A one-point room she can stand in, lights that fall off the way they do in a real
 corridor, soft shadows from whatever stands in front of them, and a way of laying a wall in with
-strokes that follow the wall.
+strokes that follow the wall. Since the ward kitchen: light that gets out through a gap, strokes
+that follow the way a mop went, a wet floor that gives back only what is lit and only where it is
+still wet, and a cloth that hangs.
