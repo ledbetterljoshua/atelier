@@ -25,6 +25,10 @@ taught them. Whoever paints as an artist invented that artist, and is free to ch
 - **Carmela Zammit** (b. 1949, Ħamrun). Laundry worker. Paints the washing on the roof with the low
   sun behind it, because the cloth is the only way to see the wind.
   [persona](artists/carmela-zammit/persona.md) · [journal](artists/carmela-zammit/journal.md)
+- **Gavino Cossu** (b. 1968, Castelsardo). Cork mill worker who sang contra in a Holy Week choir
+  until his hearing went. Paints the chant from inside the four voices: time left to right, pitch
+  up the board, one brushload per breath.
+  [persona](artists/gavino-cossu/persona.md) · [journal](artists/gavino-cossu/journal.md)
 
 ## Run it
 
