@@ -5,7 +5,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from engine import Board, Brush, ground, hexc, mix
 
-W, H = 1400, 1200
+W, H = 1400, 1500
 rng = np.random.default_rng(1)
 b = Board(W, H, hexc("#141210"), ground.hardboard_mesh(W, H, rng), seed=2)
 t0 = time.time()
@@ -51,6 +51,21 @@ b.dry()
 b.tape_where(lambda X, Y: ((X - 1030) / 220) ** 2 + ((Y - 1100) / 55) ** 2 < 1, feather=2)
 for i in range(6):
     b.stroke([(800, 1060 + i * 16), (1260, 1062 + i * 16)], Brush(width=40, level=1.0, opacity=0.8, pickup=0.0), mix((blue, 1), (white, 2)))
+b.untape()
+# 8 a flat brush held at one angle round a curve; pressure from a field; fading along a stroke
+import math
+b.stroke([(60 + 580 * u, 1260 + 80 * math.sin(u * 6.3)) for u in np.linspace(0, 1, 30)], Brush(width=50, angle=0.6), white)
+fld = np.zeros((H, W)); fld[:, :350] = 1.0; fld[:, 350:] = 0.25
+b.stroke([(60, 1380), (640, 1385)], Brush(width=40), yel, pressure=fld)
+b.stroke([(60, 1450), (640, 1455)], Brush(width=40), red, opacity=[1.0, 0.0])
+# 9 double-loaded brush whose two edges each run their own colours; a levelling glaze; one-sided feathers
+b.stroke([(720, 1250), (1340, 1260)], Brush(width=70, pickup=0.0), [blue, white], color2=[yel, red])
+b.dry()
+b.stroke([(720, 1340), (1340, 1345)], Brush(width=60, glaze=True, level=1.0, opacity=0.6), blue)
+b.tape([(720, 1400), (1000, 1400), (1000, 1480), (720, 1480)], feather=10, edge="in")
+b.stroke([(700, 1440), (1020, 1440)], Brush(width=120), white)
+b.tape([(1060, 1400), (1340, 1400), (1340, 1480), (1060, 1480)], feather=10, edge="out")
+b.stroke([(1040, 1440), (1360, 1440)], Brush(width=120), white)
 b.untape()
 print("strokes", b.n_strokes, "sec", round(time.time() - t0, 2))
 b.save(".scratch/swatch.png")

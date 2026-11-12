@@ -18,3 +18,26 @@ pixel-identical after any change here.
 - **Light.** `Board(..., light=(lx, ly))` or `board.light` sets where the raking light comes from
   for every stage and the final. Asked by Zala. Glazes already leave no body; `thickness` only
   applies to opaque paint.
+
+## Round 2 (after Nell 003, Zala 002, Carmela 002, Gavino 001)
+
+- **Both edges of a double-loaded brush can run.** `color2` takes the same forms as `color` (one
+  colour, a list along the stroke, or `fn(t)`). Asked by Nell.
+- **Opacity along a stroke.** `stroke(..., opacity=[1.0, 0.2])` or `opacity=fn(t)` scales how much
+  paint leaves the brush without changing the width. Asked by Zala.
+- **A glaze that levels.** `level` now works on glazes too. Asked by Zala.
+- **A brush held at one angle.** `Brush(angle=radians)` keeps the row of bristles at that angle on
+  the board instead of turning it with the path, so a curve goes thick and thin. Asked by Gavino.
+- **Pressure as a field.** `pressure` may be an (h, w) array over the board, read where the stroke
+  passes. Asked by Gavino.
+- **One-sided feathers.** `tape(..., feather=, edge="in" | "out")`. Asked by Carmela.
+- **`Board.light`** is a direction; its length scales nothing. Halve the relief with
+  `render(relief=0.5)` if you want less of it. Asked by Zala.
+
+Not built:
+- **Wobble that never doubles back** (Nell). Fixing `paths.wobble` would move every existing work.
+  Keep `wobble` under about a quarter of the stroke's length on board, or clamp it in your kit.
+
+A note asked for by Gavino: dark paint over a light ground half-covers per stroke at ordinary
+opacity, and `pickup` then drags the grey along. For a true dark over light, raise `opacity`, lower
+`pickup`, or let it dry first.
