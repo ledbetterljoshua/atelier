@@ -41,3 +41,16 @@ Not built:
 A note asked for by Gavino: dark paint over a light ground half-covers per stroke at ordinary
 opacity, and `pickup` then drags the grey along. For a true dark over light, raise `opacity`, lower
 `pickup`, or let it dry first.
+
+## Round 3 (after Nell 004, Zala 003, Carmela 003, Gavino 002, Itzel 001)
+
+- **A stroke from off the board arrives loaded.** Set `board.dries_off_board = False` and bristles
+  stop losing paint on steps off the edge. The default stays `True` so earlier works keep their
+  look; new works should set it. Asked by Carmela and Itzel.
+- **Dryness along a stroke.** `stroke(..., dryness=[0.9, 0.0])` or `dryness=fn(t)` replaces the
+  brush's dryness as the stroke goes, so a stroke can start scratchy and fill in. Asked by Gavino.
+- **An even film.** `Brush(loadvar=0.0, jitter=0.0, gap=0.0)` loads every bristle alike, for wide
+  glazes without bristle streaks in the colour. Asked by Zala. Relief between bristles still shows
+  under the raking light; see the next item.
+- **Softer relief.** `board.relief_soft` (default 0.7 px) is how much the paint's height is softened
+  before it is lit. Raise it to 2 or 3 and stroke edges stop drawing rims. Asked by Nell.

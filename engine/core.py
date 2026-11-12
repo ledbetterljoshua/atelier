@@ -24,7 +24,7 @@ PAINT, GLAZE = 0, 1
 
 @njit(cache=True, fastmath=True)
 def _walk(col, hgt, wet, flat, tooth, mask, use_mask, px, py, pw, pp, pcol, pcol2, bu, boff, bph, bfr,
-          wander, blog, bload, brad, mode, a0, pickup, deplete, dryness, soft, thickness, hard, level,
+          wander, blog, bload, brad, mode, a0, pickup, deplete, pdry, soft, thickness, hard, level, offdry,
           fixang, fnx, fny):
     H, W = hgt.shape
     n = px.shape[0]
@@ -59,7 +59,8 @@ def _walk(col, hgt, wet, flat, tooth, mask, use_mask, px, py, pw, pp, pcol, pcol
             ix = int(cx)
             iy = int(cy)
             if ix < 0 or iy < 0 or ix >= W or iy >= H:
-                bload[b] = ld * (1.0 - deplete)
+                if offdry:
+                    bload[b] = ld * (1.0 - deplete)
                 continue
             if pickup > 0.0 and mode == 0:
                 # feel for wet paint just ahead of the bristle, where this stroke has not been yet
@@ -88,6 +89,7 @@ def _walk(col, hgt, wet, flat, tooth, mask, use_mask, px, py, pw, pp, pcol, pcol
                 x1 = W - 1
             if y1 > H - 1:
                 y1 = H - 1
+            dryness = pdry[i]
             thr = dryness * (1.0 - 0.7 * ld * pr)
             for y in range(y0, y1 + 1):
                 dy = y + 0.5 - cy
@@ -159,6 +161,7 @@ class Brush:
     deplete: float = 0.0015    # fraction lost per step; higher runs dry sooner
     pickup: float = 0.25       # how readily bristles take up wet paint underneath
     dryness: float = 0.0       # 0 floods the tooth; 1 only kisses the high spots
+    loadvar: float = 0.18      # how unevenly the bristles are loaded; 0 lays an even film
     soft: float = 0.18         # width of the tooth threshold
     thickness: float = 1.0     # body left on the surface (reads as relief under raking light)
     jitter: float = 0.05       # colour variation between bristles (log units)
@@ -187,6 +190,10 @@ class Board:
         self.wet = np.zeros((h, w), dtype=np.float32)
         self.flat = np.zeros((h, w), dtype=np.float32)
         self.light = light   # direction the raking light comes from, for every look at the board
+        self.relief_soft = 0.7   # px: how much the paint's relief is softened before it is lit;
+                                 # raise it and stroke edges stop drawing rims
+        self.dries_off_board = True  # bristles lose paint on every step off the board; set False
+                                     # so a stroke started off the edge arrives fully loaded
         self.tooth = np.ascontiguousarray(tooth, dtype=np.float32)
         self.mask = np.ones((h, w), dtype=np.float32)
         self.use_mask = False
@@ -249,14 +256,15 @@ class Board:
 
     # --- the stroke ---------------------------------------------------------
     def stroke(self, pts, brush, color, color2=None, pressure=1.0, wobble=0.0, smooth=True,
-               opacity=None):
+               opacity=None, dryness=None):
         """color (and color2, the colour on the far edge of a double-loaded brush) is one colour, a
         list of colours spread evenly along the stroke, or fn(t) -> colour for t from 0 at the start
         to 1 at the end. Bristles keep their own streaks either way.
 
         pressure is a number, fn(t), or an (h, w) field over the board read where the stroke
         passes. opacity is None, a list of values spread along the stroke, or fn(t); it scales how
-        much paint leaves the brush without changing the stroke's width."""
+        much paint leaves the brush without changing the stroke's width. dryness, in the same
+        forms, replaces the brush's dryness along the stroke."""
         pts = np.asarray(pts, dtype=np.float64)
         if smooth and len(pts) > 2:
             pts = paths.chaikin(pts, 4)
@@ -290,6 +298,12 @@ class Board:
             else:
                 op = np.interp(t, np.linspace(0.0, 1.0, len(opacity)), np.asarray(opacity, dtype=np.float64))
             pp = pp * np.clip(op, 0.0, 1.0)
+        if dryness is None:
+            pdry = np.full(n, float(brush.dryness))
+        elif callable(dryness):
+            pdry = np.asarray([dryness(x) for x in t], dtype=np.float64)
+        else:
+            pdry = np.interp(t, np.linspace(0.0, 1.0, len(dryness)), np.asarray(dryness, dtype=np.float64))
         pw = brush.width * (0.45 + 0.55 * env) * (0.8 + 0.2 * np.clip(pres, 0, 1.2))
 
         B = max(2, int(brush.width / (brush.bristle * 0.7)))
@@ -309,7 +323,7 @@ class Board:
             blog = np.tile(c1, (B, 1))
         blog = blog + (streak * brush.jitter)[:, None] + rng.normal(0, brush.jitter * 0.4, (B, 3))
         blog = np.minimum(blog, 0.0)
-        bload = brush.load * np.exp(rng.normal(0, 0.18, B))
+        bload = brush.load * np.exp(rng.normal(0, brush.loadvar, B))
         starved = rng.random(B) < brush.gap
         bload[starved] *= rng.random(starved.sum()) * 0.35
         hits = 5.0
@@ -320,8 +334,8 @@ class Board:
               np.ascontiguousarray(pcol2), np.ascontiguousarray(bu), np.ascontiguousarray(boff), rng.uniform(0, 6.283, B), rng.uniform(0.01, 0.05, B) * spacing,
               float(brush.wander), np.ascontiguousarray(blog), np.ascontiguousarray(bload),
               float(brush.bristle), GLAZE if brush.glaze else PAINT, a0, float(brush.pickup),
-              float(brush.deplete), float(brush.dryness), float(brush.soft),
-              float(brush.thickness), bool(brush.hard), float(brush.level),
+              float(brush.deplete), np.ascontiguousarray(pdry), float(brush.soft),
+              float(brush.thickness), bool(brush.hard), float(brush.level), bool(self.dries_off_board),
               brush.angle is not None, float(np.cos((brush.angle or 0.0) + np.pi / 2)),
               float(np.sin((brush.angle or 0.0) + np.pi / 2)))
         self.n_strokes += 1
@@ -344,7 +358,7 @@ class Board:
 
     # --- looking at it ------------------------------------------------------
     def render(self, relief=1.0, raking=None, tooth_relief=0.25):
-        h = gaussian_filter(self.hgt, 0.7)
+        h = gaussian_filter(self.hgt, self.relief_soft)
         h = np.log1p(h) * 1.6 * relief + self.tooth * tooth_relief / (1.0 + self.hgt)
         gy, gx = np.gradient(h)
         lx, ly = self.light if raking is None else raking

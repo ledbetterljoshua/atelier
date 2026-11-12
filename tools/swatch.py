@@ -5,7 +5,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from engine import Board, Brush, ground, hexc, mix
 
-W, H = 1400, 1500
+W, H = 1400, 1700
 rng = np.random.default_rng(1)
 b = Board(W, H, hexc("#141210"), ground.hardboard_mesh(W, H, rng), seed=2)
 t0 = time.time()
@@ -67,6 +67,13 @@ b.stroke([(700, 1440), (1020, 1440)], Brush(width=120), white)
 b.tape([(1060, 1400), (1340, 1400), (1340, 1480), (1060, 1480)], feather=10, edge="out")
 b.stroke([(1040, 1440), (1360, 1440)], Brush(width=120), white)
 b.untape()
+# 10 dryness along a stroke; an even film; a stroke from off the board, with and without the edge wiping it
+b.stroke([(60, 1540), (640, 1545)], Brush(width=46, opacity=0.9), white, dryness=[0.9, 0.0])
+b.stroke([(720, 1540), (1340, 1545)], Brush(width=60, loadvar=0.0, jitter=0.0, gap=0.0), mix((blue, 1), (white, 1)))
+b.stroke([(-400, 1620), (640, 1625)], Brush(width=34), yel)
+b.dries_off_board = False
+b.stroke([(-400, 1670), (640, 1675)], Brush(width=34), yel)
+b.dries_off_board = True
 print("strokes", b.n_strokes, "sec", round(time.time() - t0, 2))
 b.save(".scratch/swatch.png")
 b.light = (0.7, -0.6)
