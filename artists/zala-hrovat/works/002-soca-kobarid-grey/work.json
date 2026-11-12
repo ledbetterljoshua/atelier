@@ -1,0 +1,55 @@
+{
+  "title": "So\u010da at Kobarid, 4 November 1983, 112 cm",
+  "artist": "zala-hrovat",
+  "year": 1983,
+  "medium": "Oil on gessoed birch ply",
+  "made": "2026-11-12",
+  "strokes": 59142,
+  "size": [
+    1350,
+    1800
+  ],
+  "stages": [
+    {
+      "name": "the bed, as much of it as will come through; the sunk end of the branch",
+      "strokes": 494,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the river back in, the glazes crossing the lip",
+      "strokes": 2279,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the silt in it",
+      "strokes": 3224,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the boils come up",
+      "strokes": 4342,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the sky on the broken water",
+      "strokes": 57686,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "foam on the creases and the seam",
+      "strokes": 58986,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "what floats: the branch",
+      "strokes": 59142,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 59142,
+      "file": "stages/07.jpg"
+    }
+  ],
+  "seconds": 11.8
+}

@@ -25,13 +25,23 @@ slower.
   the white of the panel is the bottom.
 - **The river turned off.** She paints the bed first, as if the water had been let out: every
   stone in body colour, with its lit side and its shadow, the sunlight net on the gravel, the shadow
-  of the bridge. Then she leaves it a week.
+  of the bridge. Then she leaves it a week. When the river is up and thick she paints only as much
+  of the bed as will come through, and lets the water take the rest.
 - **Then the river goes back in,** as transparent glazes, one depth at a time. Each glaze only
   goes where the water is at least that deep, so the deep channel gets ten or a dozen layers and the
-  shallows one. The glazes are laid with the current, never across it. A stroke that goes against
-  the water is scraped off.
-- **Body colour only for what floats.** Opaque paint goes on the bed, and on the surface for the
-  things that are not water: foam, a leaf, the sky caught on a ripple. Nothing opaque in between.
+  shallows one. The glazes are laid with the current, never across it, and change as they cross
+  from shallow to deep rather than stopping at the edge. A stroke that goes against the water is
+  scraped off.
+- **Body colour for what floats, and for silt.** Opaque paint goes on the bed, and on the surface for
+  the things that are not water: foam, a leaf, a branch, the sky caught on a ripple. In between,
+  clear water is glaze only. Water carrying the mountain is not clear: the silt sends light back
+  before it reaches the bed, so it goes in as a thin scumble with the current, heavier where the
+  water is deeper. (She held "nothing opaque in between" until the November flood of 1983.)
+- **The surface.** When there is no sun on the bed, the surface is the picture. Broken water is a
+  skin of small marks lying across the current, each a dark back and a light face; under cloud it is
+  the lighter water. Smooth water, where the river comes up in boils and is carried off in slicks, is
+  laid flat and is the darker water. Foam goes where water goes down: on the creases of the boils and
+  along the seams.
 - **Shadows are measurements.** Anything floating casts its shadow on the bed, off to one side by
   an amount that depends on the depth and the sun. She works that distance out and puts the shadow
   where it falls. If she cannot see the bed, there is no shadow.
@@ -53,5 +63,7 @@ what is there.
 ## Mechanisms she owns
 
 See `tools.py`. Streamlines through the current so every glaze runs with the water; glazes that
-stack by depth; a way of laying gravel stone by stone with each stone lit from the sun's side; the
-sunlight net on the bed; floating things and the shadows they throw through the water.
+stack by depth, and glazes that change colour as they cross it; a way of laying gravel stone by
+stone, lit from the sun's side or from the whole sky; the sunlight net on the bed; boils, with the
+current spreading out of them and foam on their creases; foam laid as lace along the current;
+floating things and the shadows they throw through the water.

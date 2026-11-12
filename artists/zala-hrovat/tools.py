@@ -249,3 +249,114 @@ def poly_mask(W, H, poly):
     im = Image.new("L", (W, H), 0)
     ImageDraw.Draw(im).polygon([tuple(map(float, q)) for q in poly], fill=255)
     return np.asarray(im, dtype=np.float64) / 255.0
+
+
+# --- a river with its surface on (added for 002) -----------------------------------------------
+
+def colors_along(pts, fn, every=3):
+    """The colour a stroke should have at each place it passes, for a stroke whose colour changes
+    along its length. fn(x, y) -> colour. Sampled every few points; the engine spreads them evenly."""
+    pts = np.asarray(pts)
+    idx = list(range(0, len(pts), every))
+    if idx[-1] != len(pts) - 1:
+        idx.append(len(pts) - 1)
+    return np.array([fn(*pts[i]) for i in idx])
+
+
+def glaze_through(board, vel, seeds, brush, color_at, length, wobble=0.8, width_jit=(0.7, 1.25)):
+    """Glazes that run with the current right across changes of depth, mixed for each place they
+    cross instead of stopping where the bed comes up. color_at(x, y) -> glaze colour there."""
+    rng = board.rng
+    n = 0
+    for x, y in seeds:
+        pts = streamline(vel, x, y, length * rng.uniform(0.6, 1.3), step=max(2.0, brush.width * 0.25))
+        if len(pts) < 4:
+            continue
+        board.stroke(pts, brush.but(width=brush.width * rng.uniform(*width_jit)), colors_along(pts, color_at),
+                     wobble=wobble)
+        n += 1
+    return n
+
+
+class Boils:
+    """Water coming up from the bed in domes: each spreads out from its centre and is smooth on top,
+    and where it meets the river round it there is a crease that gathers foam. (x, y, radius, push)."""
+
+    def __init__(self, boils):
+        self.b = [tuple(map(float, q)) for q in boils]
+
+    def flow(self, vel):
+        def v(x, y):
+            vx, vy = vel(x, y)
+            for cx, cy, r, push in self.b:
+                dx, dy = x - cx, y - cy
+                d = np.hypot(dx, dy) + 1e-6
+                k = push * np.where(d < r, d / r, np.exp(-((d - r) / (0.45 * r)) ** 2))
+                vx = vx + k * dx / d
+                vy = vy + k * dy / d
+            return vx, vy
+        return v
+
+    def reach(self, i, X, Y):
+        """Distance from boil i's centre in units of its edge, which is never a true circle: it
+        bulges where it has pushed further and is drawn out a little downstream."""
+        cx, cy, r, _ = self.b[i]
+        dx, dy = X - cx, Y - cy
+        th = np.arctan2(dy, dx)
+        edge = r * (1.0 + 0.10 * np.sin(3 * th + 1.7 * i) + 0.06 * np.sin(5 * th + 0.9 * i + 2.0)
+                    + 0.12 * np.clip(np.sin(th), 0, 1) ** 2)
+        return np.hypot(dx, dy) / edge
+
+    def inside(self, X, Y, soft=0.08):
+        """0..1, how far inside the smooth top of a boil."""
+        m = np.zeros(np.shape(X))
+        for i in range(len(self.b)):
+            m = np.maximum(m, 1.0 - smoothstep(1.0 - soft * 2, 1.0, self.reach(i, X, Y)))
+        return m
+
+    def rim(self, X, Y, w=0.07):
+        m = np.zeros(np.shape(X))
+        for i in range(len(self.b)):
+            m = np.maximum(m, np.exp(-((self.reach(i, X, Y) - 1.0) / w) ** 2))
+        return m
+
+    def edge_at(self, i, th):
+        """Points on boil i's edge at angles th."""
+        cx, cy, r, _ = self.b[i]
+        e = r * (1.0 + 0.10 * np.sin(3 * th + 1.7 * i) + 0.06 * np.sin(5 * th + 0.9 * i + 2.0)
+                 + 0.12 * np.clip(np.sin(th), 0, 1) ** 2)
+        return np.column_stack([cx + e * np.cos(th), cy + e * np.sin(th)])
+
+
+def stone_under_cloud(board, x, y, r, ang, elong, lit, dark, brush):
+    """A stone with the light from the whole sky: lit on top, dark all round where it meets the bed."""
+    L = 2 * r * elong
+    board.dab(x, y, brush.but(width=2 * r * 1.08, taper=(0.28, 0.28)), dark, angle=ang, length=L * 1.04)
+    board.dab(x, y, brush.but(width=1.5 * r, taper=(0.3, 0.32), opacity=0.85), lit, angle=ang, length=L * 0.74)
+
+
+def foam_lace(board, pts, brush, color_fn, rng, width=6.0, strands=3, every=(2, 6), size=(1.3, 3.4)):
+    """A foam line as it really lies on a fast river: a few strands of beads along the current that
+    wander apart and come back together, wider and thinner by turns."""
+    pts = np.asarray(pts)
+    if len(pts) < 3:
+        return 0
+    d = np.gradient(pts, axis=0)
+    nrm = np.column_stack([-d[:, 1], d[:, 0]])
+    nrm /= np.linalg.norm(nrm, axis=1, keepdims=True) + 1e-9
+    s = np.arange(len(pts))
+    n = 0
+    for j in range(strands):
+        ph, f = rng.uniform(0, 6.3), rng.uniform(0.04, 0.12)
+        w = width * (0.5 + 0.5 * np.sin(s * rng.uniform(0.02, 0.05) + rng.uniform(0, 6.3))) + 0.6
+        off = np.sin(s * f + ph) * w * rng.uniform(0.4, 1.0)
+        line = pts + nrm * off[:, None]
+        k = int(rng.integers(0, 4))
+        while k < len(line):
+            if rng.random() < 0.85:
+                q = line[k] + rng.normal(0, 0.8, 2)
+                board.dab(q[0], q[1], brush.but(width=rng.uniform(*size)), color_fn(q[0], q[1]),
+                          length=rng.uniform(1.5, 5.0))
+                n += 1
+            k += int(rng.integers(*every))
+    return n
