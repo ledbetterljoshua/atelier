@@ -499,3 +499,75 @@ def sweep(board, view, edge0, edge1, n, brush, shade, along=6, overlap=1.7, wobb
         board.stroke(ends, brush.but(width=w), [shade(q) for q in qs], wobble=wobble)
         out += 1
     return out
+
+
+# --- added for 004: standing over a machine and looking down into it ----------------------------
+
+class Over(View):
+    """A view tipped down by pitch (radians): standing over something, looking down at it.
+
+    Same as View with pitch 0, except depth is measured along the line of sight, so ppm() takes a
+    point in the room rather than a depth."""
+
+    def __init__(self, W, H, f, vx, vy, eye, pitch):
+        super().__init__(W, H, f, vx, vy, eye)
+        c, s = np.cos(pitch), np.sin(pitch)
+        self.fw, self.up, self.rt = v3(0, -s, c), v3(0, c, s), v3(1, 0, 0)
+
+    def depth(self, p):
+        return (np.asarray(p, dtype=np.float64) - self.eye) @ self.fw
+
+    def P(self, p):
+        d = np.asarray(p, dtype=np.float64) - self.eye
+        z = np.maximum(d @ self.fw, 1e-3)
+        return np.stack([self.vx + self.f * (d @ self.rt) / z, self.vy - self.f * (d @ self.up) / z], axis=-1)
+
+    def ppm(self, p):
+        return self.f / max(float(self.depth(p)), 1e-3)
+
+    def ray(self, sx, sy):
+        a = (np.asarray(sx, dtype=np.float64) - self.vx) / self.f
+        b = -(np.asarray(sy, dtype=np.float64) - self.vy) / self.f
+        return a[..., None] * self.rt + b[..., None] * self.up + np.ones_like(a)[..., None] * self.fw
+
+
+def scrub(board, region, brush, shade, n, length=(260, 600), angle=(0.0, np.pi), along=5, feather=2.0, wobble=0.0):
+    """The dark, left as the board. A few long strokes dragged dry across a region at whatever angle
+    the arm falls, each mixed along its length from shade(x, y) on the board, so they cross each
+    other instead of lining up into cloth. region is a polygon on the board or None for all of it."""
+    rng = board.rng
+    if region is not None:
+        board.tape(region, feather=feather)
+        x0, y0 = np.min(region, 0)
+        x1, y1 = np.max(region, 0)
+    else:
+        x0, y0, x1, y1 = 0, 0, board.w, board.h
+    for _ in range(n):
+        cx, cy = rng.uniform(x0, x1), rng.uniform(y0, y1)
+        a = rng.uniform(*angle)
+        L = rng.uniform(*length)
+        d = np.array([np.cos(a), np.sin(a)]) * L / 2
+        pts = np.array([(cx, cy) - d, (cx, cy) + d])
+        cols = [shade(*(pts[0] + (pts[1] - pts[0]) * t)) for t in np.linspace(0, 1, along)]
+        board.stroke(pts, brush, cols, wobble=wobble)
+    if region is not None:
+        board.untape()
+
+
+def radiate(board, view, plane, origin, brush, shade, n, reach=1.6, along=8, wobble=0.0, spread=(0.0, np.pi), r0=(0.0, 0.5)):
+    """Strokes that run away from where the light comes from: each starts at a random distance from
+    origin (u, v on the plane) and runs out past the plane's edge, where the tape stops it, mixed
+    along its length. On a surface with no grain of its own the light is the only thing to follow.
+    spread: the range of directions in the plane's (u, v), in radians."""
+    rng = board.rng
+    ou, ov = origin
+    k = np.sqrt(plane.uu / plane.vv)            # so a direction in (u, v) is a direction in the room
+    for _ in range(n):
+        a = rng.uniform(*spread)
+        r = rng.uniform(*r0)
+        du, dv = np.cos(a), np.sin(a) * k
+        m = np.hypot(du * np.sqrt(plane.uu), dv * np.sqrt(plane.vv)) / np.sqrt(plane.uu)
+        du, dv = du / m, dv / m
+        qs = [plane.at(ou + du * s, ov + dv * s) for s in np.linspace(r, reach, along)]
+        board.stroke(view.P(np.array([qs[0], qs[-1]])), brush, [shade(q) for q in qs], wobble=wobble)
+    return n

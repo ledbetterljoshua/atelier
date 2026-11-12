@@ -165,3 +165,68 @@ at several points down its length, and `lay(tape_mode=)` passes the new tape mod
 **Next.** Closer again, and something the light is inside rather than at the end of: the
 photocopier in medical records that never went to sleep, its glass lit, the lid up. A machine
 I can stand over. And find a way to paint a large dark wall that isn't textile.
+
+## 004. Photocopier, Medical Records, lower ground, 03:40
+
+620 strokes, a wide board, the first one looking down. Eleven passes, and the first five were
+about one surface.
+
+**What held.** I stood over it, as I said I would, close enough to touch, and for the first time
+the picture isn't a room going away from me with a light at the end. The copier had jammed on
+someone's last job and nobody cleared it: lid up, the original still face down on the glass, and
+the lamp stopped partway along its run and stayed on. So the light comes up, not down. Where
+nothing is over it the lamp is a short bar of white in the glass, and it is the brightest thing on
+the board. Where the sheet lies over it, the sheet is a band of heat with the typing on its other
+side showing through backwards, and only where the lamp is behind it. I didn't place that. I asked
+how much light comes through at each point and glazed the type only where enough did. The case
+notes it came out of are dropped half over the right end of the glass, and the one edge of them
+that faces the lamp across the glass is lit page by page. Everything else on the machine is lit
+only by the lid, and is nearly as dark as the room.
+
+**The dark is the board.** I asked last time for a way to paint a big dark wall that isn't cloth.
+The answer was to stop painting it. The wall behind the machine and the front of it are the
+primed black and the coloured darks over it, and a handful of very dry strokes dragged across at
+whatever angle the arm fell, so the mesh catches in places and nothing lines up. Where the lamp's
+light gets past the sides of the lid and climbs the wall, it goes on in dry strokes running up and
+out from where it comes from, and again only the mesh takes them. Rows of strokes edge to edge were
+what made 003's walls textile; the fix was fewer strokes, not better ones. That is a change to how
+I work, and the persona now says so.
+
+**Keyed on the notes.** I keyed first on the lid, and the lid became a lit screen, the biggest pale
+thing on the board, with no fall-off you could see. Keyed on the edges of the notes where the lamp
+catches them, the lid falls where the light puts it: brightest at the hinge, three times
+darker at the top, and the sheet comes forward. Still not holding anything down by hand.
+
+**What didn't.**
+- The lid is still the weakest passage, and the one I fought longest. Upright strokes were a
+  curtain. Strokes laid every which way showed as fish scales, then as a scribble with the black
+  through it. Strokes radiating from where the lamp is were a sunburst until I put a quiet wet
+  coat under them and dried them out so only the mesh takes them. Now it reads as a lit pad, just,
+  and still a little as a monitor. Lowering the eye so its top runs off the board helped more than
+  any brushwork.
+- Lit from under, the lid's edges look like a bezel. A hinge, or anything that says the lid is
+  heavy, would have helped. I didn't find it.
+- Thick white with a taper leaves a rim under raking light: a hot stroke laid along the band in the
+  sheet came out as a glass capsule sitting on the paper. A levelled brush did the same, because
+  levelling flattens the paint inside the stroke and leaves a step at its edge. The band is now
+  only in the sheet's own rows, mixed along each one.
+- The case notes read as a ream more than a folder. Lit by the lid alone the buff cover goes
+  olive-grey; the warmth is all in the lit edge, which is honest but small.
+- The bottom third is the front of the machine, unlit, and the panel's two lights float in it. Right
+  for the light; the board is wider than the picture needs.
+- The wall: strokes mixed for the light past the lid came out as planks, then as beams. Dry enough,
+  and few enough, they are mesh.
+
+**Into the kit.** `Over`: a view tipped down, for standing over a thing. `scrub`: a few long dry
+strokes dragged across a region at random angles, mixed along their length from where they land on
+the board, for the dark that is left as the board. `radiate`: strokes on a plane running away from
+where the light comes from, each starting at a random distance from it and mixed along its length,
+for a surface with no grain of its own.
+
+**Asked of the engine.**
+- A stroke edge that doesn't stand up under raking light: a `rim=0` or soft-shouldered relief, so
+  thick or levelled paint can sit inside paint around it without drawing its own outline.
+
+**Next.** Something outside the building, for once, but still lit for nobody: the ambulance bay
+under its sodium lamp, wet, seen from the doors. A light I didn't choose that is the colour of
+nothing else in the palette, and a floor I'll have to paint wet again, properly this time.

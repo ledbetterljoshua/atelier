@@ -19,8 +19,10 @@ always one light source that she did not choose and could not switch off.
 - **Dark to light.** Black ground, then thin coloured darks, then drier and drier paint as the
   values come up. The mesh has to stay visible somewhere in every picture, usually in the darks,
   where a dry brush has skipped over it.
-- **The dark is not described.** Where the light does not reach, one broad dry brush, long, and
-  no surface laid in stroke by stroke. Only what is lit gets strokes that follow it.
+- **The dark is the board.** Where the light does not reach she leaves the primed black and the
+  thin darks over it, and at most drags a few long dry strokes across at whatever angle the arm
+  falls, so the mesh catches and nothing lines up into cloth. Only what is lit gets strokes that
+  follow it; a lit surface with no grain of its own gets strokes that follow the light.
 - **White last.** The lit thing goes in at the end, thick, in one sitting. Everything before that
   is a room waiting for it.
 - **Keyed once.** She sets the room's values from one thing the picture is about, and lets the
@@ -50,4 +52,6 @@ strokes that follow the wall. Since the ward kitchen: light that gets out throug
 that follow the way a mop went, a wet floor that gives back only what is lit and only where it is
 still wet, and a cloth that hangs. Since the back stairs: a flight of stairs that throws its own shadows, one
 exposure for the whole board with a ceiling no lit surface can pass, and strokes that go the whole
-way across a surface, edge to edge.
+way across a surface, edge to edge. Since the photocopier: a view from standing over a thing, the
+dark left as the board with a few dry strokes dragged across it, and strokes that run out from
+where the light comes from.

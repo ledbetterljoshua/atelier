@@ -1,0 +1,55 @@
+{
+  "title": "Photocopier, Medical Records, lower ground, 03:40",
+  "artist": "nell-abara",
+  "year": 2009,
+  "medium": "Oil on hardboard, rough side",
+  "made": "2026-11-12",
+  "strokes": 620,
+  "size": [
+    1400,
+    900
+  ],
+  "stages": [
+    {
+      "name": "coloured darks over black",
+      "strokes": 70,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the dark, left as the board",
+      "strokes": 130,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the top of the machine",
+      "strokes": 148,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the lid, lit from under",
+      "strokes": 337,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the case notes, and the panel",
+      "strokes": 408,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the glass, and what was left on it",
+      "strokes": 610,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "white last: the lamp under the glass",
+      "strokes": 620,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 620,
+      "file": "stages/07.jpg"
+    }
+  ],
+  "seconds": 5.8
+}
