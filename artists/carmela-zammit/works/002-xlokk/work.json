@@ -1,0 +1,60 @@
+{
+  "title": "Xlokk, nothing dries",
+  "artist": "carmela-zammit",
+  "year": 1987,
+  "medium": "Oil on cotton sheeting, red oxide ground",
+  "made": "2026-11-12",
+  "strokes": 34023,
+  "size": [
+    1800,
+    1200
+  ],
+  "stages": [
+    {
+      "name": "the sky, thin, over the red",
+      "strokes": 302,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "Qormi, into the wet sky",
+      "strokes": 527,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the roof and its walls",
+      "strokes": 25586,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the post at the end, and the far line",
+      "strokes": 28013,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "near line, laid in where the cloth is",
+      "strokes": 28674,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the folds, from the pegs down",
+      "strokes": 32922,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "hems, wire and pegs",
+      "strokes": 33350,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "the basket, what is already in",
+      "strokes": 34023,
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 34023,
+      "file": "stages/08.jpg"
+    }
+  ],
+  "seconds": 14.7
+}

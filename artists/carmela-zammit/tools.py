@@ -179,6 +179,55 @@ class Sheet:
         return None
 
 
+class Hang(Sheet):
+    """Washing with no wind in it, heavy with damp: it drops straight from the pegs, swags between
+    them at the top, and the swags run down into folds that hang to the hem.
+
+    folds is how deep the folds stand (metres), give is how far the wind still moves it."""
+
+    def __init__(self, line, s0, width, length, pegs=3, folds=0.05, give=0.02, sag=0.05, droop=0.03,
+                 band=0.0, seed=0):
+        super().__init__(line, s0, width, length, pegs=pegs, belly=give, lift=0.0, flare=0.0,
+                         ripple=0.0, sag=sag, band=band, seed=seed)
+        r = np.random.default_rng(seed + 1000)
+        span = max(pegs - 1, 1)
+        # a fold per swag, and finer ones between, at frequencies tied to where the pegs are
+        self.fk = np.array([span, 2 * span + r.uniform(-0.4, 0.4), 3.3 * span + r.uniform(-0.6, 0.6),
+                            r.uniform(3.5, 5.0) * width])
+        self.fa = folds * np.array([1.0, 0.5, 0.22, 0.07]) * r.uniform(0.8, 1.2, 4)   # wet cloth: few, deep
+        self.fp = r.uniform(0, 2 * np.pi, 4)
+        self.fp[0] = np.pi                       # the deepest fold hangs from the middle of each swag
+        self.fd = r.normal(0, 0.06, 4)           # folds drift a little sideways as they go down
+        self.droop = droop
+
+    def crease(self, u, v):
+        """How far the cloth stands out of its own mean surface here: + toward her, - into a fold."""
+        u, v = np.broadcast_arrays(np.asarray(u, dtype=np.float64), np.asarray(v, dtype=np.float64))
+        w = np.clip(v, 0.0, 1.1)
+        env = 0.35 + 0.65 * np.clip(w / 0.35, 0, 1) ** 0.7
+        f = np.zeros_like(u)
+        for k, a, p, d in zip(self.fk, self.fa, self.fp, self.fd):
+            f += a * np.cos(2 * np.pi * k * (u + d * w) + p)
+        return f * env * (1 - (1 - np.sin(np.pi * np.clip(u, 0, 1))) ** 4)   # eases off at the sides
+
+    def pos(self, u, v):
+        u = np.asarray(u, dtype=np.float64)
+        v = np.asarray(v, dtype=np.float64)
+        u, v = np.broadcast_arrays(u, v)
+        Ln, ph = self.length, self.ph
+        w = np.clip(v, 0.0, 1.1)
+        k = (u * (self.pegs - 1)) % 1.0 if self.pegs > 1 else u
+        f = self.crease(u, v)
+        # the sides come in a little as it hangs
+        a = self.s0 + u * self.width - 0.012 * w * (u - 0.5) + 0.01 * np.sin(2 * np.pi * 1.3 * u + ph[3]) * w ** 2
+        base = self.line.at(np.clip(a, -2, self.line.span + 2))
+        swag = self.sag * np.sin(np.pi * k) * np.clip(1 - w, 0, 1) ** 1.6
+        drop = swag + v * Ln + self.droop * w ** 3 * np.sin(2 * np.pi * (1.4 * u) + ph[2])
+        out = self.belly * w * np.sin(np.pi * np.clip(u, 0, 1)) ** 0.8 + f
+        n = self.line.n
+        return np.stack([base[..., 0] + n[0] * out, base[..., 1] - drop, base[..., 2] + n[1] * out], axis=-1)
+
+
 # --- paint for where it lands ---------------------------------------------------------------------
 
 def tone(c, k=2.0):
@@ -187,9 +236,10 @@ def tone(c, k=2.0):
 
 
 def lay_cloth(board, cam, sheet, brush, shade, along="v", length=90.0, cover=2.0, wobble=1.0,
-              where=None, tape=True, feather=1.0, margin=0.02, color2=None, width_fn=None):
+              where=None, tape=True, feather=1.0, margin=0.02, color2=None, width_fn=None, run=False):
     """Strokes that follow the cloth: down from the pegs (along v) or round the belly (along u).
-    shade(u, v) mixes the colour for where each stroke lands."""
+    shade(u, v) mixes the colour for where each stroke lands. With run, shade gets the stroke's
+    points as arrays and returns a colour for each, so one stroke goes from fold into light."""
     rng = board.rng
     poly = sheet.outline(cam)
     if tape:
@@ -221,7 +271,9 @@ def lay_cloth(board, cam, sheet, brush, shade, along="v", length=90.0, cover=2.0
         pts = cam.P(sheet.pos(uu, vv))
         if rng.random() < 0.5:
             pts = pts[::-1]
-        c = shade(u0, v0)
+            if run:
+                uu, vv = uu[::-1], vv[::-1]
+        c = shade(uu, vv) if run else shade(u0, v0)
         br = brush if width_fn is None else brush.but(width=width_fn(u0, v0))
         board.stroke(pts, br, c, color2=None if color2 is None else color2(u0, v0), wobble=wobble)
         count += 1

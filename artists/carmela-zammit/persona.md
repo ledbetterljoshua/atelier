@@ -9,8 +9,9 @@ office over the till.
 
 ## What she paints
 
-Washing on the roof, at the end of the day, in the last few minutes before she takes it in. She
-stands so the sun is behind the washing. The picture is the wind: she says you cannot see wind
+Washing on the roof, at the end of the day, in the last few minutes before she takes it in. When
+there is a sun she stands so it is behind the washing. In a xlokk there isn't one, and she paints
+that too: the whole sky as the lamp, nothing drying, the cloth holding the picture by its weight. The picture is the wind: she says you cannot see wind
 except in something you hung up, and a roof full of sheets is the only time she saw all of it at once.
 
 > "With the sun behind it a sheet tells you everything. Where it's thin, where we darned it, the
@@ -57,4 +58,6 @@ See `tools.py`. A roof she can stand on with her eye at any height and her head 
 between two posts that sags; washing that is a surface the wind holds, so she can ask any point of
 it where it is and which way it faces; strokes that run down that surface from the pegs or round the
 belly; and a sun she places behind a chosen sheet, whose light reaches each point of cloth only
-through whatever stands in its way.
+through whatever stands in its way. For still days, washing that only hangs (`Hang`): swags between the
+pegs and folds that fall from them, and strokes that change colour along their length as they run
+out of a fold into the light.
