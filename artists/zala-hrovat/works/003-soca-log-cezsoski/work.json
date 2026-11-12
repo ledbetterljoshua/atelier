@@ -1,0 +1,60 @@
+{
+  "title": "So\u010da at Log \u010cezso\u0161ki, 17 August 1984, 41 cm",
+  "artist": "zala-hrovat",
+  "year": 1984,
+  "medium": "Oil on gessoed birch ply",
+  "made": "2026-11-12",
+  "strokes": 19033,
+  "size": [
+    1350,
+    1800
+  ],
+  "stages": [
+    {
+      "name": "the river turned off: cobbles at the head, gravel in the tail, the boulder",
+      "strokes": 4839,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the sun's net, coarse under the riffle, fine in the tail; bars under the waves",
+      "strokes": 6277,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the trout's shadow on the bed",
+      "strokes": 6647,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the water below the trout",
+      "strokes": 9159,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the trout, thirty centimetres down",
+      "strokes": 9269,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the river back in over it",
+      "strokes": 10481,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "the skin: sky on the faces, dark on the backs, glass over the boulder",
+      "strokes": 15643,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "the sun on the facets",
+      "strokes": 19033,
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 19033,
+      "file": "stages/08.jpg"
+    }
+  ],
+  "seconds": 8.7
+}

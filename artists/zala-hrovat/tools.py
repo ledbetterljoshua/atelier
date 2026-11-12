@@ -360,3 +360,124 @@ def foam_lace(board, pts, brush, color_fn, rng, width=6.0, strands=3, every=(2, 
                 n += 1
             k += int(rng.integers(*every))
     return n
+
+
+# --- clear water under a broken skin (added for 003) -------------------------------------------
+
+class Skin:
+    """The river's surface as a height field in metres, height(X, Y) over the pixel grid, and what
+    its slopes do to the light: where the bed is seen to be, which facets send the sun up to me."""
+
+    def __init__(self, height, W, H, ppm):
+        Y, X = np.mgrid[0:H, 0:W].astype(np.float64) + 0.5
+        self.h = height(X, Y)
+        gy, gx = np.gradient(self.h)
+        self.sx, self.sy = gx * ppm, gy * ppm          # rise per run, both on the board
+        self.W, self.H, self.ppm = W, H, ppm
+
+    def slope(self, x, y):
+        ix = np.clip(np.asarray(x, dtype=np.float64).astype(int), 0, self.W - 1)
+        iy = np.clip(np.asarray(y, dtype=np.float64).astype(int), 0, self.H - 1)
+        return self.sx[iy, ix], self.sy[iy, ix]
+
+    def seen(self, pts, depth, n=1.333):
+        """Where things at `depth` metres (a number or fn(x, y)) appear from straight above: a facet
+        tipped up toward one side bends the line of sight under it, so the bed slides that way."""
+        pts = np.asarray(pts, dtype=np.float64)
+        d = depth(pts[:, 0], pts[:, 1]) if callable(depth) else depth
+        sx, sy = self.slope(pts[:, 0], pts[:, 1])
+        k = (1.0 - 1.0 / n) * np.asarray(d) * self.ppm
+        return pts + np.column_stack([sx * k, sy * k])
+
+    def glints(self, rng, n_try, sun, sun_elev, tol, where=None):
+        """Places where a facet is tipped just so, halfway between the sun and my eye. Returns x, y and
+        how squarely (0..1) each one sends the sun up."""
+        tgt = np.tan(np.radians(90.0 - sun_elev) / 2.0)
+        x = rng.uniform(0, self.W, n_try)
+        y = rng.uniform(0, self.H, n_try)
+        sx, sy = self.slope(x, y)
+        miss = np.hypot(sx + tgt * sun[0], sy + tgt * sun[1])
+        keep = miss < tol
+        if where is not None:
+            keep &= where(x, y)
+        return x[keep], y[keep], 1.0 - miss[keep] / tol
+
+
+def net_cells(rng, W, H, cell_fn, n_try, stretch=1.0, angle=0.0, pad=80):
+    """The sunlight net when its mesh changes across the reach: coarse under big chop, fine under
+    small. cell_fn(x, y) -> px. Segments as (a, b)."""
+    pts = pack_stones(rng, W, H, lambda x, y, g: 0.5 * cell_fn(x, y) * g.uniform(0.85, 1.15), n_try,
+                      overlap=0.92, pad=pad)
+    P = np.array([(x, y) for x, y, _ in pts])
+    ca, sa = np.cos(angle), np.sin(angle)
+    R = np.array([[ca, sa], [-sa, ca]])
+    Q = P @ R.T
+    Q[:, 1] *= 1.0 / stretch
+    vor = Voronoi(Q)
+    V = vor.vertices.copy()
+    V[:, 1] *= stretch
+    V = V @ R
+    segs = []
+    for (a, b) in vor.ridge_vertices:
+        if a < 0 or b < 0:
+            continue
+        pa, pb = V[a], V[b]
+        if np.hypot(*(pa - pb)) > 4 * cell_fn(*((pa + pb) / 2)):
+            continue
+        if not (-pad < pa[0] < W + pad and -pad < pa[1] < H + pad):
+            continue
+        segs.append((pa, pb))
+    return segs
+
+
+def _axis(x, y, ang, L, k=7):
+    t = np.linspace(-0.5, 0.5, k)
+    return np.column_stack([x + np.cos(ang) * L * t, y + np.sin(ang) * L * t])
+
+
+def stone_seen(board, seen, x, y, r, ang, elong, lit, dark, sun, brush, shadow=None, shadow_len=0.5):
+    """stone(), seen through a broken surface: seen(pts) moves every part of it to where it appears,
+    so a stone under a wave is bent with it."""
+    sx, sy = sun
+    L = 2 * r * elong
+    if -np.sin(ang) * sx + np.cos(ang) * sy < 0:
+        ang += np.pi
+    if shadow is not None:
+        ox, oy = -sx * r * shadow_len, -sy * r * shadow_len
+        board.stroke(seen(_axis(x + ox, y + oy, ang, L * 1.02)),
+                     brush.but(width=2 * r * 1.05, glaze=True, opacity=0.55, taper=(0.3, 0.3)), shadow)
+    board.stroke(seen(_axis(x, y, ang, L)), brush.but(width=2 * r, taper=(0.28, 0.28)), dark, color2=lit)
+    board.stroke(seen(_axis(x + sx * r * 0.32, y + sy * r * 0.32, ang, L * 0.62)),
+                 brush.but(width=1.25 * r, taper=(0.3, 0.35), opacity=0.8), lit)
+    board.stroke(seen(_axis(x - sx * r * 0.62, y - sy * r * 0.62, np.arctan2(sx, -sy), r * 1.3, 5)),
+                 brush.but(width=max(2.0, 0.35 * r), opacity=0.4, taper=(0.35, 0.35)), dark)
+
+
+def trout_outline(cx, cy, length, ang, bend=0.0, n=40):
+    """A trout from above, snout first along `ang`: the body to the tail fork, and the two pectoral
+    fins splayed back off the shoulders. bend swings the tail to one side."""
+    u = np.linspace(0.0, 1.0, n)
+    hw = np.where(u < 0.26, (u / 0.26) ** 0.55, 1.0 - 0.8 * np.clip((u - 0.26) / 0.62, 0, 1) ** 1.25)
+    hw = length * 0.095 * hw
+    tail = u > 0.88
+    hw[tail] = length * (0.015 + 0.075 * ((u[tail] - 0.88) / 0.12) ** 0.8)
+    s = u * length
+    lat = bend * length * 0.09 * (u ** 2)
+    ca, sa = np.cos(ang), np.sin(ang)
+    fwd, side = np.array([ca, sa]), np.array([-sa, ca])
+    c0 = np.array([cx, cy]) + fwd * length / 2
+    spine = c0 - np.outer(s, fwd) + np.outer(lat, side)
+    right = spine + side * hw[:, None]
+    left = spine - side * hw[:, None]
+    fork = spine[-1] + fwd * length * 0.035
+    body = np.vstack([right, [fork], left[::-1]])
+    fins = []
+    k = int(0.24 * (n - 1))
+    for sg in (1, -1):
+        root = spine[k] + sg * side * hw[k] * 0.8
+        out = -fwd * 0.75 + sg * side * 0.65
+        out /= np.linalg.norm(out)
+        tip = root + out * length * 0.13
+        back = spine[k + 3] + sg * side * hw[k + 3] * 0.8
+        fins.append(np.array([root, tip + sg * side * length * 0.012, tip - fwd * length * 0.02, back]))
+    return body, fins

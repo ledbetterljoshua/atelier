@@ -129,3 +129,81 @@ My old `tape_where` stays for 001.
 what is under it, bigger over the bar head and finer in the tail, and run in trains. And I want a
 day when the water is clear and the surface is broken, both at once, so the net of light comes
 back through a skin of chop and I have to paint both.
+
+## 003. Soča at Log Čezsoški, 17 August 1984, 41 cm
+
+19,033 strokes. Eleven passes again. I have stopped minding.
+
+A different bridge: Log Čezsoški, upstream, below Bovec, where in August the river is so clear you
+see the bed before you see the water. The gauge at 41, summer low. Near
+midday, the sun high behind me and to the right. A riffle over coarse cobbles at the top of the
+panel, a grey boulder standing up into it with the water glassy over its back, a train of standing
+waves behind it, and then the bed falling away into a glide toward the bridge. In the slack behind
+the boulder, a marble trout. I wrote last time that I wanted clear water and a broken surface at once.
+This is that.
+
+**What held.** The trout's shadow. The fish holds thirty centimetres down in ninety-two of water, so
+its shadow lands on the bed sixty centimetres below it, and with the sun where it was that puts it
+29 cm upstream and a little to the left (offset_through_water again, the leaf's sum from June). The
+shadow is sharper and darker than the fish, which is what you actually see from a bridge: you find
+the shadow first, and then, looking beside it, the trout, olive on olive, there and not there. The
+eye goes to the shadow, then the fish, then up the wave train to the boulder. That is the picture,
+and it is about what the persona says the pictures are about: how far down you can see.
+
+The other thing that held is a way of working I did not have before. I wrote the surface down as
+heights: chop that is coarse at the head of the riffle and fine in the tail and lies across the
+current, the standing waves in a V behind the boulder, a smooth hump over it, long swells on the
+glide. Everything else is worked out from that. Every stone is painted where the surface shows it,
+not where it lies, so a stone under a wave is bent with the wave. The net's mesh follows the size of
+the chop above it. The trout is moved by the surface at its own depth, less than the bed under it.
+The marks of sky on the water lie along the crest each one is on and are as long as that chop. And
+the glints are only where a facet is tipped halfway between the sun and my eye. I did not place one
+of them. They came out strung along the faces of the standing waves and scattered over the riffle,
+none on the glassy water, which is right and which I would not have dared to paint by hand.
+
+**What didn't.**
+- The cobbles, for most of the passes. Painted as in June they went soft, like frogspawn, a bed of
+  pale overlapping discs. Darker silt between them and fewer overlaps did not fix it; a hard-edged
+  brush did. Through water this clear the stones have edges. The finer gravel in the tail is still
+  mush under the glide.
+- The boulder is the weakest passage. It is a pale slab with its shadow beside it. I modelled it as a
+  dome in the sun and it still reads flat, and the glassy water over it does not read as glass; it
+  reads as nothing. The bright rim where the pillow's edge focuses the sun on its flanks drew it, like
+  an outline, so most of the rim is gone.
+- The net was chicken wire again at first, and yellow. Fewer, wider, warmer, broken lines, brightest
+  where the water is shallow and the chop is big. It is better than wire. It is not yet light.
+- The standing waves were ladder rungs when I gave them seven crests. Five, dying faster, bowed.
+- The trout came out as a brown stick until I cooled it and widened it. It is still a little stiff.
+- Sky on the faces: as fine lines they were hairs; as wide marks in the riffle they greyed the whole
+  bed. They are faint now and mostly on the wave train.
+- The glazes, laid with bristles, still leave vertical rain on the glide.
+
+**The rule I moved.** "The river turned off": the bed was painted as if the water had been let out,
+everything where it lies. Here it is painted where the water shows it. The surface goes into the
+bed before the glazes do, as a displacement, because in clear broken water that is most of what the
+surface is. And the water is no longer one stack of glazes: what is in the water goes in between them,
+at its depth. The persona now says both.
+
+**What the engine changed.** Opacity along a stroke, which I asked for, I ended up not needing; the
+standing waves' bars fade with pressure as a sine and that was enough. The levelling glaze I did use,
+as a clear film of stand oil over the boulder's back and the glide, and it shows the problem below.
+`tape(..., mode="cut")` let me lay the boulder's shadow round the boulder without painting under it.
+
+**Into the kit.** `Skin`, a surface as heights, with `seen` (where something at a depth appears),
+`glints` (where a facet sends the sun up) and its slopes; `net_cells`, the sunlight net with a mesh
+that changes size across the reach; `stone_seen`, a stone painted through the surface; and
+`trout_outline`, a trout from above with its pectorals.
+
+**Asked of the engine.**
+- A glaze laid as a film, not as bristles. Wide glazes leave rain in the direction of the stroke; I
+  hide it with more, wider, softer bristles, which is a workaround.
+- Levelling across the whole width of a stroke. A levelling stroke flattens only where its bristles
+  touch, so a clear levelling glaze leaves the relief in stripes between them.
+- Something between `hard` and soft for a bristle's edge. Soft stones went to mush; hard ones are
+  crisp but a little cut-paper.
+- Tape that can follow one small shape cheaply. Cutting each cobble to its outline would be the true
+  way to paint a stone bed, and full-board tape per stone is too slow for fifteen hundred stones.
+
+**Next.** The boulder, properly: a single large thing seen through glassy water, close enough to fill
+the panel, with the skin over it showing as nothing but what it does to the stone. Or the same reach
+in the evening, when the sun is low enough that the surface turns to sky and the bed goes out.

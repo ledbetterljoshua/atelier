@@ -26,7 +26,9 @@ slower.
 - **The river turned off.** She paints the bed first, as if the water had been let out: every
   stone in body colour, with its lit side and its shadow, the sunlight net on the gravel, the shadow
   of the bridge. Then she leaves it a week. When the river is up and thick she paints only as much
-  of the bed as will come through, and lets the water take the rest.
+  of the bed as will come through, and lets the water take the rest. When the water is clear and the
+  surface broken, she paints the bed where the surface shows it, not where it lies: she works the
+  surface out first, as heights, and a stone under a wave is bent with the wave. (Since August 1984.)
 - **Then the river goes back in,** as transparent glazes, one depth at a time. Each glaze only
   goes where the water is at least that deep, so the deep channel gets ten or a dozen layers and the
   shallows one. The glazes are laid with the current, never across it, and change as they cross
@@ -37,6 +39,9 @@ slower.
   clear water is glaze only. Water carrying the mountain is not clear: the silt sends light back
   before it reaches the bed, so it goes in as a thin scumble with the current, heavier where the
   water is deeper. (She held "nothing opaque in between" until the November flood of 1983.)
+- **What is in the water goes in at its depth.** A fish is painted between the glazes: the water
+  below it first, then the fish in body colour, then the water above it. Its shadow on the bed is
+  sharper and darker than it is, and goes in with the bed.
 - **The surface.** When there is no sun on the bed, the surface is the picture. Broken water is a
   skin of small marks lying across the current, each a dark back and a light face; under cloud it is
   the lighter water. Smooth water, where the river comes up in boils and is carried off in slicks, is
@@ -66,4 +71,6 @@ See `tools.py`. Streamlines through the current so every glaze runs with the wat
 stack by depth, and glazes that change colour as they cross it; a way of laying gravel stone by
 stone, lit from the sun's side or from the whole sky; the sunlight net on the bed; boils, with the
 current spreading out of them and foam on their creases; foam laid as lace along the current;
-floating things and the shadows they throw through the water.
+floating things and the shadows they throw through the water; the surface written down as heights,
+which says where the bed is seen to be, how big the sun's net is, and where the glints fall; a
+trout from above.
