@@ -1,0 +1,54 @@
+{
+  "title": "Miserere, first verse, Lunissanti 2008",
+  "year": 2013,
+  "medium": "Oil on agglomerated cork, gessoed",
+  "artist": "gavino-cossu",
+  "strokes": 379,
+  "size": [
+    1800,
+    1050
+  ],
+  "stages": [
+    {
+      "name": "gesso on cork",
+      "strokes": 0,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the silence",
+      "strokes": 210,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "morning, the first stations",
+      "strokes": 261,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "afternoon",
+      "strokes": 312,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "evening, the torches",
+      "strokes": 346,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the church keeping it",
+      "strokes": 362,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "the last time, at the door",
+      "strokes": 379,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 379,
+      "file": "stages/07.jpg"
+    }
+  ],
+  "seconds": 5.4
+}

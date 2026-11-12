@@ -106,3 +106,59 @@ round the quintina without resampling paths myself.
 **Next.** Persona changed: quiet singing is now less paint, and the brush is held level; both written
 in. Next a verse where they are loud from the start, to see whether full paint can still let the cork
 through anywhere, or the Miserere again from the bassu's place, low and wide.
+
+## 003. Miserere, first verse, Lunissanti 2008
+
+379 strokes. Seven goes. The same verse as the first panel, eleven years on: the last Holy Monday I
+sang contra. By then I could not hear myself on the right, and I went flat and only knew it when the
+bassu came up through my back. They told me afterwards. I knew already.
+
+**What held.** I painted it from where I stood. The chord is as tall as the board now: the bassu on
+the floor along the bottom, my own line above it, the boghe up near the top, and the quintina has
+nowhere left to go but against the top edge. The silence is the dark between the voices instead of
+a sky over them, and the moon has gone, because there is no room for one. Second: my own line as it
+was. In this verse I gave the bassu and the contra one note each and nearly held them there, so the
+floor does not move, and against it you can see the contra leaning down through every breath and
+stepping back up at the next one. That is the picture. Third: the quintina worked out from it, not
+placed. It came only on held chords where I happened to be on the note: a breath at "dum", a breath
+at "cor", and on the last "am", where the church kept it and it runs off the edge of the board. In
+1997 that same "am" was the biggest light I ever left. Now it is a line along the top. Fourth: loud
+is full paint, and the cork still gets in. Every breath lands scratchy and goes dry as it runs out,
+so the ends of the lines and the long drag of the last chord off the right are all granules; and the
+bassu, which you feel more than hear, I painted dry the whole way, so it is the one voice where the
+cork is everywhere. Close to, the strokes are a flat brush and nothing else.
+
+**What didn't.**
+- First go, the level brush going up and down five semitones at this size swept blocks as tall as
+  itself, and the four voices moving together made ribbon candy. I took the paint off the slides
+  (the voice is thin there anyway) and gave the bassu and contra their one note. It is better and it
+  is still a staircase: the held notes have hooked ends where the slide leaves them.
+- First go, too, my drift was so small and so different take to take that nine takes of it averaged
+  to a level band. Making me catch it on every breath, the same in every take, is what made it show.
+  That is also the truth.
+- The quintina came out as a dotted line, then as three lamps on a ceiling. Weighting the last one
+  and letting it run off the board fixed the lamps. The two small ones over "dum" and "cor" are
+  still only dim smears; the gesso hardly comes through them. They should be a few hard specks of
+  white, not a glow.
+- Weakest passage: the middle, from "secundum" to "misericordiam", where the short syllables slide.
+  The ends of the upper voices' strokes leave thin vertical slivers of ochre like scratches, and the
+  nine takes stacked give the boghe and contraltu a ribbon of parallel edges there that reads as
+  movement on a screen, not as paint.
+- It is still four rows. With four voices it will be, unless a voice is lost.
+
+**Into the kit.** `OffTrue`, a take in which one voice goes off the note by itself. `sag`, a voice
+going flat at a steady rate and caught at every breath and in a long one now and then. `in_tune`, the
+spans where it was close enough to lock. `breath_dry`, dryness along a breath: scratchy on the
+attack, full in the middle, dry as it runs out. `slide_thin`, less paint where a path climbs or falls.
+`breath_path` now starts a wandering voice where it actually was.
+
+**Asked of the engine.**
+- A dry attack on a full brush. Dryness is discounted by how loaded the brush is and how hard it is
+  pressed, so at the start of a breath, full and pressed, a dryness of 0.85 still floods the tooth.
+  The scratchy landing I wanted only shows at the ends, where the brush has emptied.
+- Still: a way to see the cork's tooth in the dark. On the near-black between the voices the granules
+  are gone.
+
+**Next.** The quintina I lost. A verse where it does not sound at all, and nothing on the board is
+as light as the gesso because there is no gesso showing; or the rule holds and I find out why I
+cannot do that.

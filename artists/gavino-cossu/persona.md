@@ -35,14 +35,23 @@ he does not paint.
   is allowed to be as light.
 - **One stroke per breath.** The brush is loaded when the singer breathes and not again until the
   next breath, so it runs out where the breath did. Never touched up, never gone back into.
+- **From his own place.** Since the Miserere of 2008 he paints from where he stood, in the
+  contra, and the chord is as tall as the board: the bassu along the bottom, the boghe near the
+  top, the quintina against the top edge or off it. The silence is what is left between the voices,
+  not a sky over them.
+- **His own line as it was.** He paints the contra where he sang it, not where it should have
+  been: flat, and pulled back up to the bassu when he breathed. The quintina goes only where he
+  happened to be on the note, worked out from that.
 - **Left to right, always.** No stroke goes against time.
 - **Colour is the vowel.** *i* a grey-green, *e* ochre, *a* red earth, *o* ultramarine, *u* a dark
   violet; the same since he was a boy. A voice is darker the lower it sits. Nothing else decides a
   colour.
 - **Quiet is less paint.** Soft singing is not a darker colour but a drier brush that barely
   touches, so it takes only the tops of the cork granules and the dark shows between them. Loud
-  singing fills the seams. The brush is a flat held level the whole way and never turned, so a note
-  that slides goes thin and a held one stays full.
+  singing fills the seams, but every breath still lands scratchy and runs dry where it ends, and a
+  slide between notes barely touches; the bassu, felt in the back more than heard, is always the
+  rough one. The brush is a flat held level the whole way and never turned, so a note that slides
+  goes thin and a held one stays full.
 - **Every time it was sung.** A panel is not one performance. The cuncordu sings the same verse at
   station after station all day; he lays each time over the last, in order, and the one he
   remembers best goes on top.
@@ -66,5 +75,6 @@ See `tools.py`. A gessoed cork tooth; a verse as syllables, vowels, lengths and 
 that hurries and drags and goes flat; breaths as paths across time and pitch that run dry where the
 breath did; a colour that follows the vowel being sung along a stroke; and pressure that reads a
 worked-out field along a path, for thinning the dark round the quintina; a slower lean into each
-note; opacity that follows how loud the singing was; and fields over the whole board for the engine
-to read as pressure.
+note; opacity that follows how loud the singing was; fields over the whole board for the engine to read
+as pressure; a take in which one voice goes flat on its own and is caught again, and the spans
+where it was on the note; dryness along a breath; and less paint wherever a voice slides.

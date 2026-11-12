@@ -114,6 +114,8 @@ def breath_path(take, voice, b0, b1, x_of, y_of, vib=0.0, vib_beats=0.35, phase=
     k0 = take.syl_at(b0 - lag)
     first = bt - lag < take.end[k0]
     semi[first] = take.v.sylls[k0][3][voice] + take.drift
+    if hasattr(take, "off"):
+        semi[first] += take.off(voice, bt[first] - lag)
     y = y_of(semi)
     if vib > 0:
         y = y + vib * np.sin(2 * np.pi * bt / vib_beats + phase) * smooth01((bt - b0) / 1.2)
@@ -151,3 +153,94 @@ def field(w, h, fn):
     passes."""
     Y, X = np.mgrid[0:h, 0:w].astype(np.float64) + 0.5
     return np.broadcast_to(np.asarray(fn(X, Y), dtype=np.float64), (h, w)).copy()
+
+
+class OffTrue(Take):
+    """A take in which one voice wanders off the note on its own: `off[voice](beat)` in semitones,
+    added to where that voice should be. The others stay where the take has them."""
+
+    def __init__(self, take, off):
+        super().__init__(take.v, take.beats, take.drift)
+        self._off = off
+
+    def off(self, voice, beat):
+        f = self._off.get(voice)
+        beat = np.atleast_1d(np.asarray(beat, dtype=float))
+        return np.zeros_like(beat) if f is None else np.asarray(f(beat), dtype=float)
+
+    def pitch(self, voice, beat, glide=1.0):
+        return super().pitch(voice, beat, glide) + self.off(voice, beat)
+
+
+def sag(total, rng, rate, catch_every, catch_beats=0.5, at=()):
+    """A voice that cannot hear itself: it goes flat steadily, `rate` semitones a beat, until it
+    hears the bassu in its back and pulls up over `catch_beats`. It always catches at the beats in
+    `at` (a breath, say), and in a long stretch without one, about every `catch_every` beats.
+    Returns (fn(beat), catch beats)."""
+    fixed = sorted(list(at) + [total + 8.0])
+    catches, b = [], 0.0
+    for f in fixed:
+        while f - b > catch_every * 1.3:
+            b += catch_every * rng.uniform(0.8, 1.2)
+            catches.append(b)
+        if f <= total:
+            catches.append(f)
+        b = f
+    c = np.array(catches if catches else [total + 8.0])
+
+    def fn(beat):
+        beat = np.atleast_1d(np.asarray(beat, dtype=float))
+        k = np.searchsorted(c, beat, side="right")
+        last = np.where(k > 0, c[np.maximum(k - 1, 0)], 0.0)
+        down = -rate * (beat - last)                       # flat since the last catch
+        prev = np.where(k > 1, c[np.maximum(k - 2, 0)], 0.0)
+        before = np.where(k > 0, -rate * (last - prev), 0.0)  # how flat it was when he caught it
+        u = smooth01((beat - last) / catch_beats)
+        return np.where(k > 0, before * (1 - u) + down * u, down)
+    return fn, c
+
+
+def in_tune(take, voice, tol=0.12, min_beats=1.0, step=0.05, keep=None):
+    """Spans of beats where a wandering voice is within `tol` of its note for at least `min_beats`:
+    the only places the four could lock. keep(beat) -> bool rules out spans that do not count."""
+    bt = np.arange(0.0, take.v.total, step)
+    ok = np.abs(take.off(voice, bt)) < tol
+    if keep is not None:
+        ok &= np.array([bool(keep(b)) for b in bt])
+    spans, a = [], None
+    for b, o in zip(bt, ok):
+        if o and a is None:
+            a = b
+        elif not o and a is not None:
+            if b - a >= min_beats:
+                spans.append((a, b))
+            a = None
+    if a is not None and bt[-1] - a >= min_beats:
+        spans.append((a, bt[-1]))
+    return spans
+
+
+def breath_dry(base, attack=0.85, tail=0.65, a=0.05, z=0.18):
+    """Dryness along one breath: the brush lands scratchy on the attack, fills in as the voice
+    opens, and goes dry again as the breath and the paint run out together."""
+    def fn(t):
+        t = float(t)
+        d = base + (attack - base) * np.exp(-t / max(a, 1e-3))
+        return max(d, base + (tail - base) * smooth01((t - (1 - z)) / z))
+    return fn
+
+
+def slide_thin(pts, steep=1.2, floor=0.12):
+    """fn(t) -> 0..1 along a breath path: full on a held note, little paint where the voice slides
+    between notes. A level flat moved up the board would otherwise sweep a block as tall as itself;
+    the voice is thin there, so the brush barely touches."""
+    pts = np.asarray(pts, dtype=float)
+    d = np.gradient(pts, axis=0)
+    slope = np.abs(d[:, 1]) / (np.abs(d[:, 0]) + 1e-6)
+    k = floor + (1 - floor) / (1.0 + (slope / steep) ** 2)
+    k = gaussian_filter(k, 1.0)
+    s = np.linspace(0, 1, len(k))
+
+    def fn(t):
+        return float(np.interp(t, s, k))
+    return fn
