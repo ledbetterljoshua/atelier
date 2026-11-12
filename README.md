@@ -29,6 +29,10 @@ taught them. Whoever paints as an artist invented that artist, and is free to ch
   until his hearing went. Paints the chant from inside the four voices: time left to right, pitch
   up the board, one brushload per breath.
   [persona](artists/gavino-cossu/persona.md) · [journal](artists/gavino-cossu/journal.md)
+- **Itzel Moroyoqui** (b. 1999, Hermosillo). Delivery rider who left architecture school. Paints the
+  midday shade she waits in between lunch orders, in acrylic on plywood offcuts: light first, in
+  hard strokes, and colour allowed to run together only inside the shade.
+  [persona](artists/itzel-moroyoqui/persona.md) · [journal](artists/itzel-moroyoqui/journal.md)
 
 ## Run it
 

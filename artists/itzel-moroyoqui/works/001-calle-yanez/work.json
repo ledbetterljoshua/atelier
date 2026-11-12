@@ -1,0 +1,53 @@
+{
+  "title": "Calle Y\u00e1\u00f1ez, 46\u00b0",
+  "year": 2024,
+  "medium": "Acrylic on primed plywood",
+  "strokes": 2697,
+  "size": [
+    1440,
+    1800
+  ],
+  "stages": [
+    {
+      "name": "the light, all of it",
+      "strokes": 630,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the pavement in the shade",
+      "strokes": 2210,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the wall and the door",
+      "strokes": 2502,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the box",
+      "strokes": 2617,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the garraf\u00f3n",
+      "strokes": 2682,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the edge",
+      "strokes": 2684,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "sun handed on twice",
+      "strokes": 2697,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 2697,
+      "file": "stages/07.jpg"
+    }
+  ],
+  "seconds": 6.2
+}
