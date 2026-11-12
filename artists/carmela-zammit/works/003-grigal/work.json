@@ -1,0 +1,65 @@
+{
+  "title": "Grigal, the basket over",
+  "artist": "carmela-zammit",
+  "year": 1989,
+  "medium": "Oil on cotton sheeting, red oxide ground",
+  "made": "2026-11-12",
+  "strokes": 11316,
+  "size": [
+    1200,
+    1500
+  ],
+  "stages": [
+    {
+      "name": "a strip of scoured sky",
+      "strokes": 112,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the roof, all in the sun",
+      "strokes": 3356,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the shadows of the washing",
+      "strokes": 7290,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "joints, and the shadows of the prop and the wire",
+      "strokes": 7300,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the washing laid in, the side away from the sun",
+      "strokes": 7801,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the sun through the washing",
+      "strokes": 9796,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "the basket, gone over",
+      "strokes": 10420,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "pegs",
+      "strokes": 10432,
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "the sheet the wind is taking",
+      "strokes": 11316,
+      "file": "stages/08.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 11316,
+      "file": "stages/09.jpg"
+    }
+  ],
+  "seconds": 7.5
+}

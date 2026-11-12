@@ -114,3 +114,57 @@ bottom and a soft one where the fold strokes come down into it.
 **Next.** The roof is still the problem in both pictures. Next time paint the roof as the subject
 and the washing at the edge of it: Gregale, the north-easter, cold and bright, everything on the
 line going one way and a basket blown over.
+
+## 003. Grigal, the basket over
+
+11,316 strokes. About a dozen goes. The first one where the roof is the picture and not the floor
+under it.
+
+**What held.** I turned my eyes down. The board is upright for once, and the line runs along the
+top of it with the sheets going out of the picture; what I painted is the roof. A January sun low
+behind the line throws the washing's shadow four, five metres toward me, and the shadow is where
+the wind is: every piece pulled the same way, the hems torn ragged, the pillowcase a flag. I laid
+the whole roof in as if nothing were on the line, warm, then laid the shadows on top, cut to
+where the light cuts them and brushed the way the sun throws them. They came out blue with warm
+in them, because a sheet is not a wall: one thickness of cotton lets a fifth of the sun through,
+and the hems almost none. Between two shadows the sun gets through in thin streaks and they run
+straight at you. The sheet the wind is taking out of the basket lies across the top of the shadow,
+the one thing on the roof the sun hits square, and that is where the thick paint went. The prop's
+shadow runs across it in the cloth's own blue, and I like that more than anything else in it.
+
+**What didn't.**
+- I had the wind blowing toward me first, which is a majjistral if I am facing the sun. Turned it
+  round so it comes over my right shoulder; then the sheets swing away and their shadows open up.
+- The roof was a khaki desert and the shadows grey; the sun has to be twice what I thought before
+  the screed looks lit, and the shadows need the sky in them, not the sun.
+- The sheet on the ground was a magic carpet, then foil, then a canoe, then a leaf. It took a
+  broader far end with two real corners, only one lifting, rucks few and wide, a hem round it, and
+  the shaded side warmed by the roof under it.
+- The basket on its side read as a tin, then a drum. Turning its mouth toward me so the dark inside
+  shows, and two rows of slots, made it a basket.
+- I tried sun spots through the basket's slots on the roof. They came out as thrown rice. Out.
+- Long lines on the roof that started off the board came back with a dry brush: the joints and the
+  prop's shadow were not there. Start them at the edge.
+
+**Still wrong.** The near roof, the bottom third on the right, is a field of warm paint with two pegs
+in it; it is the open sun the shadows need, but it is the weakest passage and the dullest paint.
+The basket is still the darkest, most saturated thing and it sits right beside the brightest, so
+the two pull together. The washing at the top is all one cream; it should glow more at the edges.
+The far roof between the wall's shadow and the washing's is soft dabs that say nothing.
+
+**Into the kit.** `Gust`, washing in a hard wind: pegged along the top, the rest swung out the
+wind's way, more the further from the pegs, waves running down it and the free corners going over.
+`cast`, the shadow anything throws on the roof: one thickness, two, and the product where they
+cross, from any surface the kit can ask a point of. `lay_field`, roof strokes that change colour
+along their length as they run into a shadow and out.
+
+**Changed.** The sun can be off the top of the board now, not only behind a sheet, and the thick goes
+where it lands hardest on cloth. Shadows are laid over a roof painted all in sun. Persona updated.
+
+**Asked of the engine.** A stroke that starts off the board should arrive with its paint: bristles
+lose load every step they are off the edge, so a long line begun outside the board is dry by the
+time it gets on. I clip my lines now. And a tape that can be cut from a soft field with a threshold
+and a hard edge in one go; I threshold by hand.
+
+**Next.** A night. The roof lit only from the stairwell door, the washing left out by mistake, and
+the light coming the other way through it for once: from in front, from below.

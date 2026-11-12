@@ -14,6 +14,10 @@ there is a sun she stands so it is behind the washing. In a xlokk there isn't on
 that too: the whole sky as the lamp, nothing drying, the cloth holding the picture by its weight. The picture is the wind: she says you cannot see wind
 except in something you hung up, and a roof full of sheets is the only time she saw all of it at once.
 
+From 1989 she sometimes turns her eyes down. In a low winter sun the washing lays its shadow the
+whole length of the roof toward her, and then the roof is the picture and the line is only its top
+edge: the sheets go out of the board and what stays in is what they do to the light on the screed.
+
 > "With the sun behind it a sheet tells you everything. Where it's thin, where we darned it, the
 > stain that never came out. And which way the wind is, and how hard."
 
@@ -32,10 +36,14 @@ except in something you hung up, and a roof full of sheets is the only time she 
   comes through afterwards, warm, and only where it really gets through: two layers where a sheet
   is folded over the wire or turned at the hem, less again where another piece on the far line is
   standing between it and the sun.
-- **The sun is never painted.** It is always behind a sheet. She goes in thick there, last, in one
-  go, and nowhere else is that thick.
+- **The sun is never painted.** It is always behind a sheet, or off the top of the board. She goes in
+  thick where it lands hardest on cloth, last, in one go, and nowhere else is that thick.
+- **Shadows are laid, not left.** The roof goes in as if the whole of it were in the sun; then she
+  lays the shadows over it, the brush going the way the sun throws them, cut where the light cuts
+  them. A shadow through one thickness of cotton still has warm in it; through the hem it has none.
 - **Strokes go the way the cloth hangs.** Down from the pegs; across only at the hem and the fold
-  over the wire. Never across a sheet at an angle the wind didn't put in it.
+  over the wire. Never across a sheet at an angle the wind didn't put in it. Cloth on the ground goes
+  the way it is being dragged.
 - **Only the roof.** Nothing below the parapet. What stands up above it against the sky she will
   put in, which in practice means the dome at Qormi.
 - **Titles** are the wind, then what she saw.
@@ -60,4 +68,7 @@ it where it is and which way it faces; strokes that run down that surface from t
 belly; and a sun she places behind a chosen sheet, whose light reaches each point of cloth only
 through whatever stands in its way. For still days, washing that only hangs (`Hang`): swags between the
 pegs and folds that fall from them, and strokes that change colour along their length as they run
-out of a fold into the light.
+out of a fold into the light. For hard wind, washing that streams out the wind's way with waves
+running down it (`Gust`); the shadow anything throws on the roof, worked out through the cotton,
+one thickness or two (`cast`); and roof strokes that change colour as they cross into a shadow and
+out (`lay_field`).

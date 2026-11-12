@@ -301,3 +301,98 @@ def lay_screen(board, region, brush, shade, angle=0.0, length=120.0, cover=2.0, 
                      color2=None if color2 is None else color2(x, y), wobble=wobble)
         count += 1
     return count
+
+
+# --- a hard wind, and what the washing does to the sun on the roof -------------------------------
+
+class Gust(Sheet):
+    """Washing in a hard wind that blows across the roof in direction wind (x, z). Pegged along the
+    top, the rest swings out the way the wind goes, more the further from the pegs, and waves run
+    down it. throw is how far it swings out at the hem (radians from hanging), flap how much the
+    waves turn it, curl how far the free corners at the hem go over."""
+
+    def __init__(self, line, s0, width, length, pegs=3, wind=(-1.0, 0.0), throw=0.9, flap=0.25,
+                 curl=0.3, sag=0.04, band=0.0, seed=0):
+        super().__init__(line, s0, width, length, pegs=pegs, belly=0.0, lift=0.0, flare=0.0,
+                         ripple=0.0, sag=sag, band=band, seed=seed)
+        w = np.asarray(wind, dtype=np.float64)
+        w = w / np.linalg.norm(w)
+        self.wind = np.array([w[0], 0.0, w[1]])
+        self.throw, self.flap, self.curl = throw, flap, curl
+        r = np.random.default_rng(seed + 2000)
+        self.wk = r.uniform(1.2, 2.2), r.uniform(0.9, 1.6)      # how many waves across and down
+        self.wp = r.uniform(0, 2 * np.pi, 3)
+
+    def pos(self, u, v):
+        u = np.asarray(u, dtype=np.float64)
+        v = np.asarray(v, dtype=np.float64)
+        u, v = np.broadcast_arrays(u, v)
+        K = 8
+        s = v[..., None] * (np.arange(K) + 0.5) / K                  # points down the cloth to here
+        uu = u[..., None]
+        ku, kv = self.wk
+        phi = self.throw * (0.3 + 0.7 * np.clip(s, 0, 1.1) ** 0.8)
+        phi = phi + self.flap * np.sin(2 * np.pi * (ku * uu - kv * s) + self.wp[0]) * np.clip(s, 0, 1) ** 0.7
+        edge = np.clip(1 - 2 * np.minimum(uu, 1 - uu), 0, 1) ** 2   # the free corners
+        phi = phi + self.curl * edge * np.clip(s, 0, 1) ** 2
+        n3 = np.array([self.line.n[0], 0.0, self.line.n[1]])
+        tw = 0.18 * np.sin(2 * np.pi * (0.8 * uu + 0.6 * s) + self.wp[1]) * np.clip(s, 0, 1)
+        d = (-np.cos(phi))[..., None] * np.array([0.0, 1.0, 0.0]) + np.sin(phi)[..., None] * self.wind \
+            + tw[..., None] * n3
+        down = d.mean(axis=-2) * (v * self.length)[..., None]
+        k = (u * (self.pegs - 1)) % 1.0 if self.pegs > 1 else u
+        a = self.s0 + u * self.width
+        base = self.line.at(np.clip(a, -2, self.line.span + 2))
+        swag = self.sag * np.sin(np.pi * k) * np.clip(1 - np.clip(v, 0, 1), 0, 1) ** 1.6
+        return base + down - np.stack([np.zeros_like(swag), swag, np.zeros_like(swag)], axis=-1)
+
+
+def cast(cam, W, H, sheets, L, tau=0.35, tau2=0.13, grid=(48, 36), ground_h=0.0):
+    """How much of the sun reaches the roof at each point of the board, after the washing: 1 in the
+    open, tau behind one thickness of cotton, tau2 behind the hem or the fold over the wire, and the
+    product where two pieces stand in the way. Worked out by laying each piece's shadow down on the
+    roof along the sun's direction L, a little quad of cloth at a time."""
+    from PIL import Image, ImageDraw
+    out = np.ones((H, W), dtype=np.float32)
+    L = unit(L)
+    nu, nv = grid
+    U, V = np.meshgrid(np.linspace(0, 1, nu + 1), np.linspace(0, 1, nv + 1))
+    for sh in sheets:
+        Q = sh.pos(U, V)
+        g = Q - L * ((Q[..., 1] - ground_h) / L[1])[..., None]
+        p = cam.P(g)
+        im = Image.new("L", (W, H), 255)
+        d = ImageDraw.Draw(im)
+        dbl = (V[:-1, :-1] < sh.band) | (V[:-1, :-1] > 0.96)
+        for pass_dbl in (False, True):
+            val = int(255 * (tau2 if pass_dbl else tau))
+            for j in range(nv):
+                for i in range(nu):
+                    if pass_dbl and not dbl[j, i]:
+                        continue
+                    q = [tuple(p[j, i]), tuple(p[j, i + 1]), tuple(p[j + 1, i + 1]), tuple(p[j + 1, i])]
+                    d.polygon(q, fill=val)
+        out *= np.asarray(im, dtype=np.float32) / 255.0
+    return out
+
+
+def lay_field(board, region, brush, shade, angle=0.0, length=120.0, cover=2.0, wobble=1.0,
+              angle_jitter=0.1, where=None, n_pts=6):
+    """Like lay_screen, but shade(xs, ys) gets every point of the stroke and returns a colour for
+    each, so one stroke can run from sun into shadow and out again."""
+    rng = board.rng
+    x0, y0, x1, y1 = region
+    n = int((x1 - x0) * (y1 - y0) * cover / (length * brush.width)) + 1
+    count = 0
+    for _ in range(n):
+        x, y = rng.uniform(x0, x1), rng.uniform(y0, y1)
+        if where is not None and not where(x, y):
+            continue
+        a = (angle(x, y) if callable(angle) else angle) + rng.normal(0, angle_jitter)
+        Ls = length(x, y) if callable(length) else length
+        Ls = Ls * rng.uniform(0.6, 1.25)
+        t = np.linspace(-0.5, 0.5, n_pts)
+        xs, ys = x + np.cos(a) * Ls * t, y + np.sin(a) * Ls * t
+        board.stroke(np.stack([xs, ys], 1), brush, shade(xs, ys), wobble=wobble)
+        count += 1
+    return count
