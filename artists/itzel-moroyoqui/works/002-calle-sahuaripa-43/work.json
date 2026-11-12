@@ -1,0 +1,48 @@
+{
+  "title": "Calle Sahuaripa, 43\u00b0",
+  "year": 2024,
+  "medium": "Acrylic on primed plywood",
+  "strokes": 5186,
+  "size": [
+    1680,
+    1400
+  ],
+  "stages": [
+    {
+      "name": "the light, all of it",
+      "strokes": 1310,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the shade, round a hundred suns",
+      "strokes": 2540,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the dog",
+      "strokes": 5004,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the bowl",
+      "strokes": 5163,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the edge, and what the tree drops",
+      "strokes": 5184,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "sun handed on",
+      "strokes": 5186,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 5186,
+      "file": "stages/06.jpg"
+    }
+  ],
+  "seconds": 18.1
+}

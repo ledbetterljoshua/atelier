@@ -66,3 +66,65 @@ shape on the board, mixed along their length, each varied a little from the last
 **Next.** Under a mesquite, where the shade is not one shape but a hundred, each hole in the leaves a
 little picture of the sun. And something alive in there with me: the dog that is always under that
 tree.
+
+## 002. Calle Sahuaripa, 43°
+
+5,186 strokes. Six goes.
+
+**What held.** The suns. I did not draw a single one. I made the leaves as a lid with holes in it,
+most of them smaller than the sun, and asked each point of the earth how much of the sun's disc it
+could see through them. A hole smaller than the sun does not put down a picture of the hole: it
+puts down a picture of the sun, and the sun is round, so the earth is covered in coins, longer one
+way than the other because the sun is not straight up. The big gaps come out as puddles with
+rounded edges and the small ones as ovals, and they get smaller and closer together going away from
+me without my doing anything. The first go had the holes too big and it was a cow. The second had
+too many near me and the eye fell out of the bottom of the board, so I thinned the leaves over the
+foreground.
+
+One of the suns lands in the bowl. The water gives the sun back to me, and that is the white, a
+single fat dash and a small one beside it. It is the brightest thing on the board and it is where
+the eye goes, from the dog's nose to the orange rim to the white. The bowl is the box from the last
+panel doing the same job, and better, because it is small.
+
+The shade now looks painted. In the first panel I mixed every stroke for every place it crossed and
+it came out smooth, a gradient, a sky. This time each load is one mix, chosen for where the stroke
+is centred (warmer where there are a lot of suns about, bluer toward the open sun, deeper in the
+dog's scrape), and laid wet against the next load, which is a different one. Then a last, nearly
+dry drag of each over the top so the ply's grain takes it. You can see where every load went and
+where they ran together. That is the change to how I work, and I have put it in the rules.
+
+**What didn't.**
+- The leftovers of the suns. Every sun has a soft rim where it is half a sun, and the first time I
+  painted the half-suns warm they came out as a pink ring round every coin. Now only a half-sun with
+  no whole sun near it gets touched, and the rings are gone.
+- The dog's shadow cuts suns out of the earth, but at first it cut only their middles, and the dim
+  rim was left standing on its own as a thin pale crescent under its chin.
+- Mesquite drops leaflets by the thousand. Painted, they were hundreds-and-thousands on a cake.
+  Gone, and a dozen pebbles instead, each with its bit of shadow.
+- The water: first a draughts board of dabs, then salad (the clay floor through turquoise is
+  green), then brown glass, because I kept putting some of the clay into it to show the floor. Now
+  it gives back only the leaves: dark, a little bluer toward the far side, laid flat.
+- I had the edge of the crown along the whole top of the board and it was a beach again. Moved the
+  tree so the plain sun is a wedge in the top corner.
+
+**Still wrong.** The dog is the weakest passage. It reads as a dog asleep, and the hair flicked in
+with the lettering brush helps, but it is still a soft toy in places: the head has no ear you can
+find, the hind legs are a tangle of tubes, and the paw tips fray where the hair runs off them. The
+limb's shadow in the open corner is two dark scratches that do not explain themselves. The cut edge
+is the least of this panel; under a tree there is hardly one to cut.
+
+**Into the kit.** `Canopy`, the leaves as a grid of holes and the sun's disc spread through them;
+`to_ground`, where a thing's shadow falls; `sd_ellipsoid`, `sd_capsule`, `smin`, `march`, `normals`
+and `blocked`, shapes made of distances and the rays to find them, for the dog and the bowl;
+`loads`, brushloads placed in metres with their centres drawn from where they are wanted, one mix
+each; `fur`, strokes that run the way the hair lies over a surface.
+
+**Asked of the engine.**
+- Somewhere to put a stroke in metres. Every painter looking down at a floor is projecting points
+  through their own camera before every stroke; a board that knew its view could take them direct.
+- A `dab` that is round. A short stroke with tapered ends is the closest I can get to a pebble or a
+  nose, and the ends still square off when the brush is wide for its length.
+
+**Next.** Nearer. Something that throws coloured shade instead of grey: a tarp over a taco stand,
+or the green fibreglass of a bus shelter, where the shade itself has a colour before anything is in
+it.

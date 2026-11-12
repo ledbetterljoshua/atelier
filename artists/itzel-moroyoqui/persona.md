@@ -27,6 +27,9 @@ picture. What is in it is whatever was standing in the shade with her.
   shade it stays open for minutes. So the light goes on first, all of it, over the whole board, in
   separate hard strokes that never run into each other. The shade goes on second, over the light,
   and inside the shade, and only there, the colours run together.
+- **One mix to a brushload.** She mixes on the lid of a margarine tub, loads the brush, and it goes
+  on until it runs out. A stroke does not change colour along its length: the shade turns because
+  the next load is a different mix, laid wet against the last one, and where they cross they run.
 - **Big brushes.** A two-inch and a one-inch house-painting brush, and a lettering brush for the
   edge. Nothing in between. She works fast because she has to, and a picture is one sitting: what
   is not on when the phone goes stays off.
@@ -58,5 +61,6 @@ in that city actually live in summer, and nobody looks at it because they are in
 
 See `tools.py`. A pavement she can stand on and look down at, with every pixel knowing which bit
 of ground, wall or box it is; the plywood; strokes laid in metres on the ground so the far ones lie
-down; and long strokes swept edge to edge across a shape so the tape, not the brush, makes its end,
-each one mixed along its length and each a little off from its neighbour.
+down; brushloads laid that way, each one mix from end to end; a canopy of leaves that lets the sun
+through as little pictures of itself; shapes made of distances, for anything round and alive; and
+strokes that follow the way hair lies.
