@@ -1,0 +1,60 @@
+{
+  "title": "Back stairs, east wing, half-landing, 04:50",
+  "artist": "nell-abara",
+  "year": 2008,
+  "medium": "Oil on hardboard, rough side",
+  "made": "2026-11-12",
+  "strokes": 873,
+  "size": [
+    1050,
+    1500
+  ],
+  "stages": [
+    {
+      "name": "coloured darks over black",
+      "strokes": 90,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the dark, one brush",
+      "strokes": 407,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the walls, with the stair",
+      "strokes": 493,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the landing and the fire door",
+      "strokes": 661,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the flight, step by step",
+      "strokes": 747,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "where the light catches",
+      "strokes": 807,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "what was left: a cup",
+      "strokes": 843,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "white last: the light over the door",
+      "strokes": 873,
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 873,
+      "file": "stages/08.jpg"
+    }
+  ],
+  "seconds": 2.7
+}

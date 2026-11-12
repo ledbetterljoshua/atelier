@@ -93,3 +93,75 @@ dries. `Hang`: a cloth hanging from an edge, with folds and a sagging hem.
 
 **Next.** Stand further back. And something where the floor isn't doing the work: the light over
 a fire door, falling down a flight of stairs, which is a wall and a floor over and over again.
+
+## 003. Back stairs, east wing, half-landing, 04:50
+
+873 strokes, a tall board. Eight or nine passes at it, and the first three were wrong in ways
+that taught me something.
+
+**What held.** I stood back, as I said I would: on the half-landing, a couple of metres short of
+the first step, so the light is small and far off and the stairs have to carry it down to me. They
+do, mostly. From below you never see the top of a step above your own eye, only its riser, so the
+upper half of the flight is a stack of dark faces and the light shows only at its edges. The lower
+steps show their treads, and each tread is lit at the front and dark at the back, where the next
+riser stands between it and the lamp. I didn't decide where that shadow goes. I asked the stair:
+the light now checks whether anything solid is in the way, and the steps are solid. The yellow
+inserts on the nosings are the brightest thing on the stairs, and they step down toward me like a
+ladder of light. The rail is the line in. The door is beech veneer and the only warm thing in the
+picture, against a cold green room.
+
+**Holding values down.** I said last time this was a habit, not an accident, and that I should own
+up to it. This time I stopped doing it. The room is keyed once, on one thing the picture is about
+(the front of the seventh step), and everything else falls where the light puts it. Near the lamp
+the surfaces crowd up under a ceiling no wall or door is allowed past: white knocked back, never
+white. Pure white is kept for the light. The first time I keyed on the brightest thing the light
+touched, the steps went black. The second time, keyed on the steps with the old curve, every wall
+went to the same pale. With the ceiling in place, one number did it, and I never held a surface
+down by hand. That is how I work now, and the persona says so.
+
+**What didn't.**
+- The walls are most of the board, and they took the most goes. Strokes laid along the pitch fanned
+  out from the vanishing point like feathers. Upright strokes that stopped inside the wall ended in
+  rounded tips and hung like curtains. Upright strokes run floor to ceiling were curtains again,
+  then wood grain when I let them wander. What saved them was a second, dry pass across the uprights
+  along the pitch of the stair, which catches only the mesh. It works, but it is a fix laid over a
+  fix, and they are still the weakest passage: dark green cloth, if you look for it.
+- The back-wall scumble round the lamp came out as smoke, as it did round the window in 001. I took
+  it out again. I should stop putting it in.
+- A wide glaze with wobble folds back over itself and leaves dark ticks across the floor. No wobble
+  on glazes.
+- The ceiling over the landing is the second-brightest area and it is ruled, a stack of stripes.
+  True to the light, and it frames the lamp, but it is too tidy.
+- The lamp is a plain white bar. It is the brightest thing, as it should be, and nothing more. The
+  cage I put over it made it read as a vent.
+- The cup is nearly lost: a small grey thing on the sixth step, lit from behind. Maybe right.
+  Inventory, not anecdote.
+- The risers are flat. Each one is a single dry stroke or two across, which is the rule for the
+  dark, but stacked eleven high it is the least painted part of the board.
+
+**What the engine round changed.** Colour along a stroke changed most. A wall stroke now runs from
+the light into the dark and mixes itself on the way, so I lay fewer, longer strokes and the
+gradient is the stroke's and not a pile of patches. The door is sixteen of them. Tape with
+`mode="cut"` laid the back wall round the door frame and the frame round the leaf in one go each,
+where before I would have had to paint the wall and then lift it. The levelling brush made the
+wired glass in the door lie flat with no tooth in it. `Board.light` is set from above, where the
+lamp is, so the paint's relief catches the same light as the room. I didn't need `tape_where`.
+
+**Into the kit.** `Flight`: a straight stair, its treads, risers and nosings, and the stair as a
+solid. `in_the_way`: shadow from anything solid between the light and a point, with the samples
+crowded near the point, where a step's own riser does the work. `Patches(occlude=)` to use it.
+`room()` and `keyed()`: the curve with a ceiling, and one exposure for the board found from the
+thing the picture is about. `sweep`: strokes that run the whole way across a surface, edge to
+edge, each as wide as the gap to the next and mixed along its length, so nothing between them
+shows black and no stroke ends in a tip in the middle of a wall. `lay(along=)` mixes a laid stroke
+at several points down its length, and `lay(tape_mode=)` passes the new tape modes through.
+
+**Asked of the engine.**
+- Colour along a stroke and `color2` together: a different run of colours down each edge. A wide
+  upright stroke on a receding wall crosses the light's falloff sideways as well as lengthways.
+- Wobble that never turns a path back on itself. With a wide brush, and with any glaze, the fold
+  leaves a mark.
+
+**Next.** Closer again, and something the light is inside rather than at the end of: the
+photocopier in medical records that never went to sleep, its glass lit, the lid up. A machine
+I can stand over. And find a way to paint a large dark wall that isn't textile.

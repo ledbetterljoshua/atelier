@@ -125,8 +125,12 @@ def tone(c, k=2.2):
 
 
 def lay(board, view, plane, brush, shade, direction, length=110.0, cover=2.0, wobble=1.5,
-        zref=5.0, shrink=0.5, tape=True, where=None, color2=None, feather=1.2, max_m=6.0):
-    """Lay strokes along a plane. direction is a vector in the room; shade(P) mixes the colour."""
+        zref=5.0, shrink=0.5, tape=True, where=None, color2=None, feather=1.2, max_m=6.0, along=0,
+        tape_mode="replace"):
+    """Lay strokes along a plane. direction is a vector in the room; shade(P) mixes the colour.
+
+    along=n mixes the colour afresh at n points down each stroke, so one long stroke can run from
+    the light into the dark instead of being cut into pieces that each carry one value."""
     rng = board.rng
     dvec = v3(*direction)
     dvec /= np.linalg.norm(dvec)
@@ -134,7 +138,7 @@ def lay(board, view, plane, brush, shade, direction, length=110.0, cover=2.0, wo
         poly = plane.screen_poly(view)
         if poly is None:
             return 0
-        board.tape(poly, feather=feather)
+        board.tape(poly, feather=feather, mode=tape_mode)
     pts, area = plane.sample(view, rng, lambda a: a * cover / (length * brush.width) + 1)
     n = 0
     for P in pts:
@@ -156,7 +160,7 @@ def lay(board, view, plane, brush, shade, direction, length=110.0, cover=2.0, wo
             a, b = P + (a - P) * 0.6, P + (b - P) * 0.6
         if rng.random() < 0.5:
             a, b = b, a
-        c = shade(P)
+        c = shade(P) if along < 2 else [shade(a + (b - a) * t) for t in np.linspace(0, 1, along)]
         board.stroke(view.P(np.array([a, b])), brush.but(width=brush.width * k), c,
                      color2=None if color2 is None else color2(P), wobble=wobble * k)
         n += 1
@@ -194,12 +198,13 @@ class Patches:
     blockers: [(plane, transmit)] things standing in the way; transmit 0 is solid, 0.3 a tea towel.
     """
 
-    def __init__(self, S, n, rad, dA, aperture=None, blockers=()):
+    def __init__(self, S, n, rad, dA, aperture=None, blockers=(), occlude=None):
         self.S = np.asarray(S, dtype=np.float64)
         self.n = np.asarray(n, dtype=np.float64)
         self.rad = np.asarray(rad, dtype=np.float64)
         self.dA = np.broadcast_to(np.asarray(dA, dtype=np.float64), (len(self.S),)).copy()
         self.aperture, self.blockers = aperture, list(blockers)
+        self.occlude = occlude     # occlude(S, P) -> how much of each sample's light gets to P, 0..1
 
     @classmethod
     def on(cls, plane, radiance, nu, nv, facing=None, rng=None, **kw):
@@ -221,7 +226,7 @@ class Patches:
     def __add__(self, other):
         out = Patches(np.vstack([self.S, other.S]), np.vstack([self.n, other.n]),
                       np.vstack([self.rad, other.rad]), np.concatenate([self.dA, other.dA]),
-                      self.aperture, self.blockers)
+                      self.aperture, self.blockers, self.occlude)
         return out
 
     def onto(self, P, N, near=0.03):
@@ -236,6 +241,11 @@ class Patches:
             w = w * crosses(self.aperture, self.S, P)
         for plane, tr in self.blockers:
             w = np.where(crosses(plane, self.S, P), w * tr, w)
+        if self.occlude is not None:
+            live = w > 0
+            if live.any():
+                w = w.copy()
+                w[live] *= self.occlude(self.S[live], P)
         return (self.rad * w[:, None]).sum(0)
 
 
@@ -380,3 +390,112 @@ class Hang:
         hem = [self.at(u, 1) for u in us[::-1]]
         left = [self.at(0, v) for v in np.linspace(1, 0, n)]
         return view.P(np.array(top + right + hem + left))
+
+
+# --- added for 003: a flight of stairs, and a room keyed to the one light in it ----------------
+
+def in_the_way(S, P, solid, n=56, eps=0.004):
+    """For each light sample S, 1 if nothing solid stands between it and P, else 0.
+
+    solid(X, Y, Z) -> bool. The samples crowd toward P, where a step's own riser does its shading."""
+    S = np.asarray(S, dtype=np.float64)
+    d = S - P
+    L = np.linalg.norm(d, axis=1, keepdims=True)
+    t = eps / L + (1 - eps / L) * np.linspace(0.0, 1.0, n)[None, :] ** 2   # (M, n)
+    Q = P[None, None, :] + d[:, None, :] * t[..., None]
+    hit = solid(Q[..., 0], Q[..., 1], Q[..., 2]).any(axis=1)
+    return np.where(hit, 0.0, 1.0)
+
+
+class Flight:
+    """A straight flight between two walls, climbing away from me (toward +z).
+
+    Riser k (0..n-1) stands at z0 + k*going. Tread k (1..n-1) lies on top of riser k-1 at
+    y0 + k*rise. The landing at the head is tread n, and runs back to z_end.
+    """
+
+    def __init__(self, x0, x1, z0, rise, going, n, z_end, y0=0.0):
+        self.x0, self.x1, self.z0, self.r, self.g, self.n = x0, x1, z0, rise, going, n
+        self.z_end, self.y0 = z_end, y0
+        self.z_head = z0 + (n - 1) * going
+
+    def top(self, Z):
+        """Height of whatever you would stand on at depth Z."""
+        Z = np.asarray(Z, dtype=np.float64)
+        k = np.clip(np.floor((Z - self.z0) / self.g) + 1, 0, self.n)
+        return np.where(Z < self.z0, self.y0, self.y0 + k * self.r)
+
+    def solid(self, X, Y, Z):
+        inside = (X > self.x0) & (X < self.x1) & (Z >= self.z0) & (Z <= self.z_end)
+        return inside & (Y < self.top(Z) - 1e-6)
+
+    def nosing(self, k):
+        """(y, z) of the front edge of tread k; k = n is the edge of the landing."""
+        return self.y0 + k * self.r, self.z0 + (k - 1) * self.g
+
+    def pitch_y(self, z):
+        """The line through the nosings."""
+        return self.y0 + self.r + (np.asarray(z) - self.z0) * self.r / self.g
+
+    def tread(self, k):
+        from_z = self.z0 + (k - 1) * self.g
+        to_z = self.z_end if k >= self.n else from_z + self.g
+        y = self.y0 + k * self.r
+        return Plane((self.x0, y, from_z), (self.x1 - self.x0, 0, 0), (0, 0, to_z - from_z))
+
+    def riser(self, k):
+        z = self.z0 + k * self.g
+        return Plane((self.x0, self.y0 + k * self.r, z), (self.x1 - self.x0, 0, 0), (0, self.r, 0))
+
+
+def room(c, cap=0.62):
+    """Radiance to paint for anything the light falls on. However much light lands on a surface it
+    can only crowd up under cap (white knocked back), and does so slowly, so a wall a hand from the
+    lamp still steps down to the one beside it. Pure white is kept for the light itself."""
+    c = np.maximum(np.asarray(c, dtype=np.float64), 0.0)
+    return np.maximum(cap * c / (c + cap), 0.004)
+
+
+def keyed(light, probe, target, curve=room):
+    """One exposure for the whole board, found once: the probe (Q, N, albedo) comes out at target.
+
+    She keys on the thing the picture is about, not on whatever is brightest, and lets curve()
+    look after the surfaces near the lamp. Every value keeps its order against every other."""
+    Q, N, a = probe
+    c = np.asarray(a) * light(Q, N)
+    lo, hi = 1e-3, 1e5
+    for _ in range(80):
+        mid = np.sqrt(lo * hi)
+        v = curve(c * mid)
+        if 0.2 * v[0] + 0.7 * v[1] + 0.1 * v[2] < target:
+            lo = mid
+        else:
+            hi = mid
+    return np.sqrt(lo * hi)
+
+
+def sweep(board, view, edge0, edge1, n, brush, shade, along=6, overlap=1.7, wobble=0.0, jitter=0.35, min_w=2.0,
+          max_w=90.0, where=None):
+    """Strokes that go the whole way across a surface, edge to edge, each mixed along its length.
+
+    edge0(t), edge1(t): the two ends of the stroke at t in 0..1, as points in the room. Strokes sit
+    at n steps of t; each is as wide on the board as the gap to its neighbour, times overlap, so
+    nothing between them shows black. Ends are run past the surface and the tape stops them, so no
+    stroke ends in a rounded tip in the middle of a wall. where(t) may skip a stroke.
+    """
+    rng = board.rng
+    out = 0
+    for i in range(n):
+        t = (i + 0.5 + rng.uniform(-jitter, jitter)) / n
+        if where is not None and not where(t):
+            continue
+        a, b = edge0(t), edge1(t)
+        m = (a + b) / 2
+        dt = 1.0 / n
+        sp = np.hypot(*(view.P((edge0(min(t + dt, 1)) + edge1(min(t + dt, 1))) / 2) - view.P(m)))
+        w = float(np.clip(sp * overlap, min_w, max_w))
+        qs = [a + (b - a) * s for s in np.linspace(0, 1, along)]
+        ends = view.P(np.array([a, b]))
+        board.stroke(ends, brush.but(width=w), [shade(q) for q in qs], wobble=wobble)
+        out += 1
+    return out

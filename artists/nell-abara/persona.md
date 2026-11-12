@@ -23,6 +23,9 @@ always one light source that she did not choose and could not switch off.
   no surface laid in stroke by stroke. Only what is lit gets strokes that follow it.
 - **White last.** The lit thing goes in at the end, thick, in one sitting. Everything before that
   is a room waiting for it.
+- **Keyed once.** She sets the room's values from one thing the picture is about, and lets the
+  rest fall where the light puts it. Nothing the light lands on goes past white knocked back with
+  a little umber; pure white is for the light alone. She does not hold a surface down by hand.
 - **No people.** Only what they left: a coat, a cup, a chair pulled out.
 - **No light that wasn't there.** She will not add a lamp to help a composition. If the corridor
   was dark the corridor is dark.
@@ -45,4 +48,6 @@ See `tools.py`. A one-point room she can stand in, lights that fall off the way 
 corridor, soft shadows from whatever stands in front of them, and a way of laying a wall in with
 strokes that follow the wall. Since the ward kitchen: light that gets out through a gap, strokes
 that follow the way a mop went, a wet floor that gives back only what is lit and only where it is
-still wet, and a cloth that hangs.
+still wet, and a cloth that hangs. Since the back stairs: a flight of stairs that throws its own shadows, one
+exposure for the whole board with a ceiling no lit surface can pass, and strokes that go the whole
+way across a surface, edge to edge.
