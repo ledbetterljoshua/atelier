@@ -102,13 +102,14 @@ def vowel_run(take, beats, palette, voice_shade, blend=0.35, lag=0.0, gain=None)
     return fn
 
 
-def breath_path(take, voice, b0, b1, x_of, y_of, vib=0.0, vib_beats=0.35, phase=0.0, step=0.04, lag=0.0):
+def breath_path(take, voice, b0, b1, x_of, y_of, vib=0.0, vib_beats=0.35, phase=0.0, step=0.04, lag=0.0,
+                glide=1.0):
     """Points along one breath: across the board with time, up and down with pitch, with a vibrato
-    that is a few px either way."""
+    that is a few px either way. A slower chant leans into its notes over a longer `glide`."""
     bt = np.arange(b0, b1 + 1e-9, step)
     if len(bt) < 2:
         bt = np.array([b0, b1])
-    semi = take.pitch(voice, bt - lag)
+    semi = take.pitch(voice, bt - lag, glide=glide)
     # a breath starts on its note: no sliding up into it from the one before the breath
     k0 = take.syl_at(b0 - lag)
     first = bt - lag < take.end[k0]
@@ -135,3 +136,18 @@ def along(pts, field):
     def fn(t):
         return np.interp(t, s, vals)
     return fn
+
+
+def quiet(dyn, b0, b1, floor=0.15, power=1.3):
+    """Opacity along a breath from b0 to b1: soft singing is less paint on the brush, not only darker
+    paint, so on a dry brush it catches only the tops of the cork."""
+    def fn(t):
+        return floor + (1.0 - floor) * float(dyn(b0 + (b1 - b0) * t)) ** power
+    return fn
+
+
+def field(w, h, fn):
+    """fn(X, Y) at every pixel centre, as an (h, w) array: a pressure the engine reads where a stroke
+    passes."""
+    Y, X = np.mgrid[0:h, 0:w].astype(np.float64) + 0.5
+    return np.broadcast_to(np.asarray(fn(X, Y), dtype=np.float64), (h, w)).copy()

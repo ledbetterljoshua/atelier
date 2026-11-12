@@ -1,0 +1,49 @@
+{
+  "title": "Stabat Mater, first verse, Venerd\u00ec Santo 2003",
+  "year": 2012,
+  "medium": "Oil on agglomerated cork, gessoed",
+  "artist": "gavino-cossu",
+  "strokes": 353,
+  "size": [
+    1800,
+    1050
+  ],
+  "stages": [
+    {
+      "name": "gesso on cork",
+      "strokes": 0,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the silence",
+      "strokes": 229,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the morning stations, thin",
+      "strokes": 277,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "afternoon, flat",
+      "strokes": 325,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the church keeping it",
+      "strokes": 337,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the last time, at the Calvary",
+      "strokes": 353,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 353,
+      "file": "stages/06.jpg"
+    }
+  ],
+  "seconds": 4.0
+}

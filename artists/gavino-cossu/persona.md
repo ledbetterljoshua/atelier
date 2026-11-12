@@ -37,8 +37,12 @@ he does not paint.
   next breath, so it runs out where the breath did. Never touched up, never gone back into.
 - **Left to right, always.** No stroke goes against time.
 - **Colour is the vowel.** *i* a grey-green, *e* ochre, *a* red earth, *o* ultramarine, *u* a dark
-  violet; the same since he was a boy. A voice is darker the lower it sits, and quieter singing is
-  darker paint. Nothing else decides a colour.
+  violet; the same since he was a boy. A voice is darker the lower it sits. Nothing else decides a
+  colour.
+- **Quiet is less paint.** Soft singing is not a darker colour but a drier brush that barely
+  touches, so it takes only the tops of the cork granules and the dark shows between them. Loud
+  singing fills the seams. The brush is a flat held level the whole way and never turned, so a note
+  that slides goes thin and a held one stays full.
 - **Every time it was sung.** A panel is not one performance. The cuncordu sings the same verse at
   station after station all day; he lays each time over the last, in order, and the one he
   remembers best goes on top.
@@ -61,4 +65,6 @@ exactly as he can make them.
 See `tools.py`. A gessoed cork tooth; a verse as syllables, vowels, lengths and chords; a take of it
 that hurries and drags and goes flat; breaths as paths across time and pitch that run dry where the
 breath did; a colour that follows the vowel being sung along a stroke; and pressure that reads a
-worked-out field along a path, for thinning the dark round the quintina.
+worked-out field along a path, for thinning the dark round the quintina; a slower lean into each
+note; opacity that follows how loud the singing was; and fields over the whole board for the engine
+to read as pressure.

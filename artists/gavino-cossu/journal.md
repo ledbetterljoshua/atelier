@@ -55,3 +55,54 @@ where its breath does. `along` for pressure that reads a field along a path.
 
 **Next.** The Stabat Mater, which the second cuncordu sings, quieter and slower. Open thin. Let the
 silence carry more of the board and give the cork somewhere to show.
+
+## 002. Stabat Mater, first verse, Venerdì Santo 2003
+
+353 strokes. Eleven goes. The year the second cuncordu's contra was in hospital and they asked me to
+stand in for Good Friday. I sang it with them once at each station and never again.
+
+**What held.** Quiet is less paint, not darker paint. In the Miserere I darkened the soft singing and
+it still shouted. This time the voices go on with a nearly dry brush, and how loud it was decides how
+much is on it: at "Stabat" it only catches the tops of the granules and the dark shows between them,
+by "lacrimosa" it starts to fill the seams, and at "Filius" it is paint. Seven times sung, laid one
+over another, and the soft passages still stay thin, because every take hits the same granules and
+none of them reaches the seams. The cork is finally in the picture, in the voices themselves. Second:
+the brush held level, now the engine lets me. A slide goes thin and a held note stays full, which is
+what a breath does. Third: the bassu sits on one note a line and the contra nearly as still. The four
+are no longer one shape printed four times; the bottom is a floor and the tune is on top. The
+quintina over "Filius" is long and runs on toward the edge of the board, and the little one over
+"lacrimosa" is only a few dry drags. The "us" is dark violet and goes into the dark under it, so the
+loudest moment of the verse is almost invisible and the light is the one thing nobody sang. That is
+right.
+
+**What didn't.**
+- First go I gave the chords the leaps I remembered from the bassu's part and it came out a
+  seismograph, every voice jumping a fifth together. The second cuncordu moves by step. I wrote the
+  parts again voice by voice.
+- Then the boghe going up and down every syllable made waves, and waves under a white shape are a
+  moon over the sea. I gave the tune more held notes. Still, the upper two voices hump along in a
+  regular rhythm from "do" to "Fi" and from across the room it can still read as water.
+- I drew the echo on every syllable as in the Miserere and with the voices this thin the echoes were
+  the loudest thing: beads on a string. Now the church only keeps the end of each line.
+- The silence went flat and dead when I laid it in long full-width passes; with a different black on
+  each pass it went to stripes, like blinds. In the end it is four even coats and a last dry drag of
+  umber on the granules, heaviest before the first note and wearing off to the right. You see it only
+  close to. The top left third of the board is still mostly nothing.
+- The left third is thin, as I asked of it, but it is near enough to noise that a stranger may not
+  see a verse starting there. The weakest passage is the contraltu and bassu under "Stabat Mater",
+  where the paint is only speckle.
+
+**Into the kit.** `breath_path(..., glide=)` for a slower lean into each note. `quiet`, opacity along a
+breath from how loud it was sung. `field`, a function over the board as an array, so the engine can
+read pressure where a stroke goes; I use it for the umber on the granules and for thinning the dark
+round the quintina without resampling paths myself.
+
+**Asked of the engine.**
+- Dryness along a stroke, the way opacity now goes along it. Quiet and loud inside one breath want
+  different dryness, and I get there only through pressure and the brush running out.
+- A way to see the board's tooth in the dark. Relief under the raking light is a fraction of the
+  colour, so on near-black the granules vanish however proud they are. I had to put umber on them.
+
+**Next.** Persona changed: quiet singing is now less paint, and the brush is held level; both written
+in. Next a verse where they are loud from the start, to see whether full paint can still let the cork
+through anywhere, or the Miserere again from the bassu's place, low and wide.
