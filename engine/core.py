@@ -23,8 +23,8 @@ PAINT, GLAZE = 0, 1
 
 
 @njit(cache=True, fastmath=True)
-def _walk(col, hgt, wet, tooth, mask, use_mask, px, py, pw, pp, boff, bph, bfr, wander, blog, bload,
-          brad, mode, a0, pickup, deplete, dryness, soft, thickness, hard):
+def _walk(col, hgt, wet, flat, tooth, mask, use_mask, px, py, pw, pp, pcol, boff, bph, bfr, wander, blog,
+          bload, brad, mode, a0, pickup, deplete, dryness, soft, thickness, hard, level):
     H, W = hgt.shape
     n = px.shape[0]
     B = boff.shape[0]
@@ -61,11 +61,12 @@ def _walk(col, hgt, wet, tooth, mask, use_mask, px, py, pw, pp, boff, bph, bfr, 
                     wv = wet[ay, ax]
                     if wv > 0.01:
                         k = pickup * wv * pr * 0.25
+                        # blog is the bristle's offset from the stroke's colour at this point
                         for c in range(3):
-                            blog[b, c] = (1.0 - k) * blog[b, c] + k * log(col[ay, ax, c] + 1e-4)
-            c0 = exp(blog[b, 0])
-            c1 = exp(blog[b, 1])
-            c2 = exp(blog[b, 2])
+                            blog[b, c] = (1.0 - k) * blog[b, c] + k * (log(col[ay, ax, c] + 1e-4) - pcol[i, c])
+            c0 = min(exp(blog[b, 0] + pcol[i, 0]), 1.0)
+            c1 = min(exp(blog[b, 1] + pcol[i, 1]), 1.0)
+            c2 = min(exp(blog[b, 2] + pcol[i, 2]), 1.0)
             x0 = int(floor(cx - brad))
             x1 = int(ceil(cx + brad))
             y0 = int(floor(cy - brad))
@@ -104,7 +105,13 @@ def _walk(col, hgt, wet, tooth, mask, use_mask, px, py, pw, pp, boff, bph, bfr, 
                         col[y, x, 0] += (c0 - col[y, x, 0]) * a
                         col[y, x, 1] += (c1 - col[y, x, 1]) * a
                         col[y, x, 2] += (c2 - col[y, x, 2]) * a
-                        hgt[y, x] += a * thickness * ld
+                        if level > 0.0:
+                            lv = a * level
+                            hgt[y, x] *= 1.0 - lv
+                            if lv > flat[y, x]:
+                                flat[y, x] = lv
+                        else:
+                            hgt[y, x] += a * thickness * ld
                         if a > wet[y, x]:
                             wet[y, x] = a
                     else:
@@ -131,19 +138,23 @@ class Brush:
     glaze: bool = False
     hard: bool = False         # knife edge rather than hair
     wander: float = 0.6        # px each bristle strays from its place in the row
+    level: float = 0.0         # 0..1: paint settles flat and glossy (standing water, glass) and
+                               # takes the relief and the board's tooth out from under it
 
     def but(self, **kw):
         return replace(self, **kw)
 
 
 class Board:
-    def __init__(self, w, h, ground, tooth, seed=0):
+    def __init__(self, w, h, ground, tooth, seed=0, light=(-0.55, -0.75)):
         self.w, self.h = w, h
         self.rng = np.random.default_rng(seed)
         self.col = np.empty((h, w, 3), dtype=np.float32)
         self.col[:] = np.asarray(ground, dtype=np.float32)
         self.hgt = np.zeros((h, w), dtype=np.float32)
         self.wet = np.zeros((h, w), dtype=np.float32)
+        self.flat = np.zeros((h, w), dtype=np.float32)
+        self.light = light   # direction the raking light comes from, for every look at the board
         self.tooth = np.ascontiguousarray(tooth, dtype=np.float32)
         self.mask = np.ones((h, w), dtype=np.float32)
         self.use_mask = False
@@ -151,17 +162,40 @@ class Board:
         self.stages = []
 
     # --- masking tape -------------------------------------------------------
-    def tape(self, *polys, outside=False, feather=0.0):
-        """Only let paint land inside these polygons (or outside them)."""
+    def tape(self, *polys, outside=False, feather=0.0, mode="replace"):
+        """Only let paint land inside these polygons (or outside them).
+
+        mode says what happens to tape already down: "replace" lifts it first, "and" keeps only
+        what both leave open, "or" opens either, "cut" closes what this one would open."""
         im = Image.new("L", (self.w, self.h), 0)
         d = ImageDraw.Draw(im)
         for p in polys:
             d.polygon([tuple(map(float, q)) for q in p], fill=255)
-        m = np.asarray(im, dtype=np.float32) / 255.0
+        self._lay_tape(np.asarray(im, dtype=np.float32) / 255.0, outside, feather, mode)
+
+    def tape_where(self, region, outside=False, feather=0.0, mode="replace"):
+        """Tape cut to a worked-out region: an (h, w) array of 0..1, or fn(X, Y) -> 0..1 evaluated
+        at pixel centres. Same modes as tape()."""
+        if callable(region):
+            Y, X = np.mgrid[0:self.h, 0:self.w].astype(np.float64) + 0.5
+            region = region(X, Y)
+        m = np.clip(np.broadcast_to(np.asarray(region, dtype=np.float32), (self.h, self.w)), 0, 1)
+        self._lay_tape(m, outside, feather, mode)
+
+    def _lay_tape(self, m, outside, feather, mode):
         if outside:
             m = 1.0 - m
         if feather > 0:
             m = gaussian_filter(m, feather)
+        old = self.mask if self.use_mask else None
+        if mode == "and":
+            m = m if old is None else old * m
+        elif mode == "or":
+            m = m if old is None else np.maximum(old, m)
+        elif mode == "cut":
+            m = (1.0 if old is None else old) * (1.0 - m)
+        elif mode != "replace":
+            raise ValueError(f"tape mode {mode!r}")
         self.mask = np.ascontiguousarray(m, dtype=np.float32)
         self.use_mask = True
 
@@ -174,6 +208,8 @@ class Board:
 
     # --- the stroke ---------------------------------------------------------
     def stroke(self, pts, brush, color, color2=None, pressure=1.0, wobble=0.0, smooth=True):
+        """color is one colour, a list of colours spread evenly along the stroke, or fn(t) -> colour
+        for t from 0 at the start to 1 at the end. Bristles keep their own streaks either way."""
         pts = np.asarray(pts, dtype=np.float64)
         if smooth and len(pts) > 2:
             pts = paths.chaikin(pts, 4)
@@ -203,7 +239,21 @@ class Board:
         boff = np.linspace(-1, 1, B) + rng.normal(0, 0.35 / B, B)
         streak = np.cumsum(rng.normal(0, 1, B))
         streak = (streak - streak.mean()) / (streak.std() + 1e-6)
-        c1 = np.log(np.maximum(np.asarray(color, dtype=np.float64), FLOOR))
+        if callable(color):
+            run = np.log(np.maximum(np.asarray([color(x) for x in t], dtype=np.float64), FLOOR))
+        else:
+            run = np.asarray(color, dtype=np.float64)
+            if run.ndim == 2:
+                k = np.linspace(0.0, 1.0, len(run))
+                run = np.log(np.maximum(np.stack([np.interp(t, k, run[:, c]) for c in range(3)], -1), FLOOR))
+            else:
+                run = None
+        if run is None:
+            c1 = np.log(np.maximum(np.asarray(color, dtype=np.float64), FLOOR))
+            pcol = np.zeros((n, 3))
+        else:
+            c1 = run[0]
+            pcol = run - run[0]
         if color2 is not None:
             c2 = np.log(np.maximum(np.asarray(color2, dtype=np.float64), FLOOR))
             u = np.clip((boff + 1) / 2 + rng.normal(0, 0.08, B), 0, 1)[:, None]
@@ -217,14 +267,14 @@ class Board:
         bload[starved] *= rng.random(starved.sum()) * 0.35
         hits = 5.0
         a0 = 1.0 - (1.0 - min(brush.opacity, 0.995)) ** (1.0 / hits)
-        _walk(self.col, self.hgt, self.wet, self.tooth, self.mask, self.use_mask,
+        _walk(self.col, self.hgt, self.wet, self.flat, self.tooth, self.mask, self.use_mask,
               np.ascontiguousarray(p[:, 0]), np.ascontiguousarray(p[:, 1]),
-              np.ascontiguousarray(pw), np.ascontiguousarray(pp),
+              np.ascontiguousarray(pw), np.ascontiguousarray(pp), np.ascontiguousarray(pcol),
               np.ascontiguousarray(boff), rng.uniform(0, 6.283, B), rng.uniform(0.01, 0.05, B) * spacing,
               float(brush.wander), np.ascontiguousarray(blog), np.ascontiguousarray(bload),
               float(brush.bristle), GLAZE if brush.glaze else PAINT, a0, float(brush.pickup),
               float(brush.deplete), float(brush.dryness), float(brush.soft),
-              float(brush.thickness), bool(brush.hard))
+              float(brush.thickness), bool(brush.hard), float(brush.level))
         self.n_strokes += 1
 
     def dab(self, x, y, brush, color, angle=None, length=None, **kw):
@@ -244,12 +294,12 @@ class Board:
             self.stroke([a, b], brush, c, wobble=wobble, **kw)
 
     # --- looking at it ------------------------------------------------------
-    def render(self, relief=1.0, raking=(-0.55, -0.75), tooth_relief=0.25):
+    def render(self, relief=1.0, raking=None, tooth_relief=0.25):
         h = gaussian_filter(self.hgt, 0.7)
         h = np.log1p(h) * 1.6 * relief + self.tooth * tooth_relief / (1.0 + self.hgt)
         gy, gx = np.gradient(h)
-        lx, ly = raking
-        shade = 1.0 + np.clip(-(gx * lx + gy * ly) * 0.55, -0.3, 0.45)
+        lx, ly = self.light if raking is None else raking
+        shade = 1.0 + np.clip(-(gx * lx + gy * ly) * 0.55, -0.3, 0.45) * (1.0 - self.flat)
         img = self.col * shade[..., None]
         return (linear_to_srgb(img) * 255.0 + 0.5).astype(np.uint8)
 

@@ -56,6 +56,8 @@ outgrown a rule, break it in a picture first, say why in that journal entry, and
 
 When several painters are working at once, nobody edits `engine/`. Work around it in your own
 `tools.py` and write what you wanted under `Asked of the engine` in the journal entry.
+Between rounds the requests that more than one painter needs, or that paint plainly lacks, are
+built and logged in `engine/CHANGES.md`. Read it before you start.
 
 ## Running
 
