@@ -481,3 +481,197 @@ def trout_outline(cx, cy, length, ang, bend=0.0, n=40):
         back = spine[k + 3] + sg * side * hw[k + 3] * 0.8
         fins.append(np.array([root, tip + sg * side * length * 0.012, tip - fwd * length * 0.02, back]))
     return body, fins
+
+
+# --- one big thing under glassy water (added for 004) ------------------------------------------
+
+def under(sun_elev, n=1.333):
+    """tan of the sun's angle from the vertical once it is in the water: board px per px of drop."""
+    zen = np.radians(90.0 - sun_elev)
+    return np.tan(np.arcsin(np.sin(zen) / n))
+
+
+def cast_down(pts, from_depth, depth, ppm, sun_elev, sun, iters=10):
+    """Where the shadow of points at `from_depth` metres lands on a bed that is not flat. The ray
+    runs down away from the sun until it meets the bed, so over a stone the shadow comes in close,
+    and where the bed falls away it is thrown further off. Fixed-point on the landing depth."""
+    pts = np.asarray(pts, dtype=np.float64)
+    k = under(sun_elev) * ppm
+    q = pts.copy()
+    for _ in range(iters):
+        drop = np.maximum(depth(q[:, 0], q[:, 1]) - from_depth, 0.0)
+        q = pts - np.outer(drop * k, sun)
+    return q
+
+
+def rock_outline(cx, cy, rx, ry, ang, rng, facets=7, n=120, round_=0.55):
+    """A stone that is not a pill: a few broken facets round a rough ellipse, the corners worn off
+    by `round_` (0 sharp, 1 an ellipse). Returns the outline and the reach function the outline
+    bounds: reach(X, Y) < 1 inside."""
+    k = np.sort(rng.uniform(0, 2 * np.pi, facets))
+    rad = rng.uniform(0.82, 1.08, facets)
+
+    def edge(th):
+        th = np.mod(th, 2 * np.pi)
+        # the polygon through the facet corners, as a radius at angle th
+        j = np.searchsorted(k, th) % facets
+        i = (j - 1) % facets
+        a0, a1 = k[i], k[j]
+        span = np.mod(a1 - a0, 2 * np.pi) + 1e-9
+        u = np.mod(th - a0, 2 * np.pi) / span
+        p0 = np.stack([rad[i] * np.cos(a0), rad[i] * np.sin(a0)], -1)
+        p1 = np.stack([rad[j] * np.cos(a1), rad[j] * np.sin(a1)], -1)
+        # where the ray at th crosses the chord p0-p1
+        dx, dy = np.cos(th), np.sin(th)
+        ex, ey = p1[..., 0] - p0[..., 0], p1[..., 1] - p0[..., 1]
+        den = dx * ey - dy * ex
+        den = np.where(np.abs(den) < 1e-9, 1e-9, den)
+        t = (p0[..., 0] * ey - p0[..., 1] * ex) / den
+        poly_r = np.clip(t, 0.3, 1.5)
+        ell_r = (1 - u) * rad[i] + u * rad[j]
+        return (1 - round_) * poly_r + round_ * ell_r
+
+    ca, sa = np.cos(ang), np.sin(ang)
+
+    def reach(X, Y):
+        dx, dy = X - cx, Y - cy
+        u = (dx * ca + dy * sa) / rx
+        v = (-dx * sa + dy * ca) / ry
+        return np.hypot(u, v) / edge(np.arctan2(v, u))
+
+    th = np.linspace(0, 2 * np.pi, n, endpoint=False)
+    e = edge(th)
+    u, v = e * np.cos(th) * rx, e * np.sin(th) * ry
+    outline = np.column_stack([cx + u * ca - v * sa, cy + u * sa + v * ca])
+    return outline, reach
+
+
+def caustics(skin, depth, n=1.333, blur=1.6):
+    """Where the sun lands on the bed after the skin has bent it. Each pixel of surface sends its
+    light down to a point moved by its slope and by the depth under it, and the light piles up where
+    those points crowd. 1 is flat water; a lens of swell over a shallow stone gives soft bands, the
+    same swell over deep water folds into a net. Needs depth(X, Y) in metres, vectorised."""
+    H, W = skin.h.shape
+    Y, X = np.mgrid[0:H, 0:W].astype(np.float64) + 0.5
+    d = np.asarray(depth(X, Y), dtype=np.float64) * skin.ppm
+    k = 1.0 - 1.0 / n
+    lx = X + k * d * skin.sx
+    ly = Y + k * d * skin.sy
+    ix = np.floor(lx).astype(np.int64)
+    iy = np.floor(ly).astype(np.int64)
+    fx, fy = lx - ix, ly - iy
+    out = np.zeros(H * W)
+    for ox, oy, w in ((0, 0, (1 - fx) * (1 - fy)), (1, 0, fx * (1 - fy)), (0, 1, (1 - fx) * fy), (1, 1, fx * fy)):
+        jx, jy = ix + ox, iy + oy
+        ok = (jx >= 0) & (jx < W) & (jy >= 0) & (jy < H)
+        out += np.bincount((jy[ok] * W + jx[ok]).ravel(), weights=w[ok].ravel(), minlength=H * W)
+    from scipy.ndimage import gaussian_filter
+    return gaussian_filter(out.reshape(H, W), blur)
+
+
+class SmallTape:
+    """Tape cut round one small shape at a time. board.tape() cuts the whole board for every piece,
+    which is too slow for a bed of a thousand stones; this keeps one sheet and only cuts and lifts
+    the patch the stone sits in. Reaches into board.mask, as the old tape_where did."""
+
+    def __init__(self, board, ss=3):
+        self.board = board
+        self.m = np.zeros((board.h, board.w), dtype=np.float32)
+        self.box = None
+        self.ss = ss
+
+    def cut(self, polys, feather=0.6, weights=None):
+        """Open the tape inside the polygons (each may have its own 0..1 weight, max wins)."""
+        from PIL import Image, ImageDraw
+        from scipy.ndimage import gaussian_filter
+        self.lift()
+        allp = np.vstack(polys)
+        pad = int(2 + 3 * feather)
+        x0 = max(0, int(np.floor(allp[:, 0].min())) - pad)
+        y0 = max(0, int(np.floor(allp[:, 1].min())) - pad)
+        x1 = min(self.board.w, int(np.ceil(allp[:, 0].max())) + pad)
+        y1 = min(self.board.h, int(np.ceil(allp[:, 1].max())) + pad)
+        if x1 <= x0 or y1 <= y0:
+            return False
+        s = self.ss
+        out = np.zeros((y1 - y0, x1 - x0), dtype=np.float32)
+        for k, p in enumerate(polys):
+            im = Image.new("L", ((x1 - x0) * s, (y1 - y0) * s), 0)
+            ImageDraw.Draw(im).polygon([((q[0] - x0) * s, (q[1] - y0) * s) for q in p], fill=255)
+            im = im.resize((x1 - x0, y1 - y0), Image.BOX)
+            a = np.asarray(im, dtype=np.float32) / 255.0
+            out = np.maximum(out, a * (1.0 if weights is None else weights[k]))
+        if feather > 0:
+            out = gaussian_filter(out, feather)
+        self.m[y0:y1, x0:x1] = out
+        self.box = (x0, y0, x1, y1)
+        self.board.mask = self.m
+        self.board.use_mask = True
+        return True
+
+    def lift(self):
+        if self.box is not None:
+            x0, y0, x1, y1 = self.box
+            self.m[y0:y1, x0:x1] = 0.0
+            self.box = None
+        self.board.use_mask = False
+
+
+def halfplane_cut(poly, p0, direction, keep=1):
+    """The part of a polygon on one side of a line through p0 (Sutherland-Hodgman, one edge)."""
+    poly = np.asarray(poly, dtype=np.float64)
+    n = np.array([-direction[1], direction[0]]) * keep
+    s = (poly - p0) @ n
+    out = []
+    for i in range(len(poly)):
+        a, b = poly[i], poly[(i + 1) % len(poly)]
+        sa, sb = s[i], s[(i + 1) % len(poly)]
+        if sa >= 0:
+            out.append(a)
+        if (sa >= 0) != (sb >= 0):
+            out.append(a + (b - a) * (sa / (sa - sb)))
+    return np.array(out) if len(out) >= 3 else None
+
+
+def faceted_stone(board, tape, outline, center, r, color, L3, rng, brush, seen=None, cuts=2, tilt=0.9,
+                  shadow=None, sun=None, shadow_len=0.35, edge=0.5):
+    """A cobble as the river leaves it: a few flat-ish faces, not a pill. The outline is split by one
+    or two straight cuts near its middle; each face leans out toward its own side and takes the sun
+    by how it leans. Painted inside tape cut to that face, so the edges between faces stay sharp
+    and the outline is the stone's own. color is the stone in full light."""
+    seen = (lambda p: p) if seen is None else seen
+    center = np.asarray(center, dtype=np.float64)
+    if shadow is not None:
+        if tape.cut([seen(outline - np.asarray(sun) * r * shadow_len)], feather=1.0):
+            a = rng.uniform(0, np.pi)
+            board.dab(*seen(center[None] - np.asarray(sun) * r * shadow_len)[0],
+                      brush.but(width=2.6 * r, bristle=max(1.5, r / 5), glaze=True, opacity=0.5, pickup=0.0,
+                                loadvar=0.0, jitter=0.0, gap=0.0, taper=(0.0, 0.0)),
+                      shadow, angle=a, length=2.6 * r)
+    faces = [outline]
+    for _ in range(cuts):
+        new = []
+        a = rng.uniform(0, np.pi)
+        d = np.array([np.cos(a), np.sin(a)])
+        p0 = center + rng.normal(0, 0.25 * r, 2)
+        for f in faces:
+            for keep in (1, -1):
+                part = halfplane_cut(f, p0, d, keep)
+                if part is not None:
+                    new.append(part)
+        faces = new
+    top = rng.integers(len(faces))
+    for k, f in enumerate(faces):
+        c = f.mean(axis=0) - center
+        lean = 0.0 if k == top and len(faces) > 2 else tilt * min(1.0, np.hypot(*c) / (0.45 * r))
+        nrm = np.array([c[0], c[1], 0.0]) / (np.hypot(*c) + 1e-9) * lean + np.array([0, 0, 1.0])
+        nrm /= np.linalg.norm(nrm)
+        lam = max(0.0, float(nrm @ L3))
+        col = np.clip(np.asarray(color) * (0.32 + 0.78 * lam), 0.004, 1.0)
+        if not tape.cut([seen(f)], feather=edge):
+            continue
+        a = rng.uniform(0, np.pi)
+        for j in range(2):
+            board.dab(*seen(f.mean(axis=0)[None])[0], brush.but(width=2.2 * r, bristle=max(1.2, r / 7)), col,
+                      angle=a + j * 0.9, length=2.2 * r)
+    tape.lift()

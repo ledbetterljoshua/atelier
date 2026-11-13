@@ -51,6 +51,12 @@ slower.
   an amount that depends on the depth and the sun. She works that distance out and puts the shadow
   where it falls. If she cannot see the bed, there is no shadow.
 - **Her own shadow stays in** if it was there. She does not move along the rail to lose it.
+- **One place to look.** The measurement covers the whole reach, but the picture does not have to
+  give it all the same care. Most of the panel is let go quiet, deep and plain, so that one thing in
+  it (a shadow on a stone, usually) can be found. (Since September 1984; before that every stone got
+  the same attention, and the thing the picture was about got lost among them.)
+- **The light on the bed is worked out from the surface,** not drawn as a net: where the surface
+  bends the sun and piles it up, she cuts tape to the pile and lays it in warm.
 - **Titles** are the gauge record: river, station, date, reading in centimetres.
 
 ## Palette
@@ -73,4 +79,6 @@ stone, lit from the sun's side or from the whole sky; the sunlight net on the be
 current spreading out of them and foam on their creases; foam laid as lace along the current;
 floating things and the shadows they throw through the water; the surface written down as heights,
 which says where the bed is seen to be, how big the sun's net is, and where the glints fall; a
-trout from above.
+trout from above; shadows that drape over the bed until they meet it; the sun's light piled up
+where the surface bends it; cobbles in faces rather than pills, each laid through its own small
+tape.

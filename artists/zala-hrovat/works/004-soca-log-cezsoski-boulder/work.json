@@ -1,0 +1,60 @@
+{
+  "title": "So\u010da at Log \u010cezso\u0161ki, 2 September 1984, 37 cm",
+  "artist": "zala-hrovat",
+  "year": 1984,
+  "medium": "Oil on gessoed birch ply",
+  "made": "2026-11-12",
+  "strokes": 13686,
+  "size": [
+    1350,
+    1800
+  ],
+  "stages": [
+    {
+      "name": "the river turned off: the bed round the rock, falling into the scour",
+      "strokes": 2009,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the boulder in body colour, turned to the sun",
+      "strokes": 4227,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "shadows: the rock's on the bed, the trout's beside it on the rock",
+      "strokes": 4755,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the sun through the swell: bands on the rock's back, a net in the deep",
+      "strokes": 4863,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the water below the trout",
+      "strokes": 8627,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the trout, eight centimetres down, over the rock's shoulder",
+      "strokes": 8702,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "the river back in over it",
+      "strokes": 11566,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "the skin: glassy, the riffle coming in at the top",
+      "strokes": 13686,
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 13686,
+      "file": "stages/08.jpg"
+    }
+  ],
+  "seconds": 17.0
+}

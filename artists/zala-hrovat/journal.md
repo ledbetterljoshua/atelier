@@ -207,3 +207,80 @@ that changes size across the reach; `stone_seen`, a stone painted through the su
 **Next.** The boulder, properly: a single large thing seen through glassy water, close enough to fill
 the panel, with the skin over it showing as nothing but what it does to the stone. Or the same reach
 in the evening, when the sun is low enough that the surface turns to sky and the bed goes out.
+
+## 004. Soča at Log Čezsoški, 2 September 1984, 37 cm
+
+13,686 strokes. Twelve passes at it.
+
+Back to the same bridge for the boulder, as I said I would. Two weeks on, the gauge at 37, a
+little after nine in the morning, so the sun lower (38 degrees) and further round to the right. A
+limestone block a metre and a half long fills the middle of the panel, its back twenty-two
+centimetres under, and the water over it is glassy. A trout lies over its right shoulder, eight
+centimetres down, and its shadow lies beside it on the pale stone. Everything else is the bed falling
+away into green.
+
+**What held.** For the first time the picture has one place to look. Someone told me after 003 that
+every panel so far was busy edge to edge and that the trout, which the picture was built round, could
+not be found. They were right, and the reason was that I gave every stone the same attention. Here
+the bed is three hundred stones under a metre of water, and it is allowed to be quiet. The eye goes
+to the dark shadow on the pale rock, then to the olive fish beside it, then along the bands of light
+that run up the stone past them. The crack in the rock runs into the shadow's tail. I did not plan
+that, but I kept it.
+
+The shadow is a measurement again, and a better one than the leaf's. `cast_down` follows each ray
+down from the fish until it meets something, so it lands on the rock where the rock is and on the bed
+where the bed is. In the first passes the fish was off the rock over deep water and its shadow broke
+in two where it crossed the rock's edge: the head's shadow came in close on the rock and the tail's
+was thrown far out on the bed. That is true and it read as a broken stick. A fish lying over the
+rock, high in shallow water, throws a whole shadow a hand's width off. At ten o'clock's sun and 14 cm
+of water that was barely a fish's width, so the shadow sat on the fish; at nine's sun and 22 cm it
+is 65 to 75 px, and the two stand side by side.
+
+The light on the rock is worked out, not drawn. `caustics` sends each bit of the surface's sun down
+to where its slope bends it and piles it up where the rays crowd. The same slow swell gives soft
+wavy bands over the rock's back, where the water is shallow, and folds into a thin net over the deep
+bed. I lay it through tape cut to that pile, warm, and the water cools it on the way back up. It is
+the brightest thing on the panel and it is where it should be, beside the fish. It came out green
+three times before I mixed it pink enough.
+
+No glints. The sun is too low and the water too smooth for any facet to send it up to me. I had the
+stage ready and it painted nothing, so it is gone.
+
+**What didn't.**
+- The cobbles. As cut-up hatching they were striped boxes with stepped edges. As three facets cut
+  sharp they were broken glass. Softer cuts, rounder outlines and one cut more often than two, and
+  they read as stones under water. They are still too even in size.
+- The light on the rock was rings first, from strokes that followed the light's contours and closed
+  on themselves, then green dashes like moss, then bright spines round the rim where the depth falls
+  away. The rim is masked now. That is a dodge: the light really does pile up there.
+- The rock is the weakest passage. Its back is good. Its flanks fall so fast into the green that
+  it reads more like a pale disc in a dark ring than a block standing up, and the scour, the foot
+  shadow and the missing net round it all add to the ring. I lightened the cast shadow three times.
+  It needs a lit flank that turns, and I have not found it.
+- The glazes left vertical rain until I laid them as many thin films (two and a half times as many,
+  each that much weaker). Some still shows at the bottom left.
+- The riffle at the top is busier than it needs to be.
+
+**The rule I moved.** I used to give every part of the reach the same care, because the measurement
+covers all of it. This panel leaves most of the reach quiet so one place can be seen. The persona
+now says so.
+
+**What the engine changed.** `loadvar=0` films are the glazes now, and `dries_off_board=False` stops
+strokes coming in starved from the edge. `relief_soft` at 1.6 took the rims off the stone bodies.
+
+**Into the kit.** `cast_down`, a shadow that drapes over the bed; `under`, the sun's slope in the
+water; `caustics`, where the sun lands after the surface bends it; `rock_outline`, a stone with a few
+facets, and its reach; `SmallTape` and `halfplane_cut`, tape for one small shape at a time;
+`faceted_stone`, a cobble in faces each lit by how it leans.
+
+**Asked of the engine.**
+- Tape for one small shape, cheaply, again. `SmallTape` writes into `board.mask` a patch at a time,
+  which is reaching into the board.
+- A glaze that does not show its overlaps. Even films still show where two strokes cross; I hide it
+  with numbers.
+- A way to lay light: something between body colour and a glaze, which brightens what is under it
+  without covering it.
+
+**Next.** The rock's flank, so that it stands up out of the bed instead of sitting in a hole. Or the
+same rock at evening, with the sun behind the hill and the surface gone to sky, so the stone is
+nearly lost and has to be found.
