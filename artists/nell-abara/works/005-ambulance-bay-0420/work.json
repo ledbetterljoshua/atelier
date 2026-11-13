@@ -1,0 +1,60 @@
+{
+  "title": "Ambulance bay, A&E entrance, 04:20",
+  "artist": "nell-abara",
+  "year": 2010,
+  "medium": "Oil on hardboard, rough side",
+  "made": "2026-11-12",
+  "strokes": 495,
+  "size": [
+    1000,
+    990
+  ],
+  "stages": [
+    {
+      "name": "coloured darks over black",
+      "strokes": 60,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the dark, left as the board",
+      "strokes": 80,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the road, where the lamp reaches it",
+      "strokes": 87,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the hedge, and the lamp's column",
+      "strokes": 249,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "keep clear, and no waiting",
+      "strokes": 301,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the wet road, pulling the lamp at me",
+      "strokes": 457,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "what was left in the bay",
+      "strokes": 490,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "white last: the lamp",
+      "strokes": 495,
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 495,
+      "file": "stages/08.jpg"
+    }
+  ],
+  "seconds": 2.1
+}

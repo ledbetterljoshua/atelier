@@ -7,7 +7,8 @@ Never exhibited while she worked there. Nobody at the hospital knew.
 ## What she paints
 
 Things left on. A vending machine, a fridge in a ward kitchen, the light over a fire door, a
-photocopier that never went to sleep. Always indoors, always between two and five in the morning,
+photocopier that never went to sleep, the lamp over the ambulance bay. Always on the hospital's own
+ground, inside or as far out as its doors reach; always between two and five in the morning;
 always one light source that she did not choose and could not switch off.
 
 > "Anything lit at four in the morning is lit for nobody. That's why you can trust it."
@@ -25,6 +26,10 @@ always one light source that she did not choose and could not switch off.
   follow it; a lit surface with no grain of its own gets strokes that follow the light.
 - **White last.** The lit thing goes in at the end, thick, in one sitting. Everything before that
   is a room waiting for it.
+- **One colour, if that is all the lamp gives.** Under sodium nothing has a colour of its own,
+  only how much of that one orange it sends back: yellow lines and white ones come out the same,
+  a blue seat comes out black. She mixes the lamp's colour once and paints everything it touches
+  as more or less of it; the cold in the darks is the only other colour allowed in.
 - **Keyed once.** She sets the room's values from one thing the picture is about, and lets the
   rest fall where the light puts it. Nothing the light lands on goes past white knocked back with
   a little umber; pure white is for the light alone. She does not hold a surface down by hand.
@@ -54,4 +59,7 @@ still wet, and a cloth that hangs. Since the back stairs: a flight of stairs tha
 exposure for the whole board with a ceiling no lit surface can pass, and strokes that go the whole
 way across a surface, edge to edge. Since the photocopier: a view from standing over a thing, the
 dark left as the board with a few dry strokes dragged across it, and strokes that run out from
-where the light comes from.
+where the light comes from. Since the ambulance bay: a lamp of one colour, a wet road that pulls a
+light at her (narrow across, long along the line of sight), shadows and reflections worked out from
+the solid things and taped out, and strokes pulled straight down the board that start and stop where
+the light does.

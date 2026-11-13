@@ -571,3 +571,105 @@ def radiate(board, view, plane, origin, brush, shade, n, reach=1.6, along=8, wob
         qs = [plane.at(ou + du * s, ov + dv * s) for s in np.linspace(r, reach, along)]
         board.stroke(view.P(np.array([qs[0], qs[-1]])), brush, [shade(q) for q in qs], wobble=wobble)
     return n
+
+
+# --- added for 005: outside, under a lamp of one colour, on a wet road ---------------------------
+
+def one_line(albedo, weight=(0.62, 0.38, 0.0)):
+    """How much of a lamp that gives only one colour a surface sends back. Low-pressure sodium is a
+    single yellow line: a red, a yellow and a white come back as the same thing at different
+    strengths, and a blue comes back as nothing. Returns one number; the lamp gives the colour."""
+    a = np.asarray(albedo, dtype=np.float64)
+    return float(a @ np.asarray(weight))
+
+
+def gloss(F, eye, S, rad, dA, n_S, m, fresnel=(0.02, 5.0), N=None):
+    """What a wet surface at F gives back to the eye from light samples S (radiance rad, area dA,
+    facing n_S): a Beckmann lobe of roughness m. Rough wet tarmac stretches a lamp into a streak
+    running at the eye; m near zero is standing water and gives the lamp back whole. m may be a pair
+    (across, along): the roughness across the line of sight and along it, since a road's ripples
+    and ruts run with the traffic and pull a lamp out further than they spread it."""
+    N = v3(0, 1, 0) if N is None else N
+    mx, mz = (m, m) if np.ndim(m) == 0 else m
+    V = eye - F
+    V = V / np.linalg.norm(V)
+    co = max(V @ N, 1e-3)
+    B = V - N * (V @ N)
+    B = B / (np.linalg.norm(B) + 1e-12)
+    T = np.cross(N, B)
+    L = S - F
+    d2 = (L * L).sum(1)
+    L = L / np.sqrt(d2)[:, None]
+    ci = L @ N
+    cl = -(L * n_S).sum(1)
+    Hh = L + V
+    Hh = Hh / np.linalg.norm(Hh, axis=1, keepdims=True)
+    ch = np.clip(Hh @ N, 1e-3, 1.0)
+    D = np.exp(-((Hh @ T / ch) ** 2 / (mx * mx) + (Hh @ B / ch) ** 2 / (mz * mz))) / (np.pi * mx * mz * ch ** 4)
+    cd = np.clip(Hh @ V, 0, 1)
+    Fr = fresnel[0] + (1 - fresnel[0]) * (1 - cd) ** fresnel[1]
+    w = np.where((ci > 0) & (cl > 0), rad * dA * cl / d2 * Fr * D / (4 * co), 0.0)
+    return float(w.sum())
+
+
+def cast(view, W, H, L, pts, ground_y=0.0, radius=2.0, blur=1.2):
+    """Where solid things stop a small lamp at L reaching the ground: each point of them pushed down
+    the ray from L to the ground and found on the board. Returns an (H, W) 0..1 array for tape."""
+    from scipy.ndimage import gaussian_filter, maximum_filter
+    pts = np.asarray(pts, dtype=np.float64)
+    pts = pts[pts[:, 1] < L[1] - 1e-3]
+    s = (L[1] - ground_y) / (L[1] - pts[:, 1])
+    G = L + (pts - L) * s[:, None]
+    return _splat(view, W, H, G, radius, blur)
+
+
+def mirrored(view, W, H, pts, ground_y=0.0, radius=2.0, blur=(10.0, 1.5)):
+    """Where things standing on a wet floor show in it: each point flipped through the floor and
+    found on the board, then smeared along the line of sight. An (H, W) 0..1 array for tape."""
+    pts = np.asarray(pts, dtype=np.float64).copy()
+    pts[:, 1] = 2 * ground_y - pts[:, 1]
+    return _splat(view, W, H, pts, radius, blur)
+
+
+def _splat(view, W, H, pts, radius, blur):
+    from scipy.ndimage import gaussian_filter, maximum_filter
+    q = view.P(pts)
+    ok = (q[:, 0] >= 0) & (q[:, 0] < W) & (q[:, 1] >= 0) & (q[:, 1] < H)
+    m = np.zeros((H, W), dtype=np.float32)
+    m[q[ok, 1].astype(int), q[ok, 0].astype(int)] = 1.0
+    r = max(1, int(round(radius)))
+    m = maximum_filter(m, size=2 * r + 1)
+    return np.clip(gaussian_filter(m, blur) * 1.6, 0, 1)
+
+
+def drag(board, x0, x1, y0, y1, n, brush, shade, along=10, lean=0.0, wobble=0.0, where=None, floor=None, probe=60,
+         fade=None):
+    """Strokes pulled straight down the board, side by side between x0 and x1, from y0 to y1, each
+    mixed along its length from shade(x, y). What a wet road does to a light is pull it at you; a
+    dry brush pulled the same way leaves the tarmac's grain in it. where(x) may skip a stroke.
+    floor: each stroke only runs where shade comes out brighter than this, so the light decides
+    where it starts and stops and the dark either side of it is left alone. fade: paint leaves the
+    brush in proportion to how bright it is mixed, up to this, so a stroke thins out into the dark."""
+    rng = board.rng
+    out = 0
+    for i in range(n):
+        x = x0 + (x1 - x0) * (i + 0.5 + rng.uniform(-0.4, 0.4)) / n
+        if where is not None and not where(x):
+            continue
+        ya, yb = y0 + rng.uniform(-0.04, 0.04) * (y1 - y0), y1 + rng.uniform(-0.04, 0.04) * (y1 - y0)
+        if floor is not None:
+            ys = np.linspace(ya, yb, probe)
+            v = np.array([0.2 * c[0] + 0.7 * c[1] + 0.1 * c[2] for c in (shade(x + lean * (y - ya), y) for y in ys)])
+            on = np.where(v > floor * rng.uniform(0.8, 1.25))[0]
+            if len(on) < 2:
+                continue
+            ya, yb = ys[max(on[0] - 1, 0)], ys[min(on[-1] + 1, probe - 1)]
+        xs = np.linspace(x, x + lean * (yb - ya), along)
+        ys = np.linspace(ya, yb, along)
+        cs = [shade(a, b) for a, b in zip(xs, ys)]
+        op = None
+        if fade is not None:
+            op = [float(np.clip((0.2 * c[0] + 0.7 * c[1] + 0.1 * c[2]) / fade, 0, 1)) for c in cs]
+        board.stroke(np.array([(xs[0], ya), (xs[-1], yb)]), brush, cs, wobble=wobble, opacity=op)
+        out += 1
+    return out

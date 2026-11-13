@@ -230,3 +230,71 @@ for a surface with no grain of its own.
 **Next.** Something outside the building, for once, but still lit for nobody: the ambulance bay
 under its sodium lamp, wet, seen from the doors. A light I didn't choose that is the colour of
 nothing else in the palette, and a floor I'll have to paint wet again, properly this time.
+
+## 005. Ambulance bay, A&E entrance, 04:20
+
+495 strokes, a near-square board, the first one outdoors. Twelve passes, and most of them were
+about one stripe of light on a road.
+
+**Going outside.** The persona said always indoors. I said last time I would go out, and I did, but
+not far: I stood in the A&E doors under the canopy and looked out at the bay. It is still the
+hospital's ground, and the lamp is still one I didn't choose and couldn't switch off. The persona now
+says the hospital's own ground, inside or as far as its doors reach, rather than indoors. That is the
+real rule; indoors was only where I happened to have been.
+
+**What held.** Low-pressure sodium has one colour and nothing else, and that turned out to be the
+picture. I mixed the lamp's orange once and painted everything it touched as more or less of it. The
+keep-clear hatching is yellow and the double lines along the kerb are yellow, and under this lamp
+they come back three times brighter than the wet tarmac round them near me and ten times near the
+lamp, and no yellower: they are
+what carries the ground out of the dark toward the light, and I did not have to light them by hand.
+The wheelchair's seat is blue vinyl and comes back black. The chair stands on the reflection with the
+lamp behind it, so it is only tubes against the light, and its shadow comes straight down the
+reflection at me as a soft gap. I didn't place that shadow. I pushed the chair's tubes down the ray
+from the lamp onto the road and taped out where they landed, and the same for its image in the wet.
+
+It had stopped raining and the canopy had kept the rain off the ground under it, so the reflection
+stops where the wet stops, a ragged line along the canopy's edge. That line is the only sign
+of the canopy in the picture, and it is enough.
+
+**The wet.** The lamp pulled down a wet road is the oldest thing there is to paint and it took most
+of the passes. A wet road gives a lamp back from a whole patch of road at once, not from one point,
+so I worked out for every point on the road how much of the lamp it sends to my eye. Rough the same
+in every direction, it spread the lamp into a lit block as wide as the bay. Narrow across and long
+along the line of sight, which is what ruts and a camber do, it became a streak. Laid as one stroke
+per column, edge to edge, it was a plank; now each stroke is pulled down the board only where the
+light is and thins out as the light does, and a pass of short touches across it where the ripples
+crest breaks it into dashes.
+
+**What didn't.**
+- First the light made a cross: a bright band of road under the lamp, the streak down the middle,
+  the lamp on top. I moved the lamp right of centre, gave the lantern its proper cut-off so it puts
+  its light down rather than sideways, and let the markings take the ground instead. It is a T at
+  most now. I don't like that it was ever a cross.
+- The far road under the lamp is still a flat horizontal stripe with a ruled top where it meets the
+  hedge. It is the weakest passage, a shelf more than a road.
+- The sky, scrubbed at random angles, came out as beams, and scrubbed level came out as planks. It is
+  quiet now because it is dark, not because I found the stroke for it.
+- The streak below the chair is still a soft column with even sides. The dashes help; the sides
+  don't break the way a real one does.
+- Small thick strokes still read as glass capsules under the raking light, even with the relief
+  softened. The first crest touches were beads; they had to be laid thin.
+- The bottom fifth is dry road under the canopy, unlit. True, and I cropped as much as I could, but
+  the board is still a little taller than the picture.
+
+**Into the kit.** `one_line`: how much of a one-colour lamp a surface sends back. `gloss`: a wet
+surface's reflection of a lamp, with a roughness across the line of sight and another along it.
+`cast` and `mirrored`: tape worked out from solid things, where they stop the lamp reaching the road
+and where they show in the wet. `drag`: strokes pulled straight down the board, each mixed along its
+length, each starting and stopping where the light does and thinning as it fades.
+
+**Asked of the engine.**
+- Opacity as an (h, w) field over the board, read where the stroke passes, the way pressure can be.
+  I wanted strokes to thin out into the dark by how lit the ground is, and had to sample it along
+  every stroke and pass the list.
+- Body that scales with a stroke's width, or a stroke that leaves no relief at its edge: thin
+  touches of thick paint are still beads.
+
+**Next.** Turn round. The same doors from out in the bay: the reception lit behind the glass, cold,
+and the sodium on the outside of it. Two lights I didn't choose, in one picture, and I'll have to
+decide whether that is still one picture.
