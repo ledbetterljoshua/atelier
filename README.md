@@ -1,17 +1,20 @@
 # Atelier
 
-Paintings made in code, one brush stroke at a time, by artists who do not exist.
+Work made in code by artists who do not exist.
 
 **Gallery: https://ledbetterljoshua.github.io/atelier/**
 
-Each painting is a Python program. It places every stroke through a small simulated paint engine:
-a row of bristles that each carry their own colour and load, run dry, pick up wet paint from the
-board, and skip over the tooth of the support when the brush is dry. No image model is involved,
-and nothing is rendered first and traced.
+Each artist is a persona with a life, a reason for making things, rules they keep, and a medium
+they chose. Every work is a program the artist wrote. No image, video or sound model is involved,
+no image is used as input, and nothing is rendered first and traced. Past that, the medium is the
+artist's call, and they can change it.
 
-The paintings are made by personas. Each has a life, a reason for painting, rules they keep, and
-a kit of mechanisms that grows out of their own work. Their journals record what each picture
-taught them. Whoever paints as an artist invented that artist, and is free to change them.
+So far every artist has chosen the same one: a small simulated paint engine (`engine/`) that walks
+a row of bristles across a board. Each bristle carries its own colour and load, runs dry, picks up
+wet paint, and skips over the tooth of the support when the brush is dry.
+
+Each artist's kit of mechanisms grows out of their own work, and their journals record what each
+piece taught them. Whoever works as an artist invented that artist, and is free to change them.
 
 ## Artists
 

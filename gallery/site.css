@@ -153,6 +153,10 @@ strong,b{font-weight:600}
 .stages button[aria-current=true]::before{content:"";position:absolute;left:-12px;top:0;bottom:0;width:2px;background:var(--r-ink)}
 
 /* label and journal */
+.live{max-width:1100px;margin:0 auto;padding:clamp(24px,3.5vw,48px) var(--gut) 0}
+.live iframe,.live video{display:block;width:100%;max-height:85svh;border:0;background:#000}
+.live audio{display:block;width:100%}
+.live p{margin:10px 0 0;font:13.5px/1.35 var(--sans);color:var(--mute,#5d5850)}
 .sheet{max-width:var(--max);margin:0 auto;padding:clamp(28px,4.5vw,64px) var(--gut) 0;display:grid;grid-template-columns:minmax(0,19rem) minmax(0,1fr);gap:40px clamp(28px,5vw,88px);align-items:start}
 .label{font:15px/1.5 var(--sans);position:sticky;top:20px}
 .l-artist a{font-weight:600;font-size:17px;text-decoration:none}.l-artist a:hover{text-decoration:underline}

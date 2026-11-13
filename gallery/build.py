@@ -164,18 +164,25 @@ def images(wdir, w, out):
     stages = []
     last = len(w["stages"]) - 1
     for i, s in enumerate(w["stages"]):
-        src = wdir / s["file"]
+        src = wdir / s.get("file", "")
         im = final if i == last or not src.exists() else Image.open(src).convert("RGB")
         im = im.copy()
         im.thumbnail((1280, 1280), Image.LANCZOS)
         im.save(out / f"s{i:02d}.webp", quality=82, method=4)
-        stages.append({"name": s["name"], "strokes": s["strokes"], "file": f"s{i:02d}.webp"})
+        stages.append({"name": s["name"], "strokes": s.get("strokes"), "file": f"s{i:02d}.webp"})
     small = final.copy()
     small.thumbnail((640, 640), Image.LANCZOS)
     small.save(out / "small.webp", quality=80, method=4)
     og = final.copy()
     og.thumbnail((1200, 1200), Image.LANCZOS)
     og.save(out / "og.jpg", quality=84)
+    live = w.get("live")
+    if live and (wdir / live).exists():
+        src = (wdir / live).parent
+        if src == wdir:
+            shutil.copy(wdir / live, out / Path(live).name)
+        else:
+            shutil.copytree(src, out / src.relative_to(wdir), dirs_exist_ok=True)
     return stages, mean_colour(small)
 
 
@@ -201,15 +208,21 @@ def load():
             if not (wdir / "work.json").exists() or not (wdir / "final.png").exists():
                 continue
             w = json.loads((wdir / "work.json").read_text())
+            w.setdefault("stages", [{"name": "finished", "file": "final.png"}])
+            if "size" not in w:
+                with Image.open(wdir / "final.png") as im:
+                    w["size"] = list(im.size)
+            prog = w.get("program", "paint.py")
             num = wdir.name.split("-")[0]
             entry = next((b for h, b in jsecs if h.startswith(f"{num}.")), "")
             lead, parts = entry_parts(entry)
-            src = (wdir / "paint.py").read_text() if (wdir / "paint.py").exists() else ""
+            src = (wdir / prog).read_text() if (wdir / prog).is_file() else ""
             stages, mean = images(wdir, w, SITE / adir.name / wdir.name)
             dark = lum(mean) < 0.28
             a["works"].append({
                 "dir": wdir.name, "num": num, "title": w["title"], "year": w.get("year", ""),
-                "medium": w.get("medium", ""), "size": w["size"], "strokes": w["strokes"],
+                "medium": w.get("medium", ""), "size": w["size"], "strokes": w.get("strokes"),
+                "marks": w.get("marks", "strokes"), "program": prog, "live": w.get("live"),
                 "made": w.get("made", ""), "stages": stages, "lead": lead, "parts": parts,
                 "lines": src.count("\n"), "dark": dark,
                 "wall_l": wall(mean, (44, 42, 39) if dark else (228, 224, 216)),
@@ -308,10 +321,9 @@ def hang(works, root, sizes="(max-width:700px) 60vw, 360px", show_artist=False):
 
 def index_page(artists):
     total = sum(len(a["works"]) for a in artists)
-    strokes = sum(w["strokes"] for a in artists for w in a["works"])
     rows = []
     for a in artists:
-        what = next((b for h, b in a["sections"] if re.match(r"what .+ paints?$", h, re.I)), "")
+        what = next((b for h, b in a["sections"] if re.match(r"what (?!.* not$)", h, re.I)), "")
         what = what.split("\n\n")[0]
         rows.append(f"""<section class="room-row" id="{a['slug']}">
 <div class="who"><h2><a href="{a['slug']}/">{esc(a['name'])}</a></h2>
@@ -320,13 +332,13 @@ def index_page(artists):
 <p class="more"><a href="{a['slug']}/">{plural(len(a['works']), 'work')}, the journal and the kit</a></p></div>
 {hang(a['works'], '')}
 </section>""")
-    blurb = ("Paintings made in code, one brush stroke at a time, by artists who do not exist. Each is a Python "
-             "program that walks a simulated brush across a board. No image model, nothing traced.")
+    blurb = ("Work made in code by artists who do not exist. Each piece is a program the artist wrote, in a "
+             "medium they chose. No image model, nothing traced.")
     body = f"""<section class="mast">
 <h1>Atelier</h1>
-<div class="lede"><p>Paintings made in code, one brush stroke at a time, by artists who do not exist.</p>
-<p class="sub">Each painting is a Python program that walks a simulated brush across a board: bristles that carry their own colour, run dry, and pick up wet paint. No image model is involved and nothing is traced. The artists are invented by the model that paints as them. Each keeps a journal, and the journal changes how the next picture is made.</p>
-<p class="count">{plural(len(artists), 'artist')} · {plural(total, 'work')} · {strokes:,} strokes</p></div>
+<div class="lede"><p>Work made in code by artists who do not exist.</p>
+<p class="sub">Each piece is a program its artist wrote, in a medium the artist chose: so far, mostly a simulated brush whose bristles carry their own colour, run dry, and pick up wet paint. No image model is involved and nothing is traced. The artists are invented by the model that works as them. Each keeps a journal, and the journal changes how the next piece is made.</p>
+<p class="count">{plural(len(artists), 'artist')} · {plural(total, 'work')}</p></div>
 </section>
 <div id="artists">{''.join(rows)}</div>"""
     cover = artists[0]["works"][-1]["url"] + "og.jpg" if artists else ""
@@ -355,7 +367,7 @@ def timeline(a, rounds):
 <div class="t-no"><span>{w['num']}</span><span>{w['year']}</span></div>
 <a class="t-img" href="../{w['url']}" style="--ar:{ar:.4f}"><img src="../{w['url']}small.webp" alt="" width="{w['size'][0]}" height="{w['size'][1]}" loading="lazy" decoding="async"></a>
 <div class="t-body"><h3><a href="../{w['url']}"><i>{esc(w['title'])}</i></a></h3>
-<p class="t-meta">{esc(w['medium'])} · {w['strokes']:,} strokes</p>
+<p class="t-meta">{esc(w['medium'])}{f" · {w['strokes']:,} {w['marks']}" if w['strokes'] else ''}</p>
 {f'<p class="t-lead">{inline(" ".join(w["lead"].split()))}</p>' if w['lead'] else ''}
 {f'<div class="t-block"><h4>The persona moved</h4>{"".join(moved)}</div>' if moved else ''}
 {f'<div class="t-block"><h4>Into the kit</h4><p class="chips">{chips}</p></div>' if chips else ''}
@@ -381,7 +393,7 @@ def artist_page(a, rounds):
 
     cols, rest, mech = [], [], ""
     for h, b in a["sections"]:
-        if re.match(r"(what|how) .+ paints?$", h, re.I):
+        if re.match(r"(what|how) (?!.* not$)", h, re.I):
             cols.append(f'<section><h2>{esc(h)}</h2>{md(b, kit_link)}</section>')
         elif re.match(r"mechanisms", h, re.I):
             mech = b
@@ -396,7 +408,6 @@ def artist_page(a, rounds):
                 else "Helpers the journal does not name")
         rows = "".join(f'<div class="k" id="kit-{k["name"]}"><dt><code>{esc(k["name"])}</code></dt><dd>{inline(k["doc"])}</dd></div>' for k in ks)
         groups.append(f'<div class="kgroup"><h3>{head}</h3><dl>{rows}</dl></div>')
-    strokes = sum(w["strokes"] for w in a["works"])
     kit_html = f"""<section class="kit" id="kit"><header class="sec"><h2>The kit</h2>
 <p>{plural(len(a['kit']), 'mechanism')} {esc(a['first'])} built, grouped by the picture each came out of. Nobody else uses them. <a href="{REPO}/blob/main/artists/{a['slug']}/tools.py">tools.py</a></p></header>
 {f'<div class="mechnote">{md(mech)}</div>' if mech else ''}
@@ -406,7 +417,7 @@ def artist_page(a, rounds):
 <h1>{esc(a['name'])}</h1>
 <p class="intro">{inline(a['intro'])}</p>
 {f'<blockquote class="pull"><p>{inline(a["quote"])}</p></blockquote>' if a['quote'] else ''}
-<p class="count">{plural(len(a['works']), 'work')} · {strokes:,} strokes · <a href="#works">Work by work</a>{' · <a href="#kit">The kit</a>' if a['kit'] else ''}</p>
+<p class="count">{plural(len(a['works']), 'work')} · <a href="#works">Work by work</a>{' · <a href="#kit">The kit</a>' if a['kit'] else ''}</p>
 </header>
 {hang(a['works'], '../')}
 <div class="persona">{''.join(cols)}</div>
@@ -438,10 +449,12 @@ def work_page(w, prev, nxt):
         return f"{root}{a['slug']}/#kit-{base.group(0)}" if base and any(k["name"] == base.group(0) for k in a["kit"]) else None
 
     rows, before = [], 0
-    top = max([s["strokes"] - p for s, p in zip(w["stages"], [0] + [s["strokes"] for s in w["stages"][:-1]])] + [1])
+    counted = all(s.get("strokes") is not None for s in w["stages"])
+    cum = [s["strokes"] if counted else 0 for s in w["stages"]]
+    top = max([c - p for c, p in zip(cum, [0] + cum[:-1])] + [1])
     for i, s in enumerate(w["stages"]):
-        add = s["strokes"] - before
-        before = s["strokes"]
+        add = cum[i] - before
+        before = cum[i]
         rows.append(f"""<li><button type="button" data-i="{i}"{' aria-current="true"' if i == n - 1 else ''}>
 <span class="s-n">{i + 1}</span><span class="s-name">{esc(s['name'])}</span>
 <span class="s-add">{'+' + format(add, ',') if add else '·'}</span>
@@ -456,9 +469,24 @@ def work_page(w, prev, nxt):
     if w["uses"]:
         names = ", ".join(f'<a class="mech" href="{root}{a["slug"]}/#kit-{k}"><code>{esc(k)}</code></a>' for k in w["uses"])
         uses = f'<p class="l-uses">Uses {len(w["uses"])} of the {len(a["kit"])} mechanisms in {esc(a["first"])}\'s kit: {names}.</p>'
-    src = f"{REPO}/blob/main/artists/{a['slug']}/works/{w['dir']}/paint.py"
+    src = f"{REPO}/blob/main/artists/{a['slug']}/works/{w['dir']}/{w['program']}"
+    lang = {".py": "Python", ".js": "JavaScript", ".mjs": "JavaScript", ".ts": "TypeScript", ".html": "HTML",
+            ".rs": "Rust", ".glsl": "GLSL", ".frag": "GLSL", ".go": "Go", ".c": "C", ".jl": "Julia",
+            ".pde": "Processing", ".lua": "Lua", ".rb": "Ruby", ".sc": "SuperCollider"}.get(Path(w["program"]).suffix, "")
+    count = f"{w['strokes']:,} {w['marks']}" if w["strokes"] else ""
+    live = ""
+    if w["live"]:
+        ext = Path(w["live"]).suffix.lower()
+        if ext in (".mp4", ".webm"):
+            live = f'<video controls playsinline preload="metadata" poster="s{n - 1:02d}.webp" src="{esc(w["live"])}"></video>'
+        elif ext in (".mp3", ".wav", ".ogg", ".m4a"):
+            live = f'<audio controls preload="metadata" src="{esc(w["live"])}"></audio>'
+        else:
+            live = f'<iframe src="{esc(w["live"])}" title="{esc(w["title"])}, live" loading="lazy" style="aspect-ratio:{ww / wh:.4f}"></iframe>'
+        live = f'<section class="live" aria-label="The piece itself">{live}<p><a href="{esc(w["live"])}">Open the piece on its own</a></p></section>'
+    marks_json = w["marks"] if w["strokes"] else ""
     stages_json = json.dumps({"w": ww, "h": wh, "full": "full.webp", "title": w["title"],
-                              "stages": w["stages"]}).replace("</", "<\\/")
+                              "marks": marks_json, "stages": w["stages"]}).replace("</", "<\\/")
 
     def pager(x, rel, word):
         if not x:
@@ -472,22 +500,23 @@ def work_page(w, prev, nxt):
 <a class="canvas" href="full.webp" aria-label="Look closer at the painting">
 <img class="base" src="s{n - 1:02d}.webp" srcset="small.webp 640w, s{n - 1:02d}.webp 1280w" sizes="(max-width:900px) 100vw, 70vw" width="{ww}" height="{wh}" alt="{esc(w['title'])}, by {esc(a['name'])}" fetchpriority="high">
 <img class="over" alt="" width="{ww}" height="{wh}" hidden></a>
-<figcaption><span class="now" aria-live="polite">Finished · {w['strokes']:,} strokes</span>
+<figcaption><span class="now" aria-live="polite">Finished{' · ' + count if count else ''}</span>
 <span class="acts"><button type="button" class="play" aria-pressed="false">Play</button><button type="button" class="zoom">Look closer</button></span></figcaption>
 </figure>
 <aside class="making" aria-label="How it was made">
 <div class="m-head"><h2>How it was made</h2></div>
-<p class="m-note">{plural(n, 'stage')}, in the order the program painted them. The bar is how many strokes each one took. Play runs through them on the painting.</p>
+<p class="m-note">{plural(n, 'stage')}, in the order the program made them.{f" The bar is how many {w['marks']} each one took." if counted and w['strokes'] else ''} Play runs through them.</p>
 <ol class="stages">{''.join(rows)}</ol>
 </aside>
 </div>
 </section>
+{live}
 <div class="sheet">
 <aside class="label">
 <p class="l-artist"><a href="{root}{a['slug']}/">{esc(a['name'])}</a><span>{esc(a['born'])}</span></p>
 <h1><i>{esc(w['title'])}</i>{f', {w["year"]}' if w['year'] else ''}</h1>
 <p class="l-medium">{esc(w['medium'])}<br>{ww:,} × {wh:,} px</p>
-<p class="l-code">{w['strokes']:,} strokes in {plural(n, 'stage')}.<br>Painted by <a href="{src}">a {w['lines']:,}-line Python program</a>{f', run on {nice_date(w["made"])}' if w['made'] else ''}.</p>
+<p class="l-code">{count + ' in ' + plural(n, 'stage') + '.<br>' if count else ''}Made by <a href="{src}">a {w['lines']:,}-line {lang + ' ' if lang else ''}program</a>{f', run on {nice_date(w["made"])}' if w['made'] else ''}.</p>
 {uses}
 </aside>
 <article class="entry">
@@ -504,7 +533,7 @@ def work_page(w, prev, nxt):
 <div class="v-bar"><span class="v-title"><i>{esc(w['title'])}</i><span class="v-stage-name"></span></span>
 <span class="v-ctl"><button type="button" data-z="out" aria-label="Zoom out">−</button><button type="button" data-z="fit" class="v-pct">Fit</button><button type="button" data-z="in" aria-label="Zoom in">+</button><button type="button" data-z="close" class="v-close">Close</button></span></div>
 </dialog>"""
-    desc = clip(f"{a['name']}. {w['medium']}. {w['strokes']:,} strokes. {w['lead']}", 220)
+    desc = clip(f"{a['name']}. {w['medium']}. {count + '. ' if count else ''}{w['lead']}", 220)
     title = f"{w['title']} · {a['name']}"
     write(Path(a["slug"]) / w["dir"], page(root, title, desc, body, w["url"] + "og.jpg", "p-work"))
 
@@ -522,7 +551,7 @@ def about_page(artists, intro, rounds_md):
                       lambda m: f'<a href="../{firsts[m.group(1)]}/">{m.group(1)}</a>', h) if firsts else h
 
     blocks = []
-    for h in ("The one rule", "Making an artist", "Changing an artist"):
+    for h in ("The one rule", "Media", "Making an artist", "Changing an artist"):
         if cs.get(h):
             blocks.append(f'<section class="e-part"><h3>{esc(h)}</h3><div>{md(cs[h])}</div></section>')
     path = ROOT / "engine" / "CHANGES.md"
@@ -534,11 +563,11 @@ def about_page(artists, intro, rounds_md):
 <p class="e-src">These are the project's own working rules, from <a href="{REPO}/blob/main/CLAUDE.md">CLAUDE.md</a>. The source for every painting, persona and journal is on <a href="{REPO}">GitHub</a>.</p>
 </article>
 <article class="entry about" id="engine">
-<header><h2>The engine log</h2></header>
-<div class="e-lead"><p>The paint engine is shared and small: a board, a brush, colour, paths, supports. Painters do not edit it. They write what they wanted in their journals, and between rounds the things that more than one of them needed get built. This is the log of those rounds.</p></div>
+<header><h2>The paint engine</h2></header>
+<div class="e-lead"><p>The first five artists all chose the same medium: a small simulated paint engine with a board, a brush, colour, paths and supports. While they shared it, they wrote what they wanted in their journals, and between rounds the things more than one of them needed were built. This is the log of those rounds. Artists are no longer bound to it: each picks or builds their own medium, and the engine is one choice among many.</p></div>
 <div class="log">{link_names(md(log, h=3))}</div>
 </article>"""
-    desc = "How Atelier works: the one rule, how an artist is invented, and the log of changes to the shared paint engine."
+    desc = "How Atelier works: the one rule, how an artist is invented and chooses a medium, and the history of the paint engine."
     write("about", page("../", "About", desc, body, cls="p-about"))
 
 

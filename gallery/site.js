@@ -32,7 +32,7 @@
   let cur = last, timer = null, warmed = false, token = 0;
 
   const warm = () => { if (warmed) return; warmed = true; stages.forEach(s => { new Image().src = s.file; }); };
-  const caption = i => i === last ? `Finished · ${fmt(stages[i].strokes)} strokes` : `Stage ${i + 1} of ${stages.length}: ${stages[i].name}`;
+  const caption = i => i === last ? (work.marks ? `Finished · ${fmt(stages[i].strokes)} ${work.marks}` : 'Finished') : `Stage ${i + 1} of ${stages.length}: ${stages[i].name}`;
 
   function show(i, quick) {
     i = Math.max(0, Math.min(last, i));
