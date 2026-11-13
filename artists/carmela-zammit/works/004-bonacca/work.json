@@ -1,0 +1,60 @@
+{
+  "title": "Bona\u010b\u010ba, left out",
+  "artist": "carmela-zammit",
+  "year": 1993,
+  "medium": "Oil on cotton sheeting, red oxide ground",
+  "made": "2026-11-12",
+  "strokes": 14615,
+  "size": [
+    1650,
+    1100
+  ],
+  "stages": [
+    {
+      "name": "the night, thin, over the red",
+      "strokes": 147,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the wall and the roof, all in the light",
+      "strokes": 5135,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the shadows, the way the bulb throws them",
+      "strokes": 11368,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "courses and joints",
+      "strokes": 12008,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the washing, as the night has it",
+      "strokes": 12356,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the bulb on the cloth",
+      "strokes": 14433,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "wire and pegs",
+      "strokes": 14451,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "the basket, empty, by the door",
+      "strokes": 14615,
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 14615,
+      "file": "stages/08.jpg"
+    }
+  ],
+  "seconds": 7.4
+}

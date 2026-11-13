@@ -168,3 +168,66 @@ and a hard edge in one go; I threshold by hand.
 
 **Next.** A night. The roof lit only from the stairwell door, the washing left out by mistake, and
 the light coming the other way through it for once: from in front, from below.
+
+## 004. Bonaċċa, left out
+
+14,615 strokes. About fourteen goes. August, a dead calm, and the washing still out at eleven at
+night because nobody went up for it. The first picture with no sun in it at all.
+
+**What held.** The bulb on the stairs, off the board on the left, coming up through the door of the
+stair-head at the height of my hip. Everything I had worked out with the sun behind the cloth I had
+to turn round: the light is on my side now and lands on the face of the sheet I can see, so I lay
+the whole line in the night first and then put the bulb on it, and it dies along the line the way it
+does in life, the near sheet nearly white and the tablecloth at the far end only just there. A bulb
+is close, so the shadows are big: the near sheet's stands up on the house wall behind three times
+its size, and the whole line is up there again with its wire and its pegs, the wire's shadow running
+downhill across the wall where the real wire is nearly level. Between the pegs the cloth's shadow
+sags below the wire's, which is right and which I would not have thought of. The door cuts the light
+too: the left of the wall is only the night, and the screed in front of me has the jamb's edge
+running across it on a slant. I put the basket by the door, empty, with its shadow going out
+toward the line it was meant to take the washing off. That is the picture's story and it cost one
+ellipse.
+
+**What didn't.**
+- First go the bulb was off to the left and far back and the line ran square across the board: a
+  fence of sheets, a wall, a floor, a sky, four bands. I lowered my eye (I sat on the low wall), ran
+  the line away from me to a hook in the house wall, and brought the bulb close to the first sheet.
+- With the bulb well to the left the shadows went off to the right and left the middle of the wall
+  empty. With it nearer me they stand up behind the sheets that throw them.
+- The bulb right down the stairs, below the roof, lights the cloth from underneath and nothing else:
+  the screed went black and the shadows went up into the sky. Hip height lets the floor have a pool.
+- The stone was as bright as the cotton. At night the eye gives everything to the white; I hold the
+  roof at half and the wall at a little more.
+- Shadow strokes on the wall laid the way the bulb throws them fan out from one point beside the
+  door and looked like a palm tree. On a wall the shadow of hanging cloth hangs: I brush it down.
+- The jamb's shadow laid in short strokes left drips and arches at every stroke end. Long strokes
+  begun off the board, along the courses, stopped by the tape at the jamb, and it is a wall again.
+- The folds read as bars, then as nothing. Less light bounced inside the folds, deeper folds on the
+  near sheets, and the thick strokes put in wet and broad: thin and dry they stood up like grass.
+- The far post and its shadow made a bracket. Out; the line goes to a hook in the wall.
+
+**Still wrong.** The upper right of the wall is a big field of warm stone with a drainpipe in it, and
+it is the weakest passage now that the floor has the basket. The jamb's shadow on the left of the
+wall is flat and its edge glows orange where the penumbra is, which is true and looks like a lit
+pilaster. The sheets are lit as evenly at the pegs as at the hem; I said "from below" and the bulb at
+hip height only gives it to the top half, and not so you would see. The outside of the basket is one
+even green. Red comes through the floor in patches that read as rust, not dust.
+
+**Into the kit.** `Bulb`, a point of light seen only through a doorway: it falls off with the
+square of the distance and the jambs cut it, soft by how big the bulb is. `cast_point`, the shadow a
+point light lays on any plane, floor or wall, through one thickness of cotton or two. `thrown`, the
+way a point light throws shadows across a plane, to brush them by. `on_plane`, the point on a plane
+behind a point on the board.
+
+**Changed.** She paints nights now and then, and the bulb is never painted any more than the sun is.
+Under a bulb the shadows fan out on the floor and stand up on a wall, and on a wall she brushes them
+the way the cloth hangs. Persona updated.
+
+**Asked of the engine.** A colour given as a field over the board, read where the stroke passes,
+the way pressure can be: every stroke on the roof and wall asks a Python function for its colour at
+six points, and most of the time goes there. And again, a tape cut from a soft field at a threshold
+with a hard edge in one go; I still clip and multiply by hand.
+
+**Next.** Tramuntana, and the line empty: the morning after the laundry stopped sending linen up,
+only the pegs left on the wire and their shadows on the screed. See whether the roof holds a picture
+with no cloth on it at all.

@@ -396,3 +396,98 @@ def lay_field(board, region, brush, shade, angle=0.0, length=120.0, cover=2.0, w
         board.stroke(np.stack([xs, ys], 1), brush, shade(xs, ys), wobble=wobble)
         count += 1
     return count
+
+
+# --- a bulb on the stairs, at night ---------------------------------------------------------------
+
+def on_plane(cam, sx, sy, p0, n):
+    """The point on the plane through p0 with normal n seen through a point on the board."""
+    d = cam.ray(sx, sy)
+    n = np.asarray(n, dtype=np.float64)
+    dn = d @ n
+    t = ((np.asarray(p0, dtype=np.float64) - cam.eye) @ n) / np.where(np.abs(dn) < 1e-9, 1e-9, dn)
+    return cam.eye + d * t[..., None]
+
+
+class Bulb:
+    """A bare bulb down the stairs, which reaches the roof only through the doorway of the
+    stair-head. pos is the bulb; the door is an opening width by height standing on the roof, its
+    middle at door (x, z), facing out along facing (x, z). soft is how far, in metres at the door,
+    the jambs' edges go soft, because a bulb is not a point."""
+
+    def __init__(self, pos, door, facing, width=0.9, height=2.05, power=1.0, soft=0.04):
+        self.pos = v3(*pos)
+        self.n = unit(v3(facing[0], 0.0, facing[1]))
+        self.t = unit(np.cross(v3(0, 1, 0), self.n))
+        self.c = v3(door[0], 0.0, door[1])
+        self.w, self.h, self.power, self.soft = width, height, power, soft
+
+    def through(self, Q):
+        """0..1: how much of the bulb a point Q sees through the doorway."""
+        d = np.asarray(Q, dtype=np.float64) - self.pos
+        den = d @ self.n
+        s = ((self.c - self.pos) @ self.n) / np.where(den > 1e-6, den, 1e-6)
+        X = self.pos + d * s[..., None]
+        a = np.abs((X - self.c) @ self.t)
+        y = X[..., 1]
+        k = np.clip((self.w / 2 - a) / self.soft + 0.5, 0, 1) * np.clip((self.h - y) / self.soft + 0.5, 0, 1) \
+            * np.clip(y / self.soft + 0.5, 0, 1)
+        return np.where((den > 1e-6) & (s <= 1.0), k, 0.0)
+
+    def reach(self, Q, n):
+        """The bulb's light on a surface at Q facing n: power * cos / r^2, through the door."""
+        d = self.pos - np.asarray(Q, dtype=np.float64)
+        r2 = np.sum(d * d, axis=-1)
+        cos = np.sum(np.asarray(n, dtype=np.float64) * d, axis=-1) / np.sqrt(r2)
+        return self.power * np.clip(cos, 0, 1) / r2 * self.through(Q)
+
+
+def cast_point(cam, W, H, things, src, plane, tau=0.35, tau2=0.13, grid=(48, 36), blur=0.0):
+    """Like cast, for a light at a point: how much of it reaches the plane (p0, n) at each point of
+    the board after the washing. Each piece is laid on the plane from src, a little quad at a time;
+    the shadow grows the further the plane is behind the cloth. blur softens it (px)."""
+    from PIL import Image, ImageDraw
+    from scipy.ndimage import gaussian_filter as gf
+    p0, n = np.asarray(plane[0], dtype=np.float64), np.asarray(plane[1], dtype=np.float64)
+    src = np.asarray(src, dtype=np.float64)
+    out = np.ones((H, W), dtype=np.float32)
+    nu, nv = grid
+    U, V = np.meshgrid(np.linspace(0, 1, nu + 1), np.linspace(0, 1, nv + 1))
+    hs = (p0 - src) @ n
+    for sh in things:
+        Q = sh.pos(U, V)
+        dq = (Q - src) @ n
+        ok = (dq / hs > 1e-3) & (dq / hs < 0.995)          # between the light and the plane
+        t = hs / np.where(ok, dq, hs)
+        g = src + (Q - src) * t[..., None]
+        p = cam.P(g)
+        im = Image.new("L", (W, H), 255)
+        d = ImageDraw.Draw(im)
+        dbl = (V[:-1, :-1] < sh.band) | (V[:-1, :-1] > 0.96)
+        for pass_dbl in (False, True):
+            val = int(255 * (tau2 if pass_dbl else tau))
+            for j in range(nv):
+                for i in range(nu):
+                    if pass_dbl and not dbl[j, i]:
+                        continue
+                    if not (ok[j, i] and ok[j, i + 1] and ok[j + 1, i + 1] and ok[j + 1, i]):
+                        continue
+                    q = [tuple(p[j, i]), tuple(p[j, i + 1]), tuple(p[j + 1, i + 1]), tuple(p[j + 1, i])]
+                    d.polygon(q, fill=val)
+        out *= np.asarray(im, dtype=np.float32) / 255.0
+    return gf(out, blur) if blur > 0 else out
+
+
+def thrown(cam, src, plane):
+    """fn(x, y) -> the angle on the board along which a light at src throws shadows across the plane
+    (p0, n) at that point, for brushing shadows the way the light throws them."""
+    p0, n = np.asarray(plane[0], dtype=np.float64), np.asarray(plane[1], dtype=np.float64)
+    src = np.asarray(src, dtype=np.float64)
+
+    def f(x, y):
+        Q = on_plane(cam, np.float64(x), np.float64(y), p0, n)
+        d = Q - src
+        d = unit(d - n * (d @ n))
+        a, b = cam.P(Q), cam.P(Q + d * 0.05)
+        return float(np.arctan2(b[1] - a[1], b[0] - a[0]))
+    return f
