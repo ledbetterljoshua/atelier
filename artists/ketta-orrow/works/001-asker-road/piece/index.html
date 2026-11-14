@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asker road, forty down and one along the top</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #07060c; overflow: hidden; }
+  body { display: grid; place-items: center; font: italic 13px/1.4 Georgia, 'Iowan Old Style', serif; color: #a79fc4; -webkit-user-select: none; user-select: none; }
+  #frame { position: relative; width: min(100vw, 150vh); aspect-ratio: 3 / 2; touch-action: none; cursor: grab; }
+  canvas { width: 100%; height: 100%; display: block; }
+  #hud { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 1.2em .9em; display: flex; justify-content: space-between; gap: 1em; pointer-events: none; text-shadow: 0 0 6px #000; }
+  #hint { opacity: .75; transition: opacity 2s; text-align: right; }
+  #wait { position: absolute; inset: 0; display: grid; place-items: center; }
+</style>
+<div id="frame">
+  <canvas id="c"></canvas>
+  <div id="wait">the Asker side is coming up out of the dark</div>
+  <div id="hud"><span id="where"></span><span id="hint">drag across to move the count &middot; drag up or down to change benches &middot; tap to hold</span></div>
+</div>
+<script src="walk.js"></script>
+<script>
+(function () {
+  const q = new URLSearchParams(location.search);
+  const W = +(q.get('w') || 960), H = Math.round(W / 1.5), PACE = +(q.get('pace') || 8);
+  const cv = document.getElementById('c'), ctx = cv.getContext('2d'); cv.width = W; cv.height = H;
+  const frame = document.getElementById('frame'), where = document.getElementById('where'), hint = document.getElementById('hint');
+  let T = +(q.get('t') || 48), seat = +(q.get('seat') || 500), held = q.has('t'), scene, img, last = 0;
+  const bench = s => s < 120 ? 'under the Asker stage' : s < 440 ? 'a boat on the water' : s < 620 ? 'the shore bench' : s < 1000 ? 'the orchard bench' : 'the top bench';
+  function paint() {
+    scene.render(T, img.data, { seat }); ctx.putImageData(img, 0, 0);
+    where.textContent = (T >= scene.T_VEIL ? 'after the shutter, count ' : 'count ') + Math.round(T) + ' · ' + bench(seat) + ', ' + Math.round(seat) + ' paces from the Asker shore';
+  }
+  function tick(now) {
+    const dt = Math.min(0.1, (now - last) / 1000); last = now;
+    if (!held && !drag) { T += dt * PACE; if (T > scene.T_END + 20) T = 40; }
+    paint(); requestAnimationFrame(tick);
+  }
+  let drag = null, moved = 0;
+  frame.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY, T, seat }; moved = 0; frame.setPointerCapture(e.pointerId); frame.style.cursor = 'grabbing'; });
+  frame.addEventListener('pointermove', e => {
+    if (!drag || !scene) return;
+    const r = frame.getBoundingClientRect(), dx = (e.clientX - drag.x) / r.width, dy = (e.clientY - drag.y) / r.height;
+    moved = Math.max(moved, Math.abs(dx) + Math.abs(dy));
+    if (moved < 0.01) return;
+    T = Math.max(0, Math.min(scene.T_END + 20, drag.T + dx * 700));
+    seat = Math.max(20, Math.min(1600, drag.seat * Math.exp(dy * 2.4)));
+    hint.style.opacity = 0;
+  });
+  frame.addEventListener('pointerup', () => { if (moved < 0.01) held = !held; drag = null; frame.style.cursor = 'grab'; });
+  addEventListener('keydown', e => {
+    if (e.key === ' ') held = !held;
+    if (e.key === 'ArrowUp') seat = Math.min(1600, seat * 1.15);
+    if (e.key === 'ArrowDown') seat = Math.max(20, seat / 1.15);
+    if (e.key === 'ArrowRight') T += 20; if (e.key === 'ArrowLeft') T = Math.max(0, T - 20);
+  });
+  setTimeout(() => {
+    scene = Walk.build(W, H); img = ctx.createImageData(W, H);
+    document.getElementById('wait').remove(); setTimeout(() => hint.style.opacity = 0, 14000);
+    last = performance.now(); requestAnimationFrame(tick);
+  }, 30);
+})();
+</script>
+</html>

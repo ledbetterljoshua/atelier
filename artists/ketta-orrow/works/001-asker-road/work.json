@@ -1,0 +1,61 @@
+{
+  "title": "Asker road, forty down and one along the top",
+  "artist": "ketta-orrow",
+  "year": "259",
+  "medium": "Walk for forty-two lime lamps on the Asker side, seen across the Long Water from the shore bench. Half an hour; the live piece runs at eight times walking pace",
+  "made": "2026-11-14",
+  "program": "piece/walk.js",
+  "live": "piece/index.html",
+  "strokes": 42,
+  "marks": "lamps",
+  "size": [
+    1800,
+    1200
+  ],
+  "stages": [
+    {
+      "name": "The Asker side in the white hour, with the ways she is allowed walked off on it",
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "The violet hour, before anyone is over the pass. The stage lamp is not hers",
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "First red over the pass",
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "The file on the first leg, its violet still coming over the top",
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "Hask farm: one leaves the file and has her colours to herself",
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "The late one along the top, the one up the beck, the file between them",
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "The same count from a boat close in under the Asker stage: the file has pulled nearly all its colours in",
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "The same count from the top bench, 1,300 paces off: the file has no white left in it",
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "The quay: the file standing, each with all their colours back",
+      "file": "stages/08.jpg"
+    },
+    {
+      "name": "After the shutter. Every lamp is dark; the bench is still owed the slow colours, the far lamps most",
+      "file": "stages/09.jpg"
+    },
+    {
+      "name": "From the shore bench, count 945",
+      "file": "final.png"
+    }
+  ]
+}
