@@ -1,0 +1,48 @@
+{
+  "title": "Forty for Zisis Vergos, dyer. Ninth day",
+  "artist": "thomai-vergou",
+  "year": 2004,
+  "medium": "Six lawful dyes on paper, hung from two pegs beside a west window. Shown at the ninth day of forty",
+  "made": "2026-11-14",
+  "program": "paint.py",
+  "strokes": 150,
+  "marks": "washes",
+  "size": [
+    1600,
+    2000
+  ],
+  "live": "live/index.html",
+  "stages": [
+    {
+      "name": "the chair, painted empty, in walnut",
+      "file": "stages/00.jpg",
+      "strokes": 40
+    },
+    {
+      "name": "his coat on the back of it; the table, the cup, the water",
+      "file": "stages/01.jpg",
+      "strokes": 76
+    },
+    {
+      "name": "the wall and the floor, painted round him",
+      "file": "stages/02.jpg",
+      "strokes": 92
+    },
+    {
+      "name": "him, last, in the quick dyes: hung",
+      "file": "stages/03.jpg",
+      "strokes": 150
+    },
+    {
+      "name": "the third day",
+      "file": "stages/04.jpg",
+      "strokes": 150
+    },
+    {
+      "name": "the ninth day",
+      "file": "stages/05.jpg",
+      "strokes": 150
+    }
+  ],
+  "seconds": 17.6
+}
