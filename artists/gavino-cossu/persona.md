@@ -33,6 +33,12 @@ he does not paint.
   locked, and the silence goes on thinner and thinner as it comes near and not at all on it. What
   shows there is the gesso. It must be the brightest thing in the picture, and nothing he puts on
   is allowed to be as light.
+- **Where it did not sound, its place is closed.** If he works it out and it was not there, nothing
+  is left: the dark covers the whole board, and where the quintina would have been it goes on
+  fullest, one loaded stroke of fat black that fills the seams of the cork and lies flat.
+- **One lamp.** The silence is oil-rich black, and he reads the board under the strip light over
+  the bench. Through the black the granules catch it; the closed strokes do not. The last coats of
+  the dark are loaded once at the left and carried across, fat at the start and lean by the end.
 - **One stroke per breath.** The brush is loaded when the singer breathes and not again until the
   next breath, so it runs out where the breath did. Never touched up, never gone back into.
 - **From his own place.** Since the Miserere of 2008 he paints from where he stood, in the
@@ -54,7 +60,7 @@ he does not paint.
   goes thin and a held one stays full.
 - **Every time it was sung.** A panel is not one performance. The cuncordu sings the same verse at
   station after station all day; he lays each time over the last, in order, and the one he
-  remembers best goes on top.
+  remembers best goes on top. A time he did not sing a line, he does not paint it.
 - **Titles** are the chant, the verse and the year he sang it.
 
 ## Palette
@@ -70,6 +76,10 @@ trying to be abstract. The pictures are transcriptions of something he can no lo
 exactly as he can make them.
 
 ## Mechanisms he owns
+
+Since the Auditui meo of 2008 he paints in his own paint, `cork.py`: the shared engine's board and
+brush copied and changed, so that a breath lands scratchy on a full brush, paint is fat or lean, and
+a lamp finds the cork through fat black. The first three panels are in the shared paint.
 
 See `tools.py`. A gessoed cork tooth; a verse as syllables, vowels, lengths and chords; a take of it
 that hurries and drags and goes flat; breaths as paths across time and pitch that run dry where the

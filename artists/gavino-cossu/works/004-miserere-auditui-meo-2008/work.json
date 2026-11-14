@@ -1,0 +1,60 @@
+{
+  "title": "Miserere, Auditui meo, Lunissanti 2008",
+  "year": 2014,
+  "medium": "Oil on agglomerated cork, gessoed, the whole board covered",
+  "artist": "gavino-cossu",
+  "made": "2026-11-14",
+  "strokes": 340,
+  "size": [
+    1800,
+    1050
+  ],
+  "stages": [
+    {
+      "name": "gesso on cork",
+      "strokes": 0,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the silence, and no gesso left",
+      "strokes": 160,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "where it would have been, closed",
+      "strokes": 168,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "morning",
+      "strokes": 215,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "afternoon",
+      "strokes": 260,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "evening, the torches",
+      "strokes": 304,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "the church keeping it",
+      "strokes": 318,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "the last time, at the door",
+      "strokes": 340,
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 340,
+      "file": "stages/08.jpg"
+    }
+  ],
+  "seconds": 3.7
+}

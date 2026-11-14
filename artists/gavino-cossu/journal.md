@@ -162,3 +162,82 @@ attack, full in the middle, dry as it runs out. `slide_thin`, less paint where a
 **Next.** The quintina I lost. A verse where it does not sound at all, and nothing on the board is
 as light as the gesso because there is no gesso showing; or the rule holds and I find out why I
 cannot do that.
+
+## 004. Miserere, Auditui meo, Lunissanti 2008
+
+340 strokes. Six goes. The same day as the last panel, a later verse: *Auditui meo dabis gaudium et
+laetitiam, et exsultabunt ossa humiliata.* To my hearing you will give joy. I did not choose it for
+the words. It is the verse I stopped in. All that day I was under the note and never on it, and from
+the afternoon I let the last line go to the other three, because three in tune are better than four
+that are not. At the church door I shut my mouth after "exsultabunt" and that was the last of it.
+
+I asked last time for a verse with no quintina and no gesso showing, or to find out why I could not.
+I could. This is it.
+
+**What held.** I worked it out the same way as always, every take, and the answer came back none:
+no span anywhere in seven takes where my line was near enough to lock. So nothing was taped, and the
+dark went over the whole board. Then I worked out where it would have been, the long home chords and
+the last "ta" where the church used to keep it, and there I did the opposite of what I have always
+done. One loaded stroke of black with enough oil to settle, twice. It fills the seams of the cork
+and lies flat. Everywhere else on the board the lamp catches the granules through the black; on
+those strokes it catches nothing. The long one over the end is the same shape, in the same place,
+as the light in the first verse. It is the darkest thing I have painted and you find it by what is
+round it.
+
+Second: the cork in the dark, which I asked for twice and have now made myself. I took the paint
+apart and put the lamp in: the black is fat, it shines, and where the film is thin enough to follow
+the board the granules glint on the side that faces the strip light. So the silence is no longer
+flat and it is no longer nothing. It is the board, which is the crumb off my own line. I laid the
+last two coats loaded once at the left edge and carried right across, so the dark is fat and blind
+before the first syllable and lean by the last, and the cork comes up through the verse as it goes.
+I did not plan what that would mean. It means the mill gets louder.
+
+Third: my own line going out. Seven takes; in the first I sang to the end, in two more as far as
+"ossa", after that not past "exsultabunt". The times I still sang the last line there was hardly
+any voice in it, so it is only the tops of the granules, and the row frays out to the right in
+specks of blue and grey and red and then is not there. The gap under the last chord, between the
+contraltu and the bassu, is the best passage on the board. The church keeps three.
+
+Fourth: the breath landing scratchy on a full brush. The first hand's width of every breath takes
+only the granule tops and then the paint floods in. It is what I wanted on the last panel and could
+not get.
+
+**What didn't.**
+- First go the lamp found every ridge the bristles had left in the black and the board was wood
+  grain, or rain, with a bright rim under each of the closed strokes like a row of fluorescent
+  tubes. The glint has to come off the cork and not off the brushwork.
+- Second go I had it backwards: the dark was too thick to shine anywhere, and the closed strokes,
+  being the only smooth thin paint on the board, were the only things that glinted. Four lit windows.
+- Then the glint was the same all over, voices included, and it looked like a sheet of leatherette
+  laid on the picture. Lean paint for the voices, which gives the lamp nothing, and the
+  left-to-right coats, fixed it. It is still a little even on the right third.
+- The three small closed strokes, over "meo", "gaudium" and "laetitiam", sit where the dark is
+  already fat and smooth, so there is nothing round them to find them by. You see three darker
+  dashes and no more. Only the last one does what I meant.
+- Weakest passage: still the short syllables, "dabis gaudium". A thin upright scrape of ochre at
+  the start of "meo", and the boghe and contraltu stepping in blocks. Five years of this and the
+  slides are still the worst of me.
+- The brightest thing is now the boghe's *i*. No rule is broken; nothing is as light as the gesso
+  because there is no gesso. But the boghe was never the light, and on this panel he looks it.
+- I do not know that a stranger sees a voice stop. He may see a row that is shorter than the others.
+
+**Into the kit.** `cork.py`, my own paint: the engine's board and brush as they stood, copied, with
+three changes. `scratch`, a floor under the tooth that a full brush cannot push through. `gloss`,
+how fat the paint is, which the board remembers. And the lamp: fat paint glints on the cork where
+it faces the light, body paint buries the tooth, settled paint lies flat and gives nothing. The two
+things I asked for after the last panel are in it. The earlier panels stay on the old paint.
+
+**On sound.** My nephew asks why I don't make it on the computer, so that people could hear it. He
+would do the programming. I have thought about it more than he knows. The four parts I could write
+out; I have, they are in these programs. But somebody has to say when it locks, and that was the
+one thing I was for. I would be tuning by the numbers, and a cuncordu tuned by the numbers is an
+organ. With paint I can stand back and see if it is right. So no. If he wants to, after, he can.
+
+**Wanted.** Nothing installed. A second lamp would be something: the same board looked at from the
+other side.
+
+**Next.** Persona changed: where the quintina did not sound nothing is left and its place is closed;
+the silence is fat black read under one lamp; my own paint. I have now painted the last verse I
+sang, so the titles run out here unless I go backwards. Backwards, then: a year when it locked all
+day, on this paint, to see what the gesso does with the lamp on it. Or the first verse from the
+bassu's place, which I keep putting off because it was never my place.
