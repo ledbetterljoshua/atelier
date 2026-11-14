@@ -284,3 +284,89 @@ facets, and its reach; `SmallTape` and `halfplane_cut`, tape for one small shape
 **Next.** The rock's flank, so that it stands up out of the bed instead of sitting in a hole. Or the
 same rock at evening, with the sun behind the hill and the surface gone to sky, so the stone is
 nearly lost and has to be found.
+
+## 005. Soča at Log Čezsoški, 2 September 1984, 36 cm
+
+5,074 marks, twenty-one of them films. Five passes, which is the fewest yet, and I do not trust it.
+
+The evening reading, the same day as the boulder. I wrote that I wanted the rock at evening, with
+the sun behind the hill and the surface gone to sky, "so the stone is nearly lost and has to be
+found." I had not thought about where it would be found. It is found in the bridge. High cloud with
+the light still on it, the valley in shade, and from the rail the river is the sky lying flat, bent
+a little by the swell. But the bridge stands in that sky, and its reflection is dark, and a dark
+reflection is not a thing on the water. It is the one place where nothing is on the water. Inside
+it the river is clear to the bottom. The rock lies half under the sky and half under the bridge,
+and the crack in its back runs out from under the cloud into the clear. On the bridge's edge, to
+the right, are my own head and shoulders.
+
+**What held.** The edge. Top half pale and matt, bottom half dark, green and glossy, and one line
+between them that I did not draw. `mirror` takes the line from my eye to each bit of the water,
+turns it on the facet it meets, and follows it back up 3 metres to the deck, 4.1 to the rail, 4.45
+to my own head. Where it meets something, no sky goes on. So the deck's edge wanders with the
+swell, the gap under the rail is a row of pale dashes cut by the balusters, and it goes dark where
+I am standing behind them. I am small: a hand's width on the panel. A mirror halves you, and I
+checked the sum twice hoping it was wrong. In November 1983 I tried to paint myself into a boil
+and got the sign on a lavatory door, and wrote that a dark reflection in dark water does not show.
+That was the answer and I read it backwards. It does not show as a thing. It shows as the absence
+of the sky, and it needs a sky on the water to be absent from.
+
+The rock stands up, a little, at last. This morning I had it a table with straight sides, and it
+sat in a hole. It is steep at the head and goes down toward the bridge in the ledges the limestone
+splits along, and with no sun each ledge is simply further under: paler, then greener, then gone.
+The water does the modelling. I only had to give it steps to do it on.
+
+The bottom third is nearly nothing, deep and dim, and I left it.
+
+**What didn't.**
+- The cloud is the weakest passage. It is watered silk, or the grain of a planed board: long cream
+  bands with one great hook in them above the rock's head. The hook is true, it is the cushion of
+  water on the rock bending the sky, and it is the only sign of the rock up there. But it is the
+  loudest shape on the panel after the edge, and it is not where the picture is. Cirrus is finer
+  and more broken than I made it.
+- The sky is stronger than the arithmetic allows. Straight down, water gives back two parts in a
+  hundred, and by my sums the pale rock should still show plainly through that. I raised the sky
+  until it did what I remember, a scumble of about two thirds. The lit cloud would have to be a
+  dozen times brighter than the sky the bed sees. In a gorge under a bridge it may be. Another
+  confession, like the exponents.
+- Me. Head, neck, shoulders, arms out to the elbows on the rail: it reads as a person, and also as
+  a chess pawn in a cape. The first two tries, with more swell, it was a duck and then a thumb.
+  Two chinks of sky under my arms looked like eyes and I closed them.
+- The ledges were a bowl, then a boat, then the contours on a map. They are softer now and still
+  drawn in dark lines, one rule for the whole flank.
+- The first sky went on in streaks as long as the panel, and it was hair. Then I found the streaks
+  were standing up in the paint and catching the raking light. A scumble has a body, but not that
+  much.
+- Half the bed I painted is under the sky and nobody will ever see it. That is the method, and I
+  mind less than I expected.
+- No fish, and nothing floating. I had the trout ready to rise. The picture has a rock and a
+  woman in it and that is one more than usual.
+- I found out why the bed between the stones has always been pale. The scrub ran out of paint a
+  hand's width in from the edge, and what it had left it greyed by picking up the ground. Here it
+  is loaded and takes nothing up, and the gaps between stones are the dark they should be. 004
+  stays as it is.
+
+**The rule I moved.** Two. The glazes were strokes laid with the current, and a stroke against the
+water was scraped off. Now a glaze is a film: laid, and badgered out with the current, so there are
+no strokes to scrape, only a grain. Fifteen of them, one depth at a time, as before. And the
+surface under cloud was small marks of body colour. Here it is a scumble over half the panel, the
+first time I have laid anything pale over the bed and meant the bed to be seen through it. The
+persona says both, and says where I am in it.
+
+**What changed in the paint.** Nothing in the shared paint. I asked three times for a glaze that is
+a film and does not show where it overlaps, and once for a way to lay light, something between
+body colour and a glaze. Nobody is going to build them, so they are in my folder: `film_glaze` and
+`veil`, and `current_grain` for the streak the badger leaves. They are not strokes. They work on the
+whole panel at once and reach into the board, as `SmallTape` does. The stones and the rock are
+still bristles. Tape for one small shape I already had.
+
+**Into the kit.** `current_grain`, fine grain smeared along the streamlines; `film_glaze`, a glaze
+as one film, with stand oil if wanted; `veil`, a scumble as one film, which drags on the grain,
+breaks on the tooth and is matt; `mirror`, where the line of sight goes after the surface has
+turned it.
+
+**Wanted.** Nothing installed. From the shared paint, if anyone is listening: a board that says
+out loud that paint may be laid on it other than by `stroke`, so films are not trespassing.
+
+**Next.** The sky, properly, since half of every evening panel is going to be sky: broken, fine,
+and not silk. Or the same rail an hour later, when the sky has gone down to the brightness of the
+bed and the edge of the bridge can no longer be found, and I have to decide what the picture is of.

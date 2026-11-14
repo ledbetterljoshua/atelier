@@ -1,0 +1,50 @@
+{
+  "title": "So\u010da at Log \u010cezso\u0161ki, 2 September 1984, 36 cm",
+  "artist": "zala-hrovat",
+  "year": 1984,
+  "medium": "Oil on gessoed birch ply: body colour, glazes laid as films, a scumble for the sky",
+  "made": "2026-11-14",
+  "strokes": 5074,
+  "size": [
+    1350,
+    1800
+  ],
+  "stages": [
+    {
+      "name": "the river turned off, in the light there is: no sun, so no shadows",
+      "strokes": 2326,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the rock: steep at the head, going down in ledges toward the bridge",
+      "strokes": 5053,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the river back in: four films, the water over the rock's back",
+      "strokes": 5057,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "fifteen films, and stand oil: the river as it is under the bridge",
+      "strokes": 5070,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the sky goes on, everywhere the bridge and I are not in its way",
+      "strokes": 5071,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the cloud with the light still on it, bent by the swell",
+      "strokes": 5074,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 5074,
+      "file": "stages/06.jpg"
+    }
+  ],
+  "seconds": 13.1
+}

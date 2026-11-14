@@ -675,3 +675,82 @@ def faceted_stone(board, tape, outline, center, r, color, L3, rng, brush, seen=N
             board.dab(*seen(f.mean(axis=0)[None])[0], brush.but(width=2.2 * r, bristle=max(1.2, r / 7)), col,
                       angle=a + j * 0.9, length=2.2 * r)
     tape.lift()
+
+
+# --- films, and the sky lying on the water (added for 005) --------------------------------------
+# My own paint, kept here rather than asked of the engine: a glaze or a scumble laid as one film
+# over the whole panel instead of as rows of bristles. It reaches into the board, as SmallTape does.
+
+def current_grain(vel, W, H, rng, length=160.0, step=4.0, fine=1.2, down=2):
+    """The streak a wide soft brush leaves when it is drawn with the current: fine grain smeared
+    along the streamlines, none across them. Zero mean, unit spread, (H, W). vel must take arrays."""
+    from scipy.ndimage import gaussian_filter, map_coordinates, zoom
+    h, w = H // down + 1, W // down + 1
+    Y, X = np.mgrid[0:h, 0:w].astype(np.float64) * down + down / 2
+    noise = gaussian_filter(rng.normal(0, 1, (h, w)), fine)
+    acc = noise.copy()
+    for sign in (1.0, -1.0):
+        px, py = X.copy(), Y.copy()
+        for _ in range(int(length / 2 / step)):
+            vx, vy = vel(px, py)
+            n = np.hypot(vx, vy) + 1e-9
+            px = px + sign * vx / n * step
+            py = py + sign * vy / n * step
+            acc += map_coordinates(noise, [py / down - 0.5, px / down - 0.5], order=1, mode="reflect")
+    acc = zoom(acc, down, order=1)[:H, :W]
+    acc -= acc.mean()
+    return acc / (acc.std() + 1e-9)
+
+
+def _taped(board):
+    return board.mask if board.use_mask else 1.0
+
+
+def film_glaze(board, trans, grain=None, streak=0.1, level=0.0):
+    """A glaze laid as a film. trans is what the film lets through, (H, W, 3) or one colour; where it
+    is 1 there is no film. No bristles and no overlaps: the only unevenness is the grain, which makes
+    the film a little thicker and thinner in streaks. level > 0 is stand oil: it settles flat."""
+    t = np.broadcast_to(np.asarray(trans, dtype=np.float64), board.col.shape)
+    k = np.ones((board.h, board.w)) if grain is None else np.clip(1.0 + streak * grain, 0.0, 3.0)
+    k = k * _taped(board)
+    board.col *= np.exp(np.log(np.maximum(t, 1e-4)) * k[..., None]).astype(np.float32)
+    np.maximum(board.col, 0.004, out=board.col)
+    if level > 0:
+        lv = (level * _taped(board) * np.ones((board.h, board.w))).astype(np.float32)
+        board.hgt *= 1.0 - lv
+        np.maximum(board.flat, lv, out=board.flat)
+    board.n_strokes += 1
+
+
+def veil(board, color, opacity, grain=None, drag=0.25, tooth=0.3, thickness=0.25):
+    """A way to lay light: a scumble as a film. Pale paint dragged thin, so it lightens what is under
+    it and does not cover it. color is one colour or (H, W, 3), opacity a number or (H, W). It drags
+    in streaks along the grain, breaks a little on the tooth, and unlike a glaze it has a body and is
+    matt."""
+    a = np.broadcast_to(np.asarray(opacity, dtype=np.float64), (board.h, board.w)) * _taped(board)
+    if grain is not None:
+        a = a * np.clip(1.0 + drag * grain, 0.0, 2.0)
+    a = np.clip(a * (1.0 + tooth * (board.tooth - 0.5) * 2.0), 0.0, 1.0).astype(np.float32)
+    c = np.broadcast_to(np.asarray(color, dtype=np.float32), board.col.shape)
+    board.col += (c - board.col) * a[..., None]
+    board.hgt += a * thickness
+    board.flat *= 1.0 - a
+    np.maximum(board.wet, a, out=board.wet)
+    board.n_strokes += 1
+
+
+def mirror(skin, eye, eye_h, z):
+    """What the surface shows of the things above it. For every place on the water, the line from my
+    eye (at eye = (x, y) on the board, eye_h metres up) is turned by the facet it meets and goes back
+    up; this says where it is when it has climbed z metres (board px), and which way it is going
+    (run per rise, x and y). A flat river halves everything; a swell pulls it about."""
+    H, W = skin.h.shape
+    Y, X = np.mgrid[0:H, 0:W].astype(np.float64) + 0.5
+    vx, vy, vz = (X - eye[0]) / skin.ppm, (Y - eye[1]) / skin.ppm, -float(eye_h)
+    nrm = np.sqrt(skin.sx ** 2 + skin.sy ** 2 + 1.0)
+    nx, ny, nz = -skin.sx / nrm, -skin.sy / nrm, 1.0 / nrm
+    d = vx * nx + vy * ny + vz * nz
+    rx, ry, rz = vx - 2 * d * nx, vy - 2 * d * ny, vz - 2 * d * nz
+    rz = np.maximum(rz, 1e-3)
+    tx, ty = rx / rz, ry / rz
+    return X + tx * z * skin.ppm, Y + ty * z * skin.ppm, tx, ty

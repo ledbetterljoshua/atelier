@@ -32,8 +32,9 @@ slower.
 - **Then the river goes back in,** as transparent glazes, one depth at a time. Each glaze only
   goes where the water is at least that deep, so the deep channel gets ten or a dozen layers and the
   shallows one. The glazes are laid with the current, never across it, and change as they cross
-  from shallow to deep rather than stopping at the edge. A stroke that goes against the water is
-  scraped off.
+  from shallow to deep rather than stopping at the edge. Since the evening panel of September 1984
+  each one is a film: laid, then badgered out with a soft brush drawn the way the river runs, so
+  there are no strokes in it, only a grain.
 - **Body colour for what floats, and for silt.** Opaque paint goes on the bed, and on the surface for
   the things that are not water: foam, a leaf, a branch, the sky caught on a ripple. In between,
   clear water is glaze only. Water carrying the mountain is not clear: the silt sends light back
@@ -47,10 +48,17 @@ slower.
   the lighter water. Smooth water, where the river comes up in boils and is carried off in slicks, is
   laid flat and is the darker water. Foam goes where water goes down: on the creases of the boils and
   along the seams.
+- **The sky on the water is worked out too.** When the sun is gone the surface is a mirror, and a
+  weak one. From her eye down to each bit of water, off the facet it meets there, and back up: if
+  that line gets past the bridge it is sky, and the sky goes on last, as a scumble, pale paint
+  dragged thin, which lightens the bed and does not cover it. If the line meets the bridge, or her,
+  nothing goes on. A dark reflection is a window, and that is where the bed is seen.
 - **Shadows are measurements.** Anything floating casts its shadow on the bed, off to one side by
   an amount that depends on the depth and the sun. She works that distance out and puts the shadow
   where it falls. If she cannot see the bed, there is no shadow.
-- **Her own shadow stays in** if it was there. She does not move along the rail to lose it.
+- **Her own shadow stays in** if it was there, and so does her reflection: head and shoulders on
+  the edge of the bridge's, half the size she is, because a mirror halves you. She does not move
+  along the rail to lose either.
 - **One place to look.** The measurement covers the whole reach, but the picture does not have to
   give it all the same care. Most of the panel is let go quiet, deep and plain, so that one thing in
   it (a shadow on a stone, usually) can be found. (Since September 1984; before that every stone got
@@ -63,7 +71,9 @@ slower.
 
 Titanium white, yellow ochre, raw umber, burnt sienna, Payne's grey for the bed. For the water,
 phthalo green, cobalt turquoise and ultramarine, only ever as glazes, thinned with stand oil. A
-cadmium yellow deep and a cadmium orange she keeps for leaves.
+cadmium yellow deep and a cadmium orange she keeps for leaves. The sky is white and Payne's grey,
+with ochre and a little sienna for lit cloud; if it wants to be bluer it gets an ultramarine glaze
+once it is dry.
 
 ## What she is not
 
@@ -81,4 +91,6 @@ floating things and the shadows they throw through the water; the surface writte
 which says where the bed is seen to be, how big the sun's net is, and where the glints fall; a
 trout from above; shadows that drape over the bed until they meet it; the sun's light piled up
 where the surface bends it; cobbles in faces rather than pills, each laid through its own small
-tape.
+tape. And since 005 her own paint, where the shared one stopped: the grain a soft brush leaves when
+it is drawn with the current; a glaze laid as a film; a scumble laid as a film, which is how she
+lays light; and the mirror, which says what the surface shows of the things standing over it.
