@@ -1,0 +1,70 @@
+{
+  "title": "A&E doors, from the ambulance bay, 04:35",
+  "artist": "nell-abara",
+  "year": 2010,
+  "medium": "Oil on hardboard, rough side",
+  "made": "2026-11-14",
+  "strokes": 2644,
+  "size": [
+    1000,
+    900
+  ],
+  "stages": [
+    {
+      "name": "coloured darks over black",
+      "strokes": 60,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the soffit, by what the floor sends up",
+      "strokes": 76,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the ground, under both of them",
+      "strokes": 177,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the brick, where the lamp gets under the canopy",
+      "strokes": 1686,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the reception, behind the glass",
+      "strokes": 1760,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "what is in it, and the chair I brought in",
+      "strokes": 2426,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "the frames, and the dots on the glass",
+      "strokes": 2512,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "the wet at my feet",
+      "strokes": 2615,
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "the lamp, in the glass",
+      "strokes": 2617,
+      "file": "stages/08.jpg"
+    },
+    {
+      "name": "white last: the tubes",
+      "strokes": 2644,
+      "file": "stages/09.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 2644,
+      "file": "stages/10.jpg"
+    }
+  ],
+  "seconds": 3.7
+}

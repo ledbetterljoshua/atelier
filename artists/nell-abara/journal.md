@@ -298,3 +298,88 @@ length, each starting and stopping where the light does and thinning as it fades
 **Next.** Turn round. The same doors from out in the bay: the reception lit behind the glass, cold,
 and the sodium on the outside of it. Two lights I didn't choose, in one picture, and I'll have to
 decide whether that is still one picture.
+
+## 006. A&E doors, from the ambulance bay, 04:35
+
+2,644 strokes, most of them brick. Still oil on the rough side of hardboard. Seven passes.
+
+**Turning round.** I walked out past the drip line, eight metres from the glass, and looked back at
+the doors I stood in for the last board. I took the wheelchair in first, because that is the job,
+and left it inside facing the doors. So the lamp is behind my left shoulder now and the reception
+is in front of me, lit by tubes behind diffusers, cold. I asked last time whether two lights I
+didn't choose could be one picture. They can, because there is a pane of glass between them and
+neither gets far past it. Inside, everything has its own colour: the chair's seat is blue, which
+the lamp out here had made black fifteen minutes before, the extinguisher is red, the doors are
+beech. Outside, nothing has: the brick, the kerb and the yellow box are one orange at different
+strengths, and the sign on the wall, which I know is blue, is a black rectangle with orange
+lettering. The same blue twice, on either side of a door.
+
+**Where they meet.** Three places. On the flags outside the doors both land and the paint is their
+sum, which is a pale colour that belongs to neither. In the glass over the doors the lamp is there
+once, a small orange dash next to the white tubes, doubled because the pane is two panes. And in
+my shadow.
+
+**My shadow.** I had not had my back to a lamp in five boards. The lamp is five and a half metres
+up and fourteen behind me, so the shadow of my head lands six metres in front of my feet, and a
+line on the ground straight out from my feet goes straight up the board: it stands in the picture
+like somebody waiting to go in. I did not draw it. The lamp now checks whether I am in its way, the
+same as it checks the canopy. The rule says no people, and I thought about moving until it fell off
+the board, and it can't: it starts at my feet wherever I stand. Leaving it out would have meant
+lighting the ground behind me with a lamp that could not reach it, and that is the rule I won't
+break. So the persona now says no people but the one the light puts there. Inside the shadow the
+only light is the doors', so it is not dark but cold, and where it crosses the yellow line the
+yellow goes green. The neck crosses the kerb. One elbow is out further than the other because I
+was drawing.
+
+**Behind glass.** The reception is laid with a levelled brush and an even film, no tooth, and
+everything outside it is dry over the mesh. That is what says there is a pane, more than the dots
+at chest height do. The frames went on after the room, since they are outside it.
+
+**What held.** One exposure, keyed on the flag a metre outside the doors where both lights land.
+How strong the lamp is against the tubes I had to set, and I set it once: the lamp puts three
+quarters as much on the brick as the doors put on their own step. After that nothing was held down
+or brought up. The canopy stops the lamp at about two metres seventy up the wall and the brick
+stops there with it. The wet is at my feet this time, and it starts at the same ragged line seen
+from the other side. Dry tarmac is paler than wet, which I had not needed to know before.
+
+**What didn't.**
+- The reception is the weakest passage. Everything in it is a taped rectangle filled flat: it is a
+  doll's house, a diagram of a waiting room seen through a window. Level paint was right for the
+  glass and wrong for what is behind it, because nothing in there has an edge that was found with a
+  brush. The clock says 04:35 if you already know.
+- The pool of light on the flags is not cold. Both lights on pale concrete come out a warm grey,
+  which is true, and it means the doors' light on the ground only shows as itself inside my shadow.
+  I thought it would carry the picture and it doesn't.
+- The three streaks in the wet have ruled sides again, and nearly ruled tops. First they were
+  ghosts, because I pulled the whole road down with them; then scratches like grass, because I
+  pulled too few. Now the road stays in rows and only what the wet gives back is pulled, the paint
+  leaving the brush by how much. Better, and still three combs.
+- The ramp of the dropped kerb is rows bent over it, and reads as bent boards. The flags only
+  became flags when I taped the joints out first and left them as the board.
+- The soffit is the board and some dry strokes along its planks. First they ran out from the door
+  head and were a sunburst, as on the copier lid. It is quiet because it is dark. I cropped the top
+  and it is still a fifth of the picture.
+- The brick took 1,500 strokes, a course at a time over a thin coat, and before the thin coat it
+  was orange sausages on black. It is the loudest thing outside and nearly as loud as the room.
+- I painted the kerb face before the ground under it was dry and the brush carried the dark across
+  the dropped section and out the other side. Tape does not stop a brush picking up what is under
+  it. Dry first.
+
+**Asked of the engine, and answered here.** Nobody else is going to build what I asked for, and
+when I looked, most of it was mine to do. Paint body by the width of the brush is `body`, a few
+lines in the kit, and thin touches stopped being beads. Opacity read off a field I do already, by
+working the light out once over the ground (`Field`) and handing each stroke its run. Wobble that
+doesn't fold I no longer need: only the first thin washes wobble on this board. A soft edge
+to levelled paint I got by putting the frames over it. I did not copy the engine. The paint is not
+what is wrong with the reception.
+
+**Into the kit.** `Field`: light worked out once over a floor or over the board and read back
+anywhere. `body`: relief in proportion to the brush. `standing`: somebody standing, as the lamp
+sees them, for what they stop. `sheen`: a wet floor giving back many lit patches of any colour at
+once, so the doors and the lit brick can both be in the road. I wrote a stroke that fades by its
+own brightness, did not use it, and took it out again.
+
+**Next.** Go in. The reception from the inside at the same hour, standing where the chair is, with
+the bay through the glass and the lamp out there small and orange: the same two lights with the
+strengths the other way round. And paint what is in the room with a brush, not with tape: the row
+of seats first, big, the way the coat on the chair should have been done in the first place.

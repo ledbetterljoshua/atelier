@@ -673,3 +673,81 @@ def drag(board, x0, x1, y0, y1, n, brush, shade, along=10, lean=0.0, wobble=0.0,
         board.stroke(np.array([(xs[0], ya), (xs[-1], yb)]), brush, cs, wobble=wobble, opacity=op)
         out += 1
     return out
+
+
+# --- added for 006: turned round, two lights, and a pane of glass between them -------------------
+
+class Field:
+    """Light worked out once over a grid (a floor's x and z, or the board's x and y) and read back
+    anywhere in it. fn(a, b) gives a number or a colour; smooth is in cells."""
+
+    def __init__(self, a0, a1, na, b0, b1, nb, fn, smooth=0.0):
+        self.a0, self.a1, self.b0, self.b1 = a0, a1, b0, b1
+        A, B = np.linspace(a0, a1, na), np.linspace(b0, b1, nb)
+        v = np.array([[np.atleast_1d(fn(a, b)) for b in B] for a in A], dtype=np.float64)
+        if smooth > 0:
+            from scipy.ndimage import gaussian_filter
+            v = np.stack([gaussian_filter(v[..., k], smooth) for k in range(v.shape[-1])], -1)
+        self.v = v
+
+    def at(self, a, b):
+        na, nb = self.v.shape[:2]
+        fa = np.clip((np.asarray(a, dtype=np.float64) - self.a0) / (self.a1 - self.a0), 0, 1) * (na - 1)
+        fb = np.clip((np.asarray(b, dtype=np.float64) - self.b0) / (self.b1 - self.b0), 0, 1) * (nb - 1)
+        fa, fb = np.broadcast_arrays(fa, fb)
+        i, j = np.minimum(fa.astype(int), na - 2), np.minimum(fb.astype(int), nb - 2)
+        u, w = (fa - i)[..., None], (fb - j)[..., None]
+        v = self.v
+        return (v[i, j] * (1 - u) * (1 - w) + v[i + 1, j] * u * (1 - w) + v[i, j + 1] * (1 - u) * w
+                + v[i + 1, j + 1] * u * w)
+
+
+def body(brush, ref=10.0):
+    """Paint body in proportion to the brush: a touch a few pixels wide leaves next to no relief, so
+    thin touches of thick paint stop standing up as beads under the raking light."""
+    return brush.but(thickness=brush.thickness * min(1.0, brush.width / ref))
+
+
+def standing(x, y, lean=0.0):
+    """Somebody standing, seen from behind or in front, as the lamp sees them: True inside the
+    outline. x across (metres from the feet), y up. One elbow is out further than the other: she is
+    drawing on a job sheet."""
+    x = np.asarray(x, dtype=np.float64) - lean * np.asarray(y, dtype=np.float64)
+    y = np.asarray(y, dtype=np.float64)
+    ax = np.abs(x)
+    legs = (y > 0) & (y < 0.86) & (np.abs(ax - 0.095) < 0.07 + 0.02 * y / 0.86)
+    hips = (y >= 0.80) & (y < 1.02) & (ax < 0.185)
+    half = np.interp(y, [1.02, 1.12, 1.20, 1.30, 1.40, 1.45], [0.18, 0.225, 0.215, 0.20, 0.215, 0.16])
+    elbow = np.where(x > 0, 0.05 * np.exp(-((y - 1.13) / 0.07) ** 2), 0.0)
+    torso = (y >= 1.02) & (y < 1.45) & (ax < half + elbow)
+    neck = (y >= 1.45) & (y < 1.55) & (ax < 0.055)
+    head = (x / 0.088) ** 2 + ((y - 1.64) / 0.118) ** 2 < 1.0
+    return legs | hips | torso | neck | head
+
+
+def sheen(F, eye, S, n_S, rad, dA, m, fresnel=(0.02, 5.0), ok=None):
+    """gloss() for many lit patches of any colour at once: what a wet floor at F gives back to the
+    eye from patches S (facing n_S, radiance rad as colours, area dA). ok: which patches count."""
+    N = v3(0, 1, 0)
+    mx, mz = (m, m) if np.ndim(m) == 0 else m
+    V = eye - F
+    V = V / np.linalg.norm(V)
+    co = max(V @ N, 1e-3)
+    B = V - N * (V @ N)
+    B = B / (np.linalg.norm(B) + 1e-12)
+    T = np.cross(N, B)
+    L = S - F
+    d2 = (L * L).sum(1)
+    L = L / np.sqrt(d2)[:, None]
+    ci = L @ N
+    cl = -(L * n_S).sum(1)
+    Hh = L + V
+    Hh = Hh / np.linalg.norm(Hh, axis=1, keepdims=True)
+    ch = np.clip(Hh @ N, 1e-3, 1.0)
+    D = np.exp(-((Hh @ T / ch) ** 2 / (mx * mx) + (Hh @ B / ch) ** 2 / (mz * mz))) / (np.pi * mx * mz * ch ** 4)
+    cd = np.clip(Hh @ V, 0, 1)
+    Fr = fresnel[0] + (1 - fresnel[0]) * (1 - cd) ** fresnel[1]
+    w = np.where((ci > 0) & (cl > 0), dA * cl / d2 * Fr * D / (4 * co), 0.0)
+    if ok is not None:
+        w = w * ok
+    return (np.asarray(rad) * w[:, None]).sum(0)
