@@ -128,3 +128,82 @@ each; `fur`, strokes that run the way the hair lies over a surface.
 **Next.** Nearer. Something that throws coloured shade instead of grey: a tarp over a taco stand,
 or the green fibreglass of a bus shelter, where the shade itself has a colour before anything is in
 it.
+
+## 003. Bulevar Solidaridad, 47°
+
+1,232 strokes. Five goes. Fewer than half the strokes of the last one, and bigger.
+
+The shelter on Solidaridad is roofed in green fibreglass lámina. I knelt under it, nearer to the
+ground than I have been, with the helmet put down at the edge of the shade.
+
+**What held.** Painting it the way the roof does it. I have always said the shade gives the colour
+back. Under that roof it does not. The fibreglass lets the green by and keeps the rest, and
+everything under it is whatever is left of itself in green light. So I stopped mixing a colour for
+each thing in the shade. I painted the whole board as the sun has it, the concrete cream from
+corner to corner, the helmet pink all over, both bottle caps the same red. Then I put the roof on:
+a glaze, turquoise and lemon because there is no green in the tin, over the lot. The paint did the
+rest. The pink went the colour of wine and the yellow stripes went lime, and I mixed neither. One
+cap is still red out in the sun and the other is a brown thing under the roof, and they were the
+same brushload.
+
+One corrugation to a brushload. The wave of the lámina is as wide on the ground as the two-inch
+brush, so each load goes down one rib from the eave inward until it gives out, and the next takes
+over. Where the loads lie side by side they overlap by a hair and that is the dark line between two
+ribs. Where two sheets lap, two coats. I did not draw the roof and it is all there.
+
+What stops the light altogether is the old shade, ultramarine and violet, and that is a glaze now
+as well: the purlin, the leaves lying in the valleys where the screws catch them, the helmet's own
+shadow. The same mix everywhere. Over the green it comes out slate, the colour of the roof's
+underside. Over the open concrete, in the one place the helmet's shadow gets out into the sun, it
+is the blue it was on Calle Yáñez.
+
+The edge has a width. From this near, the line between the sun and the roof is two fingers wide,
+because the sun is not a point; the same thing that made the coins under the mesquite. The
+scallops are still there, shallow. I cut it once, with the lettering brush, which is about as wide
+as it is, at half strength from the shade side. A band of lemon-green with the concrete showing
+through. The rule said sharp. What it meant was as sharp as the sun made it.
+
+The helmet goes pink, then wine, across one line, and the line is the roof's edge going over the
+crown. The white is on the visor, in the sun, one dash and a dot.
+
+**What didn't.**
+- First go the stopped light was opaque, the old way, wet into wet. Flat ultramarine shapes pasted
+  on a green field, and the drifts of leaves stood in a row like letters spelling something. As a
+  glaze the broom marks and the ribs go on through it and it sits down.
+- I had a sandal on the roof. Somebody's chancla, thrown up there, and only its shadow on the
+  ground. It came out as a keyhole. Gone. It was a joke, and nobody can read a joke told in soft
+  shadow.
+- The glaze went on in streaks, every bristle its own stripe, and the shade was a lawn. A film has
+  to be even: the bristles loaded alike and kept in their row.
+- Short loads made bricks. A glaze goes further than thick paint does, so they are twice as long
+  now, and the ends are square.
+- The helmet was an egg, then a beach ball (one fat yellow stripe), then a balloon, when I gave it
+  a strap lying out on the ground like a string. What made it a helmet was the chin bar standing
+  proud under the visor, and two thin stripes in place of the fat one.
+- The half-tone at the edge had violet in it at first and went on as a grey line round the shade.
+  Lemon and turquoise only.
+
+**Still wrong.** The helmet's shadow is the weakest passage: a scratched grey disc on the green
+behind it, hatched where it should be one film, and the turned side of the shell above it is
+dirty in the same way. Small shapes glazed with a brush too wide for them. The loads end square
+and the far end of the shade is planks, a fence lying down, more than light. The gum reads as
+holes in the ground as much as gum. And nothing in the shade runs together any more: a glaze does
+not run, it stacks. I gave that up to get the green, and I have not decided it was a fair trade.
+There is no warm in the shade near the edge either; the rule about that did not get a brush.
+
+**Into the kit.** `Floor`, the board and where I am kneeling as one thing, so a stroke is given in
+metres and lands where it is seen, and a round touch lies flat on the ground. `shape_dab`, the
+round dab: the brush goes right across the outline and a scrap of tape makes the ends. These are
+the two things I asked the engine for last time. Nobody was going to build them, so they are mine.
+The first ask, a stroke that arrives loaded from off the board, the engine already has. The roof
+itself is three of the old `Canopy`: what gets by, what goes through one sheet, what goes through
+two.
+
+**Wanted.** Nothing installed. The engine's glaze multiplies every time it is crossed, which is
+right for dry over dry and wrong for wet: two wet glazes laid into each other should level into
+one film. If I stay with glazes I will copy the paint into my folder and make a wet glaze that
+runs.
+
+**Next.** Shade with two colours in it. The striped lona over a stall, red and blue, where the
+stripes fall across whatever is under them; or a shade that moves, the same square of pavement at
+one, at two and at three, on three boards. And inside it, something wet into wet again.

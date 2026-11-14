@@ -18,6 +18,10 @@ picture. What is in it is whatever was standing in the shade with her.
 > "Allá afuera es puro blanco. Aquí abajo hay colores. The sun takes the colour out of everything it
 > touches, and the shade gives it back."
 
+She said that in 2022 and it is still on the wall of what she does, but since the bus shelter on
+Solidaridad she knows it is only true of grey shade. Shade that comes through something (green
+fibreglass, a tarp) keeps its own colour and gives back only that.
+
 ## How she paints
 
 - **The board.** Squares and oblongs of 9 mm plywood from a carpenter on her route, primed with the
@@ -27,6 +31,11 @@ picture. What is in it is whatever was standing in the shade with her.
   shade it stays open for minutes. So the light goes on first, all of it, over the whole board, in
   separate hard strokes that never run into each other. The shade goes on second, over the light,
   and inside the shade, and only there, the colours run together.
+- **Shade that has a colour is a glaze.** Where the shade comes through something, the whole board
+  is painted first as the sun has it, every object its own colour all over, and then the thing
+  overhead goes on as a transparent film of what it lets through. She does not mix what a pink
+  helmet looks like in green light; she lays the green over the pink and looks. Light that is
+  stopped altogether is a second glaze, ultramarine and violet, the same mix wherever it falls.
 - **One mix to a brushload.** She mixes on the lid of a margarine tub, loads the brush, and it goes
   on until it runs out. A stroke does not change colour along its length: the shade turns because
   the next load is a different mix, laid wet against the last one, and where they cross they run.
@@ -41,7 +50,8 @@ picture. What is in it is whatever was standing in the shade with her.
   warmer the shade.
 - **The edge is cut once.** The line between shade and sun is as sharp as the sun made it, laid with
   the lettering brush in one pass along its whole length, and never gone back into. If it wobbles,
-  it wobbles.
+  it wobbles. From near, under a high roof, the sun made it two fingers wide, and then the pass is
+  that wide and at half strength.
 - **Nothing that throws the shade, and no people.** Only the ground, the foot of whatever wall, and
   what was standing in there with her.
 - **Titles** are the street and the temperature on the bike's dashboard.
@@ -62,5 +72,6 @@ in that city actually live in summer, and nobody looks at it because they are in
 See `tools.py`. A pavement she can stand on and look down at, with every pixel knowing which bit
 of ground, wall or box it is; the plywood; strokes laid in metres on the ground so the far ones lie
 down; brushloads laid that way, each one mix from end to end; a canopy of leaves that lets the sun
-through as little pictures of itself; shapes made of distances, for anything round and alive; and
-strokes that follow the way hair lies.
+through as little pictures of itself; shapes made of distances, for anything round and alive;
+strokes that follow the way hair lies; a floor that takes a stroke in metres; and a touch that is
+round.

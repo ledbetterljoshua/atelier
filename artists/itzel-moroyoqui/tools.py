@@ -299,3 +299,64 @@ def fur(board, view, P, N, D, mask, brush, mix_at, rng, n, length, curl=0.0, wob
         pts3 = p + d * (s * L) - nn * (curl * (s * L) ** 2 / max(L, 1e-6))
         board.stroke(view.P(pts3), brush, mix_at(y, x, rng), wobble=wobble, **kw)
     return n
+
+
+# --- a board that knows where she is standing ----------------------------------------------------
+class Floor:
+    """The board and the view together, so a stroke can be given in metres on the pavement (or
+    anywhere in the air over it) and lands where it is seen. Asked of the engine after 002 and
+    built here instead."""
+
+    def __init__(self, board, view):
+        self.board, self.view = board, view
+
+    def lift(self, pts):
+        """(n, 2) ground points as (x, z), or (n, 3) points, to (n, 3)."""
+        pts = np.asarray(pts, dtype=np.float64)
+        if pts.shape[-1] == 2:
+            pts = np.stack([pts[..., 0], np.zeros(pts.shape[:-1]), pts[..., 1]], -1)
+        return pts
+
+    def px(self, m, at):
+        """A length in metres as pixels, seen at a place."""
+        return m * self.view.scale_at(self.lift(np.asarray(at, dtype=np.float64)[None])[0])
+
+    def stroke(self, pts, brush, color, width_m=None, **kw):
+        """A stroke through points given in metres. width_m is the brush's width on the ground,
+        taken where the stroke is centred."""
+        P3 = self.lift(pts)
+        b = brush if width_m is None else brush.but(width=max(2.5, self.px(width_m, P3.mean(0))))
+        self.board.stroke(self.view.P(P3), b, color, **kw)
+
+    def on_board(self, p, margin=0):
+        q = self.view.P(self.lift(np.asarray(p, dtype=np.float64)[None])[0])
+        return -margin <= q[0] < self.board.w + margin and -margin <= q[1] < self.board.h + margin
+
+    def dab(self, p, r_m, brush, color, **kw):
+        """A round touch lying flat on the pavement: a circle of r_m metres, seen."""
+        c = self.lift(np.asarray(p, dtype=np.float64)[None])[0]
+        a = np.linspace(0, 2 * np.pi, 28, endpoint=False)
+        ring = c + r_m * np.stack([np.cos(a), np.zeros_like(a), np.sin(a)], 1)
+        shape_dab(self.board, self.view.P(ring), brush, color, **kw)
+
+
+def shape_dab(board, poly, brush, color, angle=0.0, feather=0.7, coats=1, **kw):
+    """A touch that ends where its shape ends: round, if the shape is. The brush goes right across
+    the outline and a scrap of tape, lifted straight after, makes the ends. Whatever tape was
+    down before stays down. The round dab asked of the engine after 002."""
+    poly = np.asarray(poly, dtype=np.float64)
+    old_mask, old_use = board.mask, board.use_mask
+    board.tape(poly, feather=feather, mode="and" if old_use else "replace")
+    d = np.array([np.cos(angle), np.sin(angle)])
+    nrm = np.array([-d[1], d[0]])
+    c = poly.mean(0)
+    along, across = (poly - c) @ d, (poly - c) @ nrm
+    half = max(2.0, (across.max() - across.min()) / 2)
+    rows = max(1, int(np.ceil(2 * half / max(brush.width, 3.0) * 1.3)))
+    b = brush.but(width=max(3.0, min(brush.width, 2.2 * half)), taper=(0.0, 0.0))
+    for _ in range(coats):
+        for o in (np.linspace(across.min(), across.max(), rows + 2)[1:-1] if rows > 1 else [across.mean()]):
+            a0 = c + nrm * o + d * (along.min() - b.width)
+            a1 = c + nrm * o + d * (along.max() + b.width)
+            board.stroke([a0, a1], b, color, **kw)
+    board.mask, board.use_mask = old_mask, old_use

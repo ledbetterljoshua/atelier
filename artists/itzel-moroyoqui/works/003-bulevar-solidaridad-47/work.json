@@ -1,0 +1,43 @@
+{
+  "title": "Bulevar Solidaridad, 47\u00b0",
+  "year": 2025,
+  "medium": "Acrylic and acrylic glaze on primed plywood",
+  "strokes": 1232,
+  "size": [
+    1640,
+    1640
+  ],
+  "stages": [
+    {
+      "name": "the light, all of it, as if there were no roof",
+      "strokes": 1047,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the roof, put on over it as a glaze",
+      "strokes": 1193,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "what stops the light altogether",
+      "strokes": 1221,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the edge, cut once, as wide as the sun made it",
+      "strokes": 1230,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "sun handed on",
+      "strokes": 1232,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 1232,
+      "file": "stages/05.jpg"
+    }
+  ],
+  "seconds": 6.6
+}
