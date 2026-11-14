@@ -199,6 +199,10 @@ def load():
         born = re.match(r"(b\. [^.]+)\.", intro)
         journal = (adir / "journal.md").read_text() if (adir / "journal.md").exists() else ""
         jsecs = sections(journal)
+        if (adir / "world.md").exists():
+            wsecs = sections((adir / "world.md").read_text())
+            whead = wsecs[0][1].split("\n", 1)
+            secs = secs + ([("The world", whead[1].strip())] if len(whead) > 1 and whead[1].strip() else []) + wsecs[1:]
         a = {"slug": adir.name, "name": name, "first": name.split()[0], "intro": intro,
              "born": born.group(1) if born else "", "sections": secs[1:], "works": [],
              "kit": kit(adir / "tools.py"),

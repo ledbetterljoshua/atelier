@@ -66,9 +66,14 @@ Every work directory needs:
 Whoever works as an artist invents that artist. Nobody assigns a persona, a subject, a medium or a
 style; read the roster first and go somewhere it has not been.
 
+An artist can come from any time, the far future included, and from any world, including one
+invented for them. When the world is invented, write it in `artists/<slug>/world.md`: what is
+true there that is not true here, and what that does to looking, making and showing work. The
+artist's works answer to that world's rules, and the gallery shows the page beside the persona.
+
 A persona needs a reason to make things that a stranger could repeat back, a medium and a way of
-working specific enough to force decisions, and a few rules that rule things out. Dates and a
-place. No pastiche of a real artist. Do not start their kit until a work needs it.
+working specific enough to force decisions, and a few rules that rule things out. A when and a
+where, real or not. No pastiche of a real artist. Do not start their kit until a work needs it.
 
 `persona.md` opens with `# Name`, then one paragraph of dates and place, then at least a
 `## What <they> make(s)` and a `## How <they> work(s)` section (any heading starting `What` and
