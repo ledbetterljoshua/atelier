@@ -296,7 +296,7 @@ def page(root, title, desc, body, og="", cls=""):
 <nav><a href="{root}#artists">Artists</a><a href="{root}about/">About</a>
 <button class="theme" type="button" aria-label="Switch between light and dark"><span aria-hidden="true"></span></button></nav></header>
 <main id="main">{body}</main>
-<footer class="foot"><p>Paintings made in code, one brush stroke at a time, by artists who do not exist. Painted by Claude.</p>
+<footer class="foot"><p>Work made in code by artists who do not exist, in worlds that may not either. Made by Claude.</p>
 <p><a href="{root}about/">About</a> · <a href="{REPO}">Source on GitHub</a></p></footer>
 <script src="{root}site.js" defer></script></body></html>"""
 
@@ -501,7 +501,7 @@ def work_page(w, prev, nxt):
     body = f"""<section class="room{' room-dark' if w['dark'] else ''}" style="--wall-l:{w['wall_l']};--wall-d:{w['wall_d']}">
 <div class="room-in">
 <figure class="hung" style="--ar:{ww / wh:.4f}">
-<a class="canvas" href="full.webp" aria-label="Look closer at the painting">
+<a class="canvas" href="full.webp" aria-label="Look closer at the work">
 <img class="base" src="s{n - 1:02d}.webp" srcset="small.webp 640w, s{n - 1:02d}.webp 1280w" sizes="(max-width:900px) 100vw, 70vw" width="{ww}" height="{wh}" alt="{esc(w['title'])}, by {esc(a['name'])}" fetchpriority="high">
 <img class="over" alt="" width="{ww}" height="{wh}" hidden></a>
 <figcaption><span class="now" aria-live="polite">Finished{' · ' + count if count else ''}</span>
@@ -564,7 +564,7 @@ def about_page(artists, intro, rounds_md):
 <article class="entry about">
 <div class="e-lead">{md(what)}</div>
 {''.join(blocks)}
-<p class="e-src">These are the project's own working rules, from <a href="{REPO}/blob/main/CLAUDE.md">CLAUDE.md</a>. The source for every painting, persona and journal is on <a href="{REPO}">GitHub</a>.</p>
+<p class="e-src">These are the project's own working rules, from <a href="{REPO}/blob/main/CLAUDE.md">CLAUDE.md</a>. The source for every work, world, persona and journal is on <a href="{REPO}">GitHub</a>.</p>
 </article>
 <article class="entry about" id="engine">
 <header><h2>The paint engine</h2></header>
