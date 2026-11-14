@@ -1,0 +1,42 @@
+{
+  "title": "Brask wall, east run. Twelfth light, for Ione Brask, breast-high",
+  "artist": "ebba-dorrigo",
+  "year": "sway 32,771",
+  "medium": "Twelve bored lights in a rammed-gravel shade wall, hoar, and one sway of the sun. Seen from the ward mast.",
+  "made": "2026-11-14",
+  "program": "live/light.js",
+  "live": "live/index.html",
+  "marks": "lights",
+  "strokes": 12,
+  "size": [
+    1500,
+    1875
+  ],
+  "stages": [
+    {
+      "name": "the ground under one sway, before anyone rammed a wall on it",
+      "strokes": 0,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the Brask wall up, and the keep it holds: hoar wherever the sun never comes",
+      "strokes": 0,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "eleven lights standing, each eye open",
+      "strokes": 11,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the twelfth bored: first sway, the sun lying on clean hoar",
+      "strokes": 12,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "finished: the piece goes on from here, and the eye opens over six sways",
+      "strokes": 12,
+      "file": "final.png"
+    }
+  ]
+}

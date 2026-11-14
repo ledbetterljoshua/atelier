@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brask wall, east run. Twelfth light</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0a0c; overflow: hidden; }
+  body { display: grid; place-items: center; }
+  canvas { display: block; max-width: 100vw; max-height: 100vh; aspect-ratio: 4 / 5; height: 100vh; width: auto; touch-action: none; cursor: ew-resize; }
+  @media (max-aspect-ratio: 4/5) { canvas { width: 100vw; height: auto; } }
+  p { position: fixed; left: 0; right: 0; bottom: 0; margin: 0; padding: 0 0 .7em; text-align: center; font: 12px/1.3 ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: .04em; color: #d9c9bd; opacity: .62; pointer-events: none; text-shadow: 0 0 6px #000; }
+</style>
+<canvas id="c"></canvas>
+<p id="say"></p>
+<script src="light.js"></script>
+<script>
+(function () {
+  const q = new URLSearchParams(location.search);
+  const cv = document.getElementById('c'), say = document.getElementById('say');
+  const still = q.has('still');
+  const W = +(q.get('w') || (still ? 1500 : 480)), H = Math.round(W * 5 / 4);
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext('2d'), img = ctx.createImageData(W, H);
+  const piece = Piece(W, H);
+
+  if (still) {
+    // a still for the gallery: ?still=<stage>&tau=<where in the sway>&open=<how far the twelfth eye has opened>
+    cv.style.cssText = 'width:' + W + 'px;height:' + H + 'px;max-width:none;max-height:none';
+    document.body.style.display = 'block';
+    piece.render(img.data, +(q.get('tau') || 0.6), +q.get('still'), +(q.get('open') || 0));
+    ctx.putImageData(img, 0, 0);
+    if (q.has('cost')) { const c = piece.cost(); document.title = JSON.stringify(c); say.textContent = JSON.stringify(c); }
+    return;
+  }
+
+  // The piece itself. One sway takes two minutes here; there it takes about twenty-three of Earth's days.
+  // The twelfth light is bored as you arrive. Its eye opens over the next six sways. Drag to carry the sun round yourself.
+  const PERIOD = 120, OPEN_OVER = 6, TAU0 = 5.2;
+  let sway = 0, last = performance.now(), held = false, lastX = 0, busy = false;
+  cv.addEventListener('pointerdown', e => { held = true; lastX = e.clientX; cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointermove', e => { if (held) { sway = Math.max(0, sway + (e.clientX - lastX) / cv.clientWidth * 1.2); lastX = e.clientX; } });
+  addEventListener('pointerup', () => { held = false; });
+  function frame(now) {
+    const dt = Math.min(0.5, (now - last) / 1000); last = now;
+    if (!held) sway += dt / PERIOD;
+    const open = Math.min(1, sway / OPEN_OVER);
+    piece.render(img.data, TAU0 + sway * 2 * Math.PI, 3, open);
+    ctx.putImageData(img, 0, 0);
+    const n = Math.floor(sway) + 1;
+    say.textContent = n <= OPEN_OVER ? 'sway ' + n + ' since the boring' : 'the eye is open';
+    setTimeout(() => requestAnimationFrame(frame), 60);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</html>
