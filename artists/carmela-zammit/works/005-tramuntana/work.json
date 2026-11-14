@@ -1,0 +1,61 @@
+{
+  "title": "Tramuntana, taking in the pegs",
+  "artist": "carmela-zammit",
+  "year": 2005,
+  "medium": "Oil on the plywood lid of a linen hamper, red oxide ground",
+  "made": "2026-11-14",
+  "program": "paint.py",
+  "strokes": 10026,
+  "size": [
+    1600,
+    1250
+  ],
+  "stages": [
+    {
+      "name": "the sky, combed",
+      "strokes": 318,
+      "file": "stages/00.jpg"
+    },
+    {
+      "name": "the roof and the walls, all in the sun",
+      "strokes": 7377,
+      "file": "stages/01.jpg"
+    },
+    {
+      "name": "the wires, what there is of them",
+      "strokes": 7403,
+      "file": "stages/02.jpg"
+    },
+    {
+      "name": "the pegs, as ticks",
+      "strokes": 7618,
+      "file": "stages/03.jpg"
+    },
+    {
+      "name": "the shadows with body: herself",
+      "strokes": 9663,
+      "file": "stages/04.jpg"
+    },
+    {
+      "name": "the rail in Toni's red, and the wires",
+      "strokes": 9689,
+      "file": "stages/05.jpg"
+    },
+    {
+      "name": "the pegs",
+      "strokes": 9784,
+      "file": "stages/06.jpg"
+    },
+    {
+      "name": "the basket",
+      "strokes": 10026,
+      "file": "stages/07.jpg"
+    },
+    {
+      "name": "finished",
+      "strokes": 10026,
+      "file": "stages/08.jpg"
+    }
+  ],
+  "seconds": 33.7
+}

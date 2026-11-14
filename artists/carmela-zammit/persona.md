@@ -3,7 +3,7 @@
 b. 1949, Ħamrun, Malta. Worked from 1964 to 2005 at a commercial laundry in Marsa that did hotel
 linen and ships' linen for the drydocks. In fine weather the flatwork dried on the laundry's flat
 roof, on eleven galvanised lines between iron posts, and from 1971 hanging out and taking in was
-her job. Painted from 1977, on Sunday afternoons, at the kitchen table in Ħamrun. Showed twice at
+her job. The laundry stopped sending linen up in 2005. Painted from 1977, on Sunday afternoons, at the kitchen table in Ħamrun. Showed twice at
 the parish hall during the festa. Sold one picture, to the laundry's owner, who hung it in the
 office over the till.
 
@@ -24,6 +24,11 @@ knows about the sun goes the other way round. The cloth is lit on the face she s
 the line the further it hangs from the door, and the whole line stands up again, three times the
 size, on the blank wall of the house behind.
 
+And in 2005, when the linen stopped, the line with nothing on it but the pegs. There is no sheet to
+stand behind then, so the sun goes behind her instead, and the roof shows what is left standing on
+it: the wires, which throw almost nothing; the pegs; and herself, as a shadow, with the wind in her
+skirt. She is never in a picture any other way.
+
 > "With the sun behind it a sheet tells you everything. Where it's thin, where we darned it, the
 > stain that never came out. And which way the wind is, and how hard."
 
@@ -31,7 +36,8 @@ size, on the blank wall of the house behind.
 
 - **The cloth.** Hotel sheets the laundry condemned, sized with rabbit glue and stretched on frames
   her brother made from pallet slats. Fine, even weave. Sometimes one of the laundry's darns is in
-  the picture, standing up off the cloth, and she paints over it.
+  the picture, standing up off the cloth, and she paints over it. When the sheets stopped coming she
+  primed the plywood lid of a linen hamper: no weave, a grain that runs across, paint that sits up.
 - **The red.** She primes with red oxide, the primer that goes on every hull in the drydock, which
   her husband Toni brought home in tins. She paints the blue sky straight over it and lets it come
   through wherever the brush runs thin. At that hour it looks right to her.
@@ -44,12 +50,15 @@ size, on the blank wall of the house behind.
   standing between it and the sun.
 - **The sun is never painted.** Nor the bulb. The sun is always behind a sheet, or off the top of the board; the bulb is
   round the jamb of the stair-head door. She goes in
-  thick where it lands hardest on cloth, last, in one go, and nowhere else is that thick.
+  thick where it lands hardest on cloth, last, in one go, and nowhere else is that thick. With no
+  cloth on the line the thick goes on the pegs.
 - **Shadows are laid, not left.** The roof goes in as if the whole of it were in the sun; then she
   lays the shadows over it, the brush going the way the sun throws them, cut where the light cuts
   them. A shadow through one thickness of cotton still has warm in it; through the hem it has none.
   Under the bulb the shadows on the screed fan out from the door; on a wall they stand up, and she
-  brushes them the way the cloth that throws them hangs.
+  brushes them the way the cloth that throws them hangs. Shadows are thin paint from a clean brush.
+  A shadow is as soft as the thing that throws it is high: hard at a foot, nearly gone from a wire.
+  She will give a wire more shadow than it has, and says so.
 - **Strokes go the way the cloth hangs.** Down from the pegs; across only at the hem and the fold
   over the wire. Never across a sheet at an angle the wind didn't put in it. Cloth on the ground goes
   the way it is being dragged.
@@ -61,7 +70,8 @@ size, on the blank wall of the house behind.
 
 Titanium white by the kilo, Naples yellow, yellow ochre, raw and burnt sienna, ultramarine,
 Prussian blue, cadmium yellow and orange for the last sun, ivory black for the wire and nothing
-else. The red oxide is not on the palette; it is the ground. Turquoise only for the basket.
+else. The red oxide is not on the palette; it is the ground, except for the iron posts, which Toni painted
+with it too. Turquoise only for the basket.
 
 ## What she is not
 
@@ -84,4 +94,7 @@ out (`lay_field`). For nights, a bulb seen only through a doorway (`Bulb`), whos
 with distance and is cut by the jambs; the shadow that light throws on any plane, floor or wall,
 growing the further the plane stands behind the cloth (`cast_point`); the direction a point light
 throws shadows across a plane, to brush them by (`thrown`); and the point on any plane behind a
-point on the board (`on_plane`).
+point on the board (`on_plane`). For a bare roof with the sun behind her, one sheet laid on the roof
+that keeps how much sun reaches each place, each shadow soft by the height of what throws it, which
+a wall or the basket can ask as well as the screed (`SunFloor`); tape cut from a soft field (`cut`);
+and plywood to paint on (`crate_lid`).

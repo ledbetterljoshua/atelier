@@ -491,3 +491,164 @@ def thrown(cam, src, plane):
         a, b = cam.P(Q), cam.P(Q + d * 0.05)
         return float(np.arctan2(b[1] - a[1], b[0] - a[0]))
     return f
+
+
+# --- a bare roof, and the sun at her back ---------------------------------------------------------
+
+def crate_lid(w, h, rng, grain=0.0):
+    """The plywood lid of a linen hamper: no weave. A long grain that runs one way and wanders, the
+    pores open along it, a knot or two the brush goes round. Smoother than sheeting, so paint sits
+    up on it and a dry brush only finds the grain."""
+    y, x = np.mgrid[0:h, 0:w].astype(np.float32)
+    ca, sa = np.cos(grain), np.sin(grain)
+    along, across = x * ca + y * sa, -x * sa + y * ca
+    drift = ground.fbm(w, h, rng, base=3, octaves=3) * 90.0
+    rings = 0.5 + 0.5 * np.sin(2 * np.pi * (across + drift) / 23.0 + 3.0 * ground.fbm(w, h, rng, base=5, octaves=2))
+    pores = ground.fbm(w, h, rng, base=220, octaves=2)
+    pores = gaussian_filter(pores, (0.0, 5.0) if abs(grain) < 0.3 else (5.0, 0.0))
+    pores = (pores - pores.min()) / (pores.max() - pores.min())
+    t = 0.45 * rings ** 2 + 0.4 * pores + 0.15 * ground.fbm(w, h, rng, base=40, octaves=3)
+    for _ in range(2):
+        kx, ky, kr = rng.uniform(0.1, 0.9) * w, rng.uniform(0.3, 0.95) * h, rng.uniform(9, 16)
+        d = np.hypot((x - kx) / 1.7, y - ky) / kr
+        t = t + 0.5 * np.exp(-d ** 2) * (0.5 + 0.5 * np.cos(6.0 * d))
+    t = gaussian_filter(t, 0.6)
+    return ((t - t.min()) / (t.max() - t.min())).astype(np.float32)
+
+
+class SunFloor:
+    """How much of the sun gets to the roof, kept as one sheet laid on the roof itself, a centimetre
+    to the square, so that anything standing anywhere can ask it. Things are laid down along the
+    sun's direction L (the way the light travels): a wire, a peg, a post, a wall, a woman.
+
+    A shadow is soft by how far the thing that throws it is from the roof, because the sun is not a
+    point: half a degree across. A wire two metres up in a low sun throws nearly nothing; what
+    stands on the roof throws a hard edge at its foot that goes soft toward its head. The sheet
+    keeps things by the height they were at and softens each height by its own amount, more along
+    the throw than across it.
+
+    Any point above the roof gets its sun from the place on the sheet its own shadow would land,
+    which is true as long as the thing asking is not the thing in the way."""
+
+    SUN_R = 0.00465                                  # the sun's radius, radians
+
+    def __init__(self, L, a=(-12.0, 12.0), b=(-1.0, 24.0), res=0.01, top=2.6, levels=9):
+        self.L = unit(np.asarray(L, dtype=np.float64))
+        self.sin = -self.L[1]
+        self.k = np.sqrt(1 - self.sin ** 2) / self.sin   # metres of shadow per metre of height
+        self.s = unit(self.L[[0, 2]])                # along the throw, on the roof
+        self.t = np.array([self.s[1], -self.s[0]])   # across it, to the right as the light goes
+        self.a0, self.b0, self.res = a[0], b[0], res
+        self.na, self.nb = int((a[1] - a[0]) / res), int((b[1] - b[0]) / res)
+        self.hs = np.linspace(0.0, top, levels)
+        self.occ = np.zeros((levels, self.nb, self.na), dtype=np.float32)
+        self.T = None
+
+    def ab(self, Q):
+        Q = np.asarray(Q, dtype=np.float64)
+        xz = Q[..., [0, 2]]
+        return xz @ self.t, xz @ self.s + Q[..., 1] * self.k
+
+    def _px(self, Q):
+        a, b = self.ab(Q)
+        return np.stack([(a - self.a0) / self.res, (b - self.b0) / self.res], -1)
+
+    def _put(self, m, y):
+        """Lay mask m (nb, na) down as thrown from height y (a number, or one for each row)."""
+        y = np.broadcast_to(np.asarray(y, dtype=np.float32), (self.nb, 1) if np.ndim(y) else (1, 1))
+        dh = self.hs[1] - self.hs[0]
+        rows = np.where(m.any(axis=1))[0]
+        if len(rows) == 0:
+            return
+        r0, r1 = rows[0], rows[-1] + 1
+        for i, h in enumerate(self.hs):
+            wgt = np.clip(1 - np.abs(np.clip(y, 0, self.hs[-1]) - h) / dh, 0, 1)
+            if wgt.shape[0] > 1:
+                wgt = wgt[r0:r1]
+            if wgt.max() > 0:
+                self.occ[i, r0:r1] += m[r0:r1] * wgt
+
+    def _mask(self):
+        from PIL import Image, ImageDraw
+        im = Image.new("F", (self.na, self.nb), 0.0)
+        return im, ImageDraw.Draw(im)
+
+    def solid(self, pts, y=None, opacity=1.0):
+        """Something flat, or a block: the outline its shadow has on the roof is the hull of where
+        its corners (3D points) land. y is the height its edge is thrown from."""
+        from scipy.spatial import ConvexHull
+        pts = np.asarray(pts, dtype=np.float64)
+        p = self._px(pts)
+        p = p[ConvexHull(p).vertices]
+        im, d = self._mask()
+        d.polygon([tuple(q) for q in p], fill=float(opacity))
+        self._put(np.asarray(im), float(pts[:, 1].max() * 0.75) if y is None else y)
+
+    def standing(self, foot, outlines, opacity=1.0):
+        """Something upright and thin seen from the sun: a post, a person. outlines are polygons of
+        (sideways, height) in metres, sideways measured across the sun's direction from foot (x, z).
+        Hard at the foot, softer the higher up it was."""
+        f = np.asarray(foot, dtype=np.float64)
+        fa, fb = f @ self.t, f @ self.s
+        im, d = self._mask()
+        for o in outlines:
+            o = np.asarray(o, dtype=np.float64)
+            d.polygon([((fa + q[0] - self.a0) / self.res, (fb + q[1] * self.k - self.b0) / self.res) for q in o],
+                      fill=float(opacity))
+        rows_b = self.b0 + (np.arange(self.nb) + 0.5) * self.res
+        self._put(np.asarray(im), ((rows_b - fb) / self.k)[:, None])
+
+    def thread(self, p, q, width, gain=1.0):
+        """Something thinner than a square of the sheet: a wire, a peg. Laid as a line one square
+        wide and as much lighter as it is thinner. gain is hers: she gives a wire more than it has."""
+        p, q = np.asarray(p, dtype=np.float64), np.asarray(q, dtype=np.float64)
+        a, b = self._px(p), self._px(q)
+        im, d = self._mask()
+        d.line([tuple(a), tuple(b)], fill=float(gain * width / self.res), width=1)
+        self._put(np.asarray(im), float((p[1] + q[1]) / 2))
+
+    def threads(self, segs, width, gain=1.0):
+        """Many threads at about one height, in one go."""
+        im, d = self._mask()
+        ys = []
+        for p, q in segs:
+            a, b = self._px(np.asarray(p, dtype=np.float64)), self._px(np.asarray(q, dtype=np.float64))
+            d.line([tuple(a), tuple(b)], fill=float(gain * width / self.res), width=1)
+            ys.append((p[1] + q[1]) / 2)
+        self._put(np.asarray(im), float(np.mean(ys)))
+
+    def settle(self):
+        """Soften every height by its own amount and add them up."""
+        tot = np.zeros((self.nb, self.na), dtype=np.float32)
+        for h, o in zip(self.hs, self.occ):
+            if not o.any():
+                continue
+            sa = max(0.5 * self.SUN_R * h / self.sin / self.res, 0.9)    # never sharper than the sheet's own squares
+            tot += gaussian_filter(o, (max(sa / self.sin, 1.2), sa))
+        self.T = 1.0 - np.clip(tot, 0, 1)
+        self.occ = None
+        return self
+
+    def at(self, Q):
+        """0..1: how much of the sun reaches the point Q (anywhere on or above the roof)."""
+        from scipy.ndimage import map_coordinates
+        p = self._px(Q)
+        return map_coordinates(self.T, [p[..., 1] - 0.5, p[..., 0] - 0.5], order=1, mode="nearest")
+
+
+def cut(board, fld, at=0.5, soft=0.0, feather=0.0, mode="replace"):
+    """Tape cut from a soft field at a threshold, in one go: closed below `at`, open above it, with
+    `soft` of the field's own gradient kept past the edge (0 is a knife) and a feather on top."""
+    f = np.asarray(fld, dtype=np.float32)
+    m = (f > at).astype(np.float32) if soft <= 0 else np.clip((f - at) / soft + 0.5, 0, 1)
+    board.tape_where(m, feather=feather, mode=mode)
+
+
+def band(poly_line, widths):
+    """The outline of something long and thin: a centre line of (x, y) points and a width at each."""
+    p = np.asarray(poly_line, dtype=np.float64)
+    w = np.broadcast_to(np.asarray(widths, dtype=np.float64), (len(p),))
+    d = np.gradient(p, axis=0)
+    n = np.stack([-d[:, 1], d[:, 0]], 1)
+    n /= np.linalg.norm(n, axis=1, keepdims=True) + 1e-9
+    return np.concatenate([p + n * w[:, None] / 2, (p - n * w[:, None] / 2)[::-1]])

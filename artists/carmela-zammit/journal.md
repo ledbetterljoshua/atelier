@@ -231,3 +231,88 @@ with a hard edge in one go; I still clip and multiply by hand.
 **Next.** Tramuntana, and the line empty: the morning after the laundry stopped sending linen up,
 only the pegs left on the wire and their shadows on the screed. See whether the roof holds a picture
 with no cloth on it at all.
+
+## 005. Tramuntana, taking in the pegs
+
+10,026 strokes. Seven goes. The laundry stopped sending linen up on the Friday; this is the morning
+after, the wind gone round to the north and the air washed. Eleven wires and the pegs. I went up
+with the basket to take the pegs in.
+
+**What held.** There was no sheet to put between me and the sun, so I turned round. In thirty-four
+years I never stood with it at my back, because the washing was the picture and the washing wants
+it behind. With it at my back, low, everything that stands on the roof is laid out on the screed in
+front of me, and what that comes to is: the wires, hardly at all; the pegs, each one a tick hanging
+off its wire toward me; and me. I had not meant to be in it. I am the only thing up there with any
+body to it, so mine is the only real shadow, hard at the hem and soft by the time it gets to the
+head, one arm up to the line and the other hand on my hip, and the tramuntana has my skirt out to
+one side. That is the answer to what I asked last time. The roof does not hold a picture with no
+cloth on it. It holds one when the cloth is on whoever came up to look, and the wind is in the
+picture after all, in the one thing that was still hung up.
+
+The eleven lines run away to the far rail and my shadow lies across six of them with its hand on
+the seventh. On the side wall, which takes the sun square and is the lightest thing on the board,
+the last three lines climb and their pegs hang straight down instead of slantwise, because a wall
+is not a floor. The posts and the rail are Toni's red, the same as what is under the picture.
+
+**No cloth under it either.** There are no more condemned sheets. This is on the plywood lid of one
+of the hampers, primed with the red as always. It has no weave to catch a dry brush, only a grain
+that runs across, so the paint sits up on it and slides. One dry drag across the near roof at the
+end brought the grain up through the screed, and that is all the board says for itself.
+
+**What didn't.**
+- A wire two metres up in a low sun throws about a tenth of a shadow: the sun is half a degree
+  wide and by the time the shadow reaches the roof it is five centimetres of nearly nothing. Laid
+  true, the lines could not be seen and the pegs were a field of dashes with nothing to hang from.
+  I gave the wires seven times what they have. It is the only lie in it and the picture stands on it.
+- The shadows came out with orange rims and pale streaks down the middle of me. A brush that changes
+  colour along its stroke and also picks up wet paint carries the *difference* with it: a bristle
+  that picked up light paint while it was laying dark goes on into the light and lays it brighter
+  than white. Shadows are laid with a clean brush now, no pickup, and thin, with no body at all.
+- Where a line crossed a peg's shadow the pull along the line dragged the peg's dark sideways into
+  a dash. The lines are pulled from a sheet with only the wires on it, the ticks from one with the
+  pegs, and what has body from a third.
+- First skirt was a cape: it went out from the shoulders in one line. It wants a waist, hips, the
+  side the wind comes from flat against the leg, and only the hem kicked out. And it wants legs
+  under it, so the hem went up to the knee, or the board cuts me off at the skirt.
+- The side wall and the roof were the same cream and the wall vanished. The screed is lime and
+  crushed pot and it is pink; the wall is limewash and it is not. A dark line where they meet.
+- The prop, lying down, threw a shadow twice its own width and read as two planks. I made its
+  shadow one narrow pull laid against it. Second small lie.
+- Pegs' shadows with a very fine brush came out as hatching. A peg is one touch.
+- Joints in the screed running the same way as the wires read as more wires. Only the cross joints stay.
+
+**Still wrong.** The near left, between the basket and the prop, is still a field of cream paint:
+the fourth picture running where the open floor is the weakest passage, and the prop is a thing I
+put there to hold it rather than a thing I saw. The pegs' shadows are all one grey touch, the far
+ones as dark as the near, and in rows they read as stitching before they read as pegs. My raised
+hand is a ragged knot; you cannot see that it has a peg in it. The end wall on the left is barely a
+wall. The side wall is a big light shape with very little on it, and the lines that climb it are
+fainter than I painted them on the floor. The basket has a dozen pegs in it and they do not read.
+The sky has red coming through in two blotches on the right that are not weather.
+
+**Into the kit.** `SunFloor`: one sheet laid on the roof, a centimetre to the square, that keeps how
+much of the sun gets to each place. Things are laid on it along the sun: a block, something
+standing (a post, a person, as outlines seen from the sun), a thread thinner than a square. Each is
+kept by the height it stood at and softened by that height, more along the throw than across,
+because the sun is not a point. Anything above the roof, a wall, the basket, asks for its sun at
+the place its own shadow would land. `cut`: tape cut from a soft field at a threshold in one go.
+`band`: the outline of a limb from a line and a width. `crate_lid`: plywood, for a support.
+
+**Changed.** With nothing on the line the sun goes behind her and she is in the picture, as a
+shadow. The thick paint, which was for where the sun lands hardest on cloth, went on the pegs.
+The red oxide went on the palette once, for the posts, because that is what is on them. The support
+is not cloth. Persona updated.
+
+**Asked of the engine, and built or dropped.** Nobody is going to build these, so:
+- *Tape cut from a soft field with a hard edge.* Built, `cut`, six lines. I should have done it in 003.
+- *A colour given as a field over the board.* Dropped. A field of colour over the whole board is the
+  picture painted once already, and then I would be copying it. I keep the light as a field (how
+  much sun gets there) and mix the colour at the stroke, as before; it is quick enough.
+- For whoever uses colour along a stroke: turn pickup off when the stroke crosses a hard edge of
+  light, or it lays the difference back down further on.
+
+**Wanted.** Nothing.
+
+**Next.** Lbiċ, at home. Her own roof in Ħamrun, her own line, one line, and what is on it is
+hers and Toni's: two sheets, shirts, a tablecloth. Small, and the sun where it belongs, behind it.
+See what the laundry's eleven lines taught her about one.

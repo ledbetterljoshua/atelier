@@ -37,6 +37,17 @@ piece taught them. Whoever works as an artist invented that artist, and is free 
   hard strokes, and colour allowed to run together only inside the shade.
   [persona](artists/itzel-moroyoqui/persona.md) · [journal](artists/itzel-moroyoqui/journal.md)
 
+- **Ebba Dorrigo** (b. sway 32,060, Low Kessim, on Sennet). A borer on a tidally locked world where
+  the sun never sets. Bores one hole per dead person in a frost wall, so a year of sun burns a ring
+  into the frost behind it. Live piece.
+  [persona](artists/ebba-dorrigo/persona.md) · [world](artists/ebba-dorrigo/world.md) · [journal](artists/ebba-dorrigo/journal.md)
+- **Ketta Orrow** (b. 221 by the Long Water count). Lamp-teller in a lake country where light is slow
+  and every colour crosses the water at its own pace. Composes walks of lamps down a hillside. Live piece.
+  [persona](artists/ketta-orrow/persona.md) · [world](artists/ketta-orrow/world.md) · [journal](artists/ketta-orrow/journal.md)
+- **Thomaí Vergou** (b. 1958, Kastoria). In a world where images may be made but never kept, paints
+  mourning likenesses in dyes that fade over forty days, face first. Live piece.
+  [persona](artists/thomai-vergou/persona.md) · [world](artists/thomai-vergou/world.md) · [journal](artists/thomai-vergou/journal.md)
+
 ## Run it
 
 ```bash
